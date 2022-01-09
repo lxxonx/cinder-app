@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+class EditScreen extends StatelessWidget {
+  const EditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
         ],
-        title: const Text("Settings", style: TextStyle(color: Colors.black)),
+        title: const Text("Edit", style: TextStyle(color: Colors.black)),
       ),
       body: Center(
         child: ElevatedButton(

@@ -5,27 +5,28 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Dog(),
+      home: const Navigation(),
       theme: ThemeData(
           appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
+              elevation: 0,
               iconTheme: IconThemeData(color: Colors.pink)))));
 }
 
-class Dog extends StatefulWidget {
-  const Dog({Key? key}) : super(key: key);
+class Navigation extends StatefulWidget {
+  const Navigation({Key? key}) : super(key: key);
 
   @override
-  State<Dog> createState() => DogState();
+  State<Navigation> createState() => NavigationState();
 }
 
-class DogState extends State<Dog> {
+class NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     Text(
-      'Music',
+      'Explore',
       style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
     ),
     Text(
@@ -33,7 +34,7 @@ class DogState extends State<Dog> {
       style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
     ),
     Text(
-      'News',
+      'Chats',
       style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
     ),
   ];
@@ -65,10 +66,22 @@ class DogState extends State<Dog> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "")
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.explore),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.compass_calibration),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble),
+              label: "",
+            )
           ],
           unselectedItemColor: Colors.blueGrey,
           selectedItemColor: Colors.pink,
