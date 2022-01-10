@@ -13,7 +13,7 @@ class DetailScreen extends StatelessWidget {
           elevation: 0,
         ),
         body: Column(children: [
-          Hero(
+          const Hero(
             child: Image(
                 image: AssetImage("images/beauty1.jpeg"), fit: BoxFit.fill),
             tag: "profile_pics",
