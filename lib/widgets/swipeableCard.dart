@@ -5,14 +5,17 @@ import 'package:flutter/material.dart';
 class SwipeableCard extends StatefulWidget {
   const SwipeableCard({
     Key? key,
-    this.onTapDislike,
-    this.onTapLike,
-    this.onTapSuperlike,
+    required this.onTapDislike,
+    required this.onTapLike,
+    required this.onTapSuperlike,
+    this.info,
   }) : super(key: key);
 
-  final onTapLike;
-  final onTapDislike;
-  final onTapSuperlike;
+  final Function onTapLike;
+  final Function onTapDislike;
+  final Function onTapSuperlike;
+  final info;
+
   @override
   State<SwipeableCard> createState() => SwipeableCardState();
 }
@@ -27,6 +30,7 @@ class SwipeableCardState extends State<SwipeableCard> {
   int _currentPicIndex = 0;
   @override
   Widget build(BuildContext context) {
+    print(widget.info);
     return GestureDetector(
       onPanDown: (DragDownDetails) {
         print(DragDownDetails);
@@ -164,7 +168,7 @@ class SwipeableCardState extends State<SwipeableCard> {
                 Icons.ac_unit,
                 color: Colors.red,
               ),
-              onPressed: () => widget.onTapDislike),
+              onPressed: () => widget.onTapDislike()),
           OutlineCircleButton(
               borderColor: Colors.blue,
               borderSize: 1.0,
@@ -173,7 +177,7 @@ class SwipeableCardState extends State<SwipeableCard> {
                 Icons.ac_unit,
                 color: Colors.blue,
               ),
-              onPressed: () => widget.onTapSuperlike),
+              onPressed: () => widget.onTapSuperlike()),
           OutlineCircleButton(
               borderColor: Colors.green,
               borderSize: 1.0,
@@ -182,7 +186,7 @@ class SwipeableCardState extends State<SwipeableCard> {
                 Icons.ac_unit,
                 color: Colors.green,
               ),
-              onPressed: () => widget.onTapLike),
+              onPressed: () => widget.onTapLike()),
           OutlineCircleButton(
             borderColor: Colors.purple,
             borderSize: 1.0,

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "898353166760",
+    "project_id": "cinder-9a390",
+    "storage_bucket": "cinder-9a390.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898353166760:android:b3c13b29724c6cebf3c59d",
+        "android_client_info": {
+          "package_name": "com.hyunwon.cinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898353166760-bvg8su0s3sldiju5h8cfrie88sui8b5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwbzzI7mV5FfQNrCHqfCMQTHuD7WgCD7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898353166760-bvg8su0s3sldiju5h8cfrie88sui8b5u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "898353166760-spn7o6aaj0krcmkhuc60qesrkuu0bv2q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hyuwon.cinder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
