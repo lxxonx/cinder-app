@@ -1,8 +1,12 @@
 import 'package:app/pages/home.dart';
 import 'package:app/pages/profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Navigation(),
@@ -22,7 +26,7 @@ class Navigation extends StatefulWidget {
 
 class NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
-
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     Text(
