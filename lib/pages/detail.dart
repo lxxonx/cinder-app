@@ -1,4 +1,4 @@
-import 'package:app/pages/settings.dart';
+import 'package:cinder/pages/settings.dart';
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatelessWidget {

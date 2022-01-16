@@ -1,5 +1,5 @@
-import 'package:app/pages/detail.dart';
-import 'package:app/widgets/circleButton.dart';
+import 'package:cinder/pages/detail.dart';
+import 'package:cinder/widgets/circleButton.dart';
 import 'package:flutter/material.dart';
 
 class SwipeableCard extends StatefulWidget {

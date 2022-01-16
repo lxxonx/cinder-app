@@ -1,5 +1,5 @@
-import 'package:app/pages/edit.dart';
-import 'package:app/pages/settings.dart';
+import 'package:cinder/pages/edit.dart';
+import 'package:cinder/pages/settings.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {

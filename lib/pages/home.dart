@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/widgets/swipeableCard.dart';
+import 'package:cinder/widgets/swipeableCard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_database/firebase_database.dart';

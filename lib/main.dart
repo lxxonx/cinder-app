@@ -1,5 +1,6 @@
-import 'package:app/pages/home.dart';
-import 'package:app/pages/profile.dart';
+import 'package:cinder/pages/chat.dart';
+import 'package:cinder/pages/home.dart';
+import 'package:cinder/pages/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,20 +28,17 @@ class Navigation extends StatefulWidget {
 class NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    Text(
+  static final List<Widget> _widgetOptions = <Widget>[
+    const HomeScreen(),
+    const Text(
       'Explore',
       style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
     ),
-    Text(
+    const Text(
       'Places',
       style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
     ),
-    Text(
-      'Chats',
-      style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
-    ),
+    ChatScreen()
   ];
 
   @override
@@ -66,6 +64,7 @@ class NavigationState extends State<Navigation> {
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsetsGeometry.lerp(EdgeInsets.zero, EdgeInsets.zero, 2),
+        color: Colors.white,
         child: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,

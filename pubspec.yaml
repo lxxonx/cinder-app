@@ -1,4 +1,4 @@
-name: app
+name: cinder
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^3.3.5
   cloud_firestore: ^3.1.6
   firebase_database: ^9.0.5
+  shared_preferences: ^2.0.12
 
 dev_dependencies:
   flutter_test:
