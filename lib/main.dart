@@ -1,21 +1,41 @@
 import 'package:cinder/pages/chat.dart';
+import 'package:cinder/pages/explore.dart';
 import 'package:cinder/pages/home.dart';
 import 'package:cinder/pages/profile.dart';
+import 'package:cinder/pages/signup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+bool? isViewed;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  isViewed = prefs.getBool('onBoard');
+
+  runApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Navigation(),
+      home: isViewed != null && isViewed == true
+          ? const Navigation()
+          : SignUpScreen(),
       theme: ThemeData(
-          appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              iconTheme: IconThemeData(color: Colors.pink)))));
+        appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.pink)),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
+      ),
+      initialRoute: "/",
+    ),
+  );
 }
 
 class Navigation extends StatefulWidget {
@@ -30,10 +50,7 @@ class NavigationState extends State<Navigation> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const Text(
-      'Explore',
-      style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
-    ),
+    ExploreScreen(),
     const Text(
       'Places',
       style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
