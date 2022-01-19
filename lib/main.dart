@@ -1,6 +1,7 @@
 import 'package:cinder/pages/chat.dart';
 import 'package:cinder/pages/explore.dart';
 import 'package:cinder/pages/home.dart';
+import 'package:cinder/pages/login.dart';
 import 'package:cinder/pages/profile.dart';
 import 'package:cinder/pages/signup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,6 +35,10 @@ void main() async {
         ),
       ),
       initialRoute: "/",
+      routes: {
+        "/login": (context) => LoginScreen(),
+        "/signup": (context) => SignUpScreen(),
+      },
     ),
   );
 }
@@ -47,8 +52,8 @@ class Navigation extends StatefulWidget {
 
 class NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  static final List<Widget> _widgetOptions = <Widget>[
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     ExploreScreen(),
     const Text(

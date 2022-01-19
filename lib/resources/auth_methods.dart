@@ -56,6 +56,10 @@ class AuthMethods {
         res = "Please enter all the fields";
       }
     } catch (err) {
+      if (err.toString().contains("weak-password")) {
+        // TODO
+        // add toast
+      }
       return err.toString();
     }
     return res;
