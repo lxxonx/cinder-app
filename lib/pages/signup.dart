@@ -16,17 +16,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _uniController = TextEditingController();
-  final TextEditingController _depController = TextEditingController();
-  String _uni = "";
-
+  String _uni = "Select University";
+  String _dep = "Select Department";
   void signUp() async {
+    if (_dep == "Select Department") {
+      // toast
+      return;
+    }
+    if (_uni == "Select University") {
+      // toast
+      return;
+    }
     String res = await AuthMethods().signUpUser(
       email: _emailController.text,
       password: _passwordController.text,
       username: _usernameController.text,
-      uni: _uniController.text,
-      dep: _depController.text,
+      uni: _uni,
+      dep: _dep,
     );
     print(res);
   }
@@ -72,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).restorablePush(_modalBuilder);
+                  _selectUni(context);
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 2),
@@ -84,6 +90,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 50,
                   child: Center(
                     child: Text(_uni),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  _selectDep(context);
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 2),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(width: 0.04)),
+                  width: double.infinity,
+                  height: 50,
+                  child: Center(
+                    child: Text(_dep),
                   ),
                 ),
               ),
@@ -142,14 +165,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  static Route<void> _modalBuilder(BuildContext context, Object? arguments) {
-    _SignUpScreenState? stateObject =
-        context.findAncestorStateOfType<_SignUpScreenState>();
-
+  void _selectUni(context) {
     List<String> universities = [
       "Select University",
       "Action One",
       "Action Two",
+      "Action Three",
+      "Action Four",
     ];
 
     List<Widget> uniOptionBuilder() {
@@ -160,23 +182,81 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return res;
     }
 
-    return CupertinoModalPopupRoute<void>(
+    showCupertinoModalPopup(
+      context: context,
       builder: (BuildContext context) {
-        return CupertinoActionSheet(actions: [
-          Container(
-            height: 180,
-            child: CupertinoPicker(
-              itemExtent: 28,
-              onSelectedItemChanged: (selected) {
-                print(selected);
+        return CupertinoActionSheet(
+            cancelButton: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
               },
-              useMagnifier: true,
-              backgroundColor: Colors.white,
-              magnification: 1.5,
-              children: uniOptionBuilder(),
+              child: Text("selected"),
             ),
-          ),
-        ]);
+            actions: [
+              Container(
+                height: 180,
+                child: CupertinoPicker(
+                  itemExtent: 28,
+                  onSelectedItemChanged: (selected) {
+                    setState(() {
+                      _uni = universities[selected];
+                    });
+                  },
+                  useMagnifier: true,
+                  backgroundColor: Colors.white,
+                  magnification: 1.5,
+                  children: uniOptionBuilder(),
+                ),
+              ),
+            ]);
+      },
+    );
+  }
+
+  void _selectDep(context) {
+    List<String> departments = [
+      "Select University",
+      "Action One",
+      "Action Two",
+      "Action Three",
+      "Action Four",
+    ];
+
+    List<Widget> depOptionBuilder() {
+      List<Widget> res = [];
+      for (var dep in departments) {
+        res.add(Text(dep));
+      }
+      return res;
+    }
+
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+            cancelButton: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("selected"),
+            ),
+            actions: [
+              Container(
+                height: 180,
+                child: CupertinoPicker(
+                  itemExtent: 28,
+                  onSelectedItemChanged: (selected) {
+                    setState(() {
+                      _dep = departments[selected];
+                    });
+                  },
+                  useMagnifier: true,
+                  backgroundColor: Colors.white,
+                  magnification: 1.5,
+                  children: depOptionBuilder(),
+                ),
+              ),
+            ]);
       },
     );
   }

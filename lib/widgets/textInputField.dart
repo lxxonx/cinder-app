@@ -20,6 +20,7 @@ class TextInputField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
           border: inputBorder,
@@ -28,6 +29,7 @@ class TextInputField extends StatelessWidget {
           filled: true,
           fillColor: Colors.white,
         ),
+        obscureText: obscureText,
         keyboardAppearance: Brightness.light,
         keyboardType: TextInputType.text,
       ),

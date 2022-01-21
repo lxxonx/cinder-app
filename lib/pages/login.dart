@@ -1,5 +1,7 @@
+import 'package:cinder/resources/auth_methods.dart';
 import 'package:cinder/widgets/TextInputField.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -9,8 +11,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  void login() async {
+    print(_emailController.text);
+    String res = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    print(res);
+    if (res == "success") {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('onBoard', true);
+      Navigator.pushNamed(context, "/");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final inputBorder =
@@ -37,8 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24,
               ),
               TextInputField(
-                hintText: "username or email",
-                controller: _usernameController,
+                hintText: "email",
+                controller: _emailController,
                 keyboardType: TextInputType.text,
               ),
               TextInputField(
@@ -66,7 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 onTap: () {
-                  // sign up,
+                  // login
+                  login();
                 },
               ),
               Flexible(child: Container(), flex: 2),
