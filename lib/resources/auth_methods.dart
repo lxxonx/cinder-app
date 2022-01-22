@@ -98,4 +98,13 @@ class AuthMethods {
   Future<void> signOut() async {
     await _auth.signOut();
   }
+
+  Future<String?> getCurrentUser() async {
+    if (_auth.currentUser != null) {
+      String? token = await _auth.currentUser?.getIdToken();
+      return token;
+    } else {
+      return null;
+    }
+  }
 }

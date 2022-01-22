@@ -4,7 +4,9 @@ import 'package:cinder/pages/home.dart';
 import 'package:cinder/pages/login.dart';
 import 'package:cinder/pages/profile.dart';
 import 'package:cinder/pages/signup.dart';
+import 'package:cinder/resources/auth_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,13 +17,23 @@ void main() async {
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getBool('onBoard');
-
+  String? token = await AuthMethods().getCurrentUser();
+  if (token == null) {
+    prefs.setBool('onBoard', false);
+  }
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: isViewed != null && isViewed == true
-          ? const Navigation()
-          : SignUpScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, userSnapshot) {
+          if (userSnapshot.hasData) {
+            return Navigation();
+          } else {
+            return LoginScreen();
+          }
+        },
+      ),
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
@@ -38,6 +50,7 @@ void main() async {
       routes: {
         "/login": (context) => LoginScreen(),
         "/signup": (context) => SignUpScreen(),
+        "/home": (context) => const Navigation(),
       },
     ),
   );

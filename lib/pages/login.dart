@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res == "success") {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('onBoard', true);
-      Navigator.pushNamed(context, "/");
+      Navigator.pushNamed(context, "/home");
     }
   }
 
@@ -114,5 +114,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 }
