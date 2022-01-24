@@ -1,6 +1,7 @@
 import 'package:cinder/widgets/chatListItem.dart';
 import 'package:cinder/widgets/friendListItem.dart';
 import 'package:cinder/widgets/friendSearchField.dart';
+import 'package:cinder/widgets/textInputField.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -12,9 +13,12 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String tap = "chat";
+  final TextEditingController _friendInputController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final inputBorder =
+        OutlineInputBorder(borderSide: Divider.createBorderSide(context));
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -64,6 +68,23 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             )
           : ListView(children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                height: 50,
+                child: TextField(
+                  controller: _friendInputController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: "Search Your Friend",
+                    contentPadding: EdgeInsets.only(left: 12),
+                    border: inputBorder,
+                    focusedBorder: inputBorder,
+                    errorBorder: inputBorder,
+                  ),
+                  keyboardType: TextInputType.name,
+                ),
+              ),
               FriendListItem(
                   name: "friend 1",
                   avatarUrl:

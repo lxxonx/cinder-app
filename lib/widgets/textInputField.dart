@@ -31,7 +31,7 @@ class TextInputField extends StatelessWidget {
         ),
         obscureText: obscureText,
         keyboardAppearance: Brightness.light,
-        keyboardType: TextInputType.text,
+        keyboardType: keyboardType,
       ),
     );
   }

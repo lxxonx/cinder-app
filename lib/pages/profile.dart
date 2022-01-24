@@ -1,5 +1,6 @@
 import 'package:cinder/pages/edit.dart';
 import 'package:cinder/pages/settings.dart';
+import 'package:cinder/widgets/circleImage.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -15,24 +16,53 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.blueGrey, opacity: 40),
       ),
-      body: Center(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(_openSettings());
-            },
-            child: const Text('Go Setting'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(_openEdit());
-            },
-            child: const Text('Go Edit'),
-          ),
-        ],
-      )),
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Flexible(
+                flex: 2,
+                child: Column(
+                  children: const <Widget>[
+                    CircleImage(
+                        imgUrl:
+                            "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"),
+                    Text(
+                      "ddf",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                )),
+            Flexible(
+              flex: 1,
+              child: Container(
+                color: Colors.blueGrey,
+                height: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(_openSettings());
+                      },
+                      child: const Text('Go Setting'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(_openEdit());
+                      },
+                      child: const Text('Go Edit'),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

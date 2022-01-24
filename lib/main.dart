@@ -21,8 +21,15 @@ void main() async {
   if (token == null) {
     prefs.setBool('onBoard', false);
   }
-  runApp(
-    MaterialApp(
+  runApp(Cinder());
+}
+
+class Cinder extends StatelessWidget {
+  const Cinder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -52,8 +59,8 @@ void main() async {
         "/signup": (context) => SignUpScreen(),
         "/home": (context) => const Navigation(),
       },
-    ),
-  );
+    );
+  }
 }
 
 class Navigation extends StatefulWidget {
