@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class CircleImage extends StatelessWidget {
   const CircleImage({
     Key? key,
-    required this.imgUrl,
+    required this.image,
     this.size = 180,
   }) : super(key: key);
 
-  final String imgUrl;
+  final ImageProvider image;
   final double size;
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,7 @@ class CircleImage extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
           shape: BoxShape.circle,
-          image: DecorationImage(
-              fit: BoxFit.contain, image: NetworkImage(imgUrl))),
+          image: DecorationImage(fit: BoxFit.contain, image: image)),
     );
   }
 }

@@ -149,7 +149,7 @@ class NavigationState extends State<Navigation> {
 Route _createRoute() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) =>
-        const ProfileScreen(),
+        const ProfileScreen(name: "name"),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(-1.0, 0.0);
       const end = Offset.zero;
