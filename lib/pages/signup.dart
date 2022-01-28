@@ -1,5 +1,6 @@
 import 'package:cinder/pages/login.dart';
 import 'package:cinder/resources/auth_methods.dart';
+import 'package:cinder/utils/colors.dart';
 import 'package:cinder/widgets/TextInputField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,10 +58,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 flex: 2,
                 child: Container(),
               ),
-              const Text(
+              Text(
                 "cinder",
                 style: TextStyle(
-                  color: Colors.pink,
+                  color: primaryColor,
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
                 ),
@@ -124,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.pink,
+                      color: primaryColor,
                       borderRadius: BorderRadius.circular(4.0)),
                   child: const Center(
                     child: Text(

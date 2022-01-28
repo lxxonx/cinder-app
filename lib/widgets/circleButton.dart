@@ -1,46 +1,37 @@
 import 'package:flutter/material.dart';
 
-class OutlineCircleButton extends StatelessWidget {
-  OutlineCircleButton({
-    Key? key,
-    this.onPressed,
-    this.borderSize: 0.5,
-    this.radius: 40.0,
-    this.borderColor: Colors.black,
-    this.foregroundColor: Colors.transparent,
-    this.child,
-  }) : super(key: key);
+class CircleButton extends StatelessWidget {
+  const CircleButton(
+      {Key? key,
+      this.color = Colors.white,
+      this.size = 60,
+      required this.onPressed,
+      required this.child})
+      : super(key: key);
 
+  final Color color;
+  final double size;
   final onPressed;
-  final radius;
-  final borderSize;
-  final borderColor;
-  final foregroundColor;
   final child;
-
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
-      child: Container(
-        width: radius,
-        height: radius,
-        decoration: BoxDecoration(
-          border: Border.all(color: borderColor, width: borderSize),
-          color: foregroundColor,
-          shape: BoxShape.circle,
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-              splashColor: borderColor,
-              child: child ?? SizedBox(),
-              onTap: () async {
-                if (onPressed != null) {
-                  onPressed();
-                }
-              }),
-        ),
-      ),
-    );
+    return InkWell(
+        onTap: () => onPressed(),
+        child: Container(
+          width: size,
+          height: size,
+          child: Center(
+            child: child,
+          ),
+          decoration:
+              BoxDecoration(shape: BoxShape.circle, color: color, boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 8,
+              offset: Offset(0, 1),
+            )
+          ]),
+        ));
   }
 }

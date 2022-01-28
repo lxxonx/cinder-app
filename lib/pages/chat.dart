@@ -1,3 +1,4 @@
+import 'package:cinder/utils/colors.dart';
 import 'package:cinder/widgets/chatListItem.dart';
 import 'package:cinder/widgets/friendListItem.dart';
 import 'package:cinder/widgets/friendSearchField.dart';
@@ -22,13 +23,19 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Container(
+          padding: EdgeInsets.zero,
           child: Row(
             children: [
               Expanded(
-                  child: TextButton(
-                child: Text("chat"),
-                style: TextButton.styleFrom(primary: Colors.black),
-                onPressed: () {
+                  child: GestureDetector(
+                child: Center(
+                  child: Text(
+                    "chat",
+                    style: TextStyle(
+                        color: tap == "chat" ? primaryColor : Colors.black),
+                  ),
+                ),
+                onTap: () {
                   // onPress chat
                   setState(() {
                     tap = "chat";
@@ -36,9 +43,15 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
               )),
               Expanded(
-                  child: TextButton(
-                child: Text("friends"),
-                onPressed: () {
+                  child: GestureDetector(
+                child: Center(
+                  child: Text(
+                    "friends",
+                    style: TextStyle(
+                        color: tap == "friends" ? primaryColor : Colors.black),
+                  ),
+                ),
+                onTap: () {
                   // onPress chat
                   setState(() {
                     tap = "friends";

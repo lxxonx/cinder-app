@@ -1,5 +1,6 @@
 import 'package:cinder/pages/edit.dart';
 import 'package:cinder/pages/settings.dart';
+import 'package:cinder/widgets/circleButton.dart';
 import 'package:cinder/widgets/circleImage.dart';
 import 'package:cinder/widgets/circleProfile.dart';
 import 'package:flutter/material.dart';
@@ -25,53 +26,56 @@ class ProfileScreen extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            Flexible(
+            Expanded(
                 flex: 2,
                 child: Column(
                   children: [
+                    Flexible(child: Container(), flex: 1),
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(_openEdit("preview"));
                       },
                       child: imgUrl != null
                           ? CircleProfile(image: NetworkImage(imgUrl!))
-                          : CircleProfile(
+                          : const CircleProfile(
                               image: NetworkImage(
                                   "https://www.acumarketing.com/acupuncture-websites/wp-content/uploads/2020/01/anonymous-avatar-sm.jpg")),
                     ),
                     Text(
                       name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Flexible(child: Container(), flex: 1),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ElevatedButton(
+                        CircleButton(
                           onPressed: () {
                             Navigator.of(context).push(_openSettings());
                           },
-                          child: const Text('Go Setting'),
+                          child: Icon(Icons.settings),
                         ),
-                        ElevatedButton(
+                        CircleButton(
                           onPressed: () {
                             Navigator.of(context).push(_openEdit("edit"));
                           },
-                          child: const Text('Go Edit'),
+                          child: Icon(Icons.edit),
                         ),
                       ],
                     ),
+                    Flexible(child: Container(), flex: 2),
                   ],
                 )),
-            Flexible(
+            Expanded(
               flex: 1,
               child: Container(
                   color: Colors.blueGrey,
                   height: double.infinity,
                   width: double.infinity,
-                  child: Center(child: Text("hd"))),
+                  child: Center(child: Text("광고 자리"))),
             )
           ],
         ),

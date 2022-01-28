@@ -5,6 +5,7 @@ import 'package:cinder/pages/login.dart';
 import 'package:cinder/pages/profile.dart';
 import 'package:cinder/pages/signup.dart';
 import 'package:cinder/resources/auth_methods.dart';
+import 'package:cinder/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,10 +43,10 @@ class Cinder extends StatelessWidget {
         },
       ),
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
             backgroundColor: Colors.white,
             elevation: 0,
-            iconTheme: IconThemeData(color: Colors.pink)),
+            iconTheme: IconThemeData(color: primaryColor)),
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
@@ -88,18 +89,18 @@ class NavigationState extends State<Navigation> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.account_tree,
-            color: Colors.pink,
+            color: primaryColor,
           ),
           onPressed: () {
             // go to profile
             Navigator.of(context).push(_createRoute());
           },
         ),
-        title: const Text(
+        title: Text(
           'cinder',
-          style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w800),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w800),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -129,7 +130,7 @@ class NavigationState extends State<Navigation> {
             )
           ],
           unselectedItemColor: Colors.blueGrey,
-          selectedItemColor: Colors.pink,
+          selectedItemColor: primaryColor,
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {

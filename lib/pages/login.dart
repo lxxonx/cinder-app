@@ -1,4 +1,5 @@
 import 'package:cinder/resources/auth_methods.dart';
+import 'package:cinder/utils/colors.dart';
 import 'package:cinder/widgets/TextInputField.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,10 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 2,
                 child: Container(),
               ),
-              const Text(
+              Text(
                 "cinder",
                 style: TextStyle(
-                  color: Colors.pink,
+                  color: primaryColor,
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
                 ),
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.pink,
+                      color: primaryColor,
                       borderRadius: BorderRadius.circular(4.0)),
                   child: const Center(
                     child: Text(

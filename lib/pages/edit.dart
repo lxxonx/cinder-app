@@ -1,12 +1,14 @@
 import 'dart:typed_data';
 
+import 'package:cinder/utils/colors.dart';
 import 'package:cinder/utils/pickImage.dart';
+import 'package:cinder/widgets/textOpacityButton.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileEditScreen extends StatefulWidget {
-  ProfileEditScreen({Key? key, this.state = "edit"}) : super(key: key);
-  String state;
+  const ProfileEditScreen({Key? key, this.state = "edit"}) : super(key: key);
+  final String state;
   @override
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();
 }
@@ -19,6 +21,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   void initState() {
     super.initState();
     state = widget.state;
+    print(widget.state);
   }
 
   void selectImage() async {
@@ -35,21 +38,63 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         automaticallyImplyLeading: false,
         actions: [
           TextButton(
-            child: Text("done"),
+            child: Text("done", style: TextStyle(color: primaryColor)),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
         ],
-        title: const Text("Edit", style: TextStyle(color: Colors.black)),
+        title: Text(state!, style: TextStyle(color: Colors.black)),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 0),
+            color: Colors.white,
+            child: Row(
+              children: [
+                Expanded(
+                    flex: 1,
+                    child: TextOpacityButton(
+                        onPressed: () {
+                          setState(() {
+                            state = "edit";
+                          });
+                        },
+                        text: "edit",
+                        color: primaryColor)),
+                const VerticalDivider(
+                  thickness: 12,
+                  color: Colors.black,
+                ),
+                Expanded(
+                    flex: 1,
+                    child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            state = "preview";
+                          });
+                        },
+                        child: Center(
+                            child: Text("preview",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: state == "preview"
+                                      ? primaryColor
+                                      : Colors.black,
+                                )))))
+              ],
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Go back!'),
+            ),
+          ),
+        ],
       ),
     );
   }
