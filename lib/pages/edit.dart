@@ -62,27 +62,24 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           });
                         },
                         text: "edit",
-                        color: primaryColor)),
-                const VerticalDivider(
-                  thickness: 12,
-                  color: Colors.black,
+                        color: state == "edit" ? primaryColor : Colors.black)),
+                //Divider
+                Container(
+                  width: 1,
+                  height: 12,
+                  color: Colors.grey,
                 ),
                 Expanded(
                     flex: 1,
-                    child: InkWell(
-                        onTap: () {
+                    child: TextOpacityButton(
+                        onPressed: () {
                           setState(() {
                             state = "preview";
                           });
                         },
-                        child: Center(
-                            child: Text("preview",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: state == "preview"
-                                      ? primaryColor
-                                      : Colors.black,
-                                )))))
+                        text: "preview",
+                        color:
+                            state == "preview" ? primaryColor : Colors.black)),
               ],
             ),
           ),

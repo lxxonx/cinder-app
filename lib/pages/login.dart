@@ -3,6 +3,7 @@ import 'package:cinder/utils/colors.dart';
 import 'package:cinder/widgets/TextInputField.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -24,6 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
       prefs.setBool('onBoard', true);
       Navigator.pushNamed(context, "/home");
     }
+  }
+
+  void googleLogin() async {
+    String p = await AuthMethods().googleSignIn();
+    print(p);
   }
 
   @override
@@ -83,6 +89,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {
                   // login
                   login();
+                },
+              ),
+              InkWell(
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 2),
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(4.0)),
+                  child: const Center(
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  // login
+                  googleLogin();
                 },
               ),
               Flexible(child: Container(), flex: 2),

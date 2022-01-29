@@ -4,10 +4,13 @@ import 'package:cinder/resources/storage_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cinder/models/user.dart' as model;
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? currentUser;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Signing Up User
   Future<String> signUpUser({
@@ -97,6 +100,35 @@ class AuthMethods {
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<String> googleSignIn() async {
+    final GoogleSignInAccount? account = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth = await account!.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final UserCredential authResult =
+        await _auth.signInWithCredential(credential);
+    final User? user = authResult.user;
+
+    assert(!user!.isAnonymous);
+    assert(await user!.getIdToken() != null);
+
+    currentUser = _auth.currentUser;
+    assert(user!.uid == currentUser!.uid);
+
+    return '구글 로그인 성공: $user';
+  }
+
+  void googleSignOut() async {
+    await _auth.signOut();
+    await _googleSignIn.signOut();
+
+    print("User Sign Out");
   }
 
   Future<String?> getCurrentUser() async {

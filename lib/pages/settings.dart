@@ -1,7 +1,13 @@
+import 'package:cinder/resources/auth_methods.dart';
+import 'package:cinder/widgets/textOpacityButton.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
+
+  void logout() {
+    AuthMethods().signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +25,23 @@ class SettingsScreen extends StatelessWidget {
         title: const Text("Settings", style: TextStyle(color: Colors.black)),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Go back!'),
+            ),
+            TextOpacityButton(
+              onPressed: () {
+                logout();
+                Navigator.pushNamed(context, "/login");
+              },
+              text: "logout",
+              color: Colors.black,
+            )
+          ],
         ),
       ),
     );

@@ -13,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool? isViewed;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,6 +23,7 @@ void main() async {
   if (token == null) {
     prefs.setBool('onBoard', false);
   }
+
   runApp(Cinder());
 }
 
@@ -30,6 +32,7 @@ class Cinder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.authStateChanges());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: StreamBuilder(
