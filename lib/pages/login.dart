@@ -2,7 +2,6 @@ import 'package:cinder/resources/auth_methods.dart';
 import 'package:cinder/utils/colors.dart';
 import 'package:cinder/widgets/TextInputField.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,15 +20,17 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text, password: _passwordController.text);
     print(res);
     if (res == "success") {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('onBoard', true);
       Navigator.pushNamed(context, "/home");
     }
   }
 
   void googleLogin() async {
-    String p = await AuthMethods().googleSignIn();
-    print(p);
+    String res = await AuthMethods().googleSignIn();
+    print(res);
+    if (res == "success") {
+      // show toast;
+      Navigator.pushNamed(context, "/home");
+    }
   }
 
   @override
@@ -46,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 2,
                 child: Container(),
               ),
-              Text(
+              const Text(
                 "cinder",
                 style: TextStyle(
                   color: primaryColor,

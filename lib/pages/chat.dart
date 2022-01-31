@@ -3,6 +3,7 @@ import 'package:cinder/widgets/chatListItem.dart';
 import 'package:cinder/widgets/friendListItem.dart';
 import 'package:cinder/widgets/friendSearchField.dart';
 import 'package:cinder/widgets/textInputField.dart';
+import 'package:cinder/widgets/textOpacityButton.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -22,20 +23,18 @@ class _ChatScreenState extends State<ChatScreen> {
         OutlineInputBorder(borderSide: Divider.createBorderSide(context));
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
+        toolbarHeight: 40,
+        automaticallyImplyLeading: false,
         title: Container(
           padding: EdgeInsets.zero,
           child: Row(
             children: [
               Expanded(
-                  child: GestureDetector(
-                child: Center(
-                  child: Text(
-                    "chat",
-                    style: TextStyle(
-                        color: tap == "chat" ? primaryColor : Colors.black),
-                  ),
-                ),
-                onTap: () {
+                  child: TextOpacityButton(
+                color: tap == "chat" ? primaryColor : Colors.black,
+                text: "chat",
+                onPressed: () {
                   // onPress chat
                   setState(() {
                     tap = "chat";
@@ -43,15 +42,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
               )),
               Expanded(
-                  child: GestureDetector(
-                child: Center(
-                  child: Text(
-                    "friends",
-                    style: TextStyle(
-                        color: tap == "friends" ? primaryColor : Colors.black),
-                  ),
-                ),
-                onTap: () {
+                  child: TextOpacityButton(
+                text: "friends",
+                color: tap == "friends" ? primaryColor : Colors.black,
+                onPressed: () {
                   // onPress chat
                   setState(() {
                     tap = "friends";

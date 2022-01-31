@@ -35,6 +35,8 @@ class _TextOpacityButtonState extends State<TextOpacityButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       onTap: widget.onPressed,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8),

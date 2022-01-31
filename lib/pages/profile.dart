@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600)),
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.blueGrey, opacity: 40),
+        iconTheme: IconThemeData(color: Colors.blueGrey),
       ),
       body: Container(
         color: Colors.white,

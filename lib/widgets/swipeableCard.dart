@@ -1,3 +1,4 @@
+import 'package:cinder/models/profileInfo.dart';
 import 'package:cinder/pages/detail.dart';
 import 'package:cinder/widgets/outlineCircleButton.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,13 @@ class SwipeableCard extends StatefulWidget {
     required this.onTapDislike,
     required this.onTapLike,
     required this.onTapSuperlike,
-    this.info,
+    required this.profileInfo,
   }) : super(key: key);
 
   final Function onTapLike;
   final Function onTapDislike;
   final Function onTapSuperlike;
-  final info;
+  final ProfileInfo profileInfo;
 
   @override
   State<SwipeableCard> createState() => SwipeableCardState();
@@ -30,7 +31,6 @@ class SwipeableCardState extends State<SwipeableCard> {
   int _currentPicIndex = 0;
   @override
   Widget build(BuildContext context) {
-    print(widget.info);
     return GestureDetector(
       onPanDown: (DragDownDetails) {
         print(DragDownDetails);

@@ -2,6 +2,7 @@ import 'package:cinder/pages/chat.dart';
 import 'package:cinder/pages/explore.dart';
 import 'package:cinder/pages/home.dart';
 import 'package:cinder/pages/login.dart';
+import 'package:cinder/pages/onBoard.dart';
 import 'package:cinder/pages/profile.dart';
 import 'package:cinder/pages/signup.dart';
 import 'package:cinder/resources/auth_methods.dart';
@@ -20,10 +21,6 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getBool('onBoard');
   String? token = await AuthMethods().getCurrentUser();
-  if (token == null) {
-    prefs.setBool('onBoard', false);
-  }
-
   runApp(Cinder());
 }
 
@@ -35,18 +32,22 @@ class Cinder extends StatelessWidget {
     print(FirebaseAuth.instance.authStateChanges());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, userSnapshot) {
-          if (userSnapshot.hasData) {
-            return Navigation();
-          } else {
-            return LoginScreen();
-          }
-        },
-      ),
+      home: isViewed != null && isViewed == true
+          ? OnBoardPage()
+          : StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, userSnapshot) {
+                if (userSnapshot.hasData) {
+                  return Navigation();
+                } else {
+                  return LoginScreen();
+                }
+              },
+            ),
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             elevation: 0,
             iconTheme: IconThemeData(color: primaryColor)),
@@ -108,9 +109,11 @@ class NavigationState extends State<Navigation> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsetsGeometry.lerp(EdgeInsets.zero, EdgeInsets.zero, 2),
-        color: Colors.white,
+      bottomNavigationBar: Theme(
+        data: ThemeData(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
         child: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,

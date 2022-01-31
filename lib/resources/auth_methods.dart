@@ -121,7 +121,7 @@ class AuthMethods {
     currentUser = _auth.currentUser;
     assert(user!.uid == currentUser!.uid);
 
-    return '구글 로그인 성공: $user';
+    return "success";
   }
 
   void googleSignOut() async {
