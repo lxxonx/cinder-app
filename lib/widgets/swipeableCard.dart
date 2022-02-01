@@ -22,13 +22,16 @@ class SwipeableCard extends StatefulWidget {
 }
 
 class SwipeableCardState extends State<SwipeableCard> {
-  static const List<ImageProvider> pics = [
-    AssetImage("images/beauty1.jpeg"),
-    AssetImage("images/beauty2.jpeg"),
-    AssetImage("images/beauty3.jpeg"),
-    AssetImage("images/beauty4.jpeg"),
-  ];
   int _currentPicIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    pics =
+        widget.profileInfo.profilePics.map((pic) => NetworkImage(pic)).toList();
+  }
+
+  List<ImageProvider>? pics;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -45,7 +48,7 @@ class SwipeableCardState extends State<SwipeableCard> {
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                     image: DecorationImage(
-                        image: pics[_currentPicIndex], fit: BoxFit.cover)),
+                        image: pics![_currentPicIndex], fit: BoxFit.cover)),
                 margin: EdgeInsets.zero,
               ),
               tag: "profile_pics",
@@ -218,7 +221,7 @@ class SwipeableCardState extends State<SwipeableCard> {
 
   nextPic() {
     print("nextPic");
-    if (_currentPicIndex < pics.length - 1) {
+    if (_currentPicIndex < pics!.length - 1) {
       setState(() {
         _currentPicIndex++;
       });

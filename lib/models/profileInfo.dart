@@ -5,7 +5,7 @@ class ProfileInfo {
   final String bio;
   final String uni;
   final String dep; //
-  final List profilePics;
+  final List<String> profilePics;
 
   const ProfileInfo({
     required this.username,

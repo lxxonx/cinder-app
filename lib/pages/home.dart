@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cinder/dummy/users.dart';
 import 'package:cinder/widgets/swipeableCard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -40,6 +41,7 @@ class HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             SwipeableCard(
+              profileInfo: user1,
               onTapDislike: () => onTapDislike(),
               onTapLike: () => onTapLike(),
               onTapSuperlike: () => onTapSuperlike(),
