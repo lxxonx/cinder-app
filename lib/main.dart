@@ -7,6 +7,7 @@ import 'package:cinder/pages/profile.dart';
 import 'package:cinder/pages/signup.dart';
 import 'package:cinder/resources/auth_methods.dart';
 import 'package:cinder/utils/colors.dart';
+import 'package:cinder/utils/logo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class NavigationState extends State<Navigation> {
     ExploreScreen(),
     const Text(
       'Places',
-      style: TextStyle(fontSize: 30, fontFamily: 'DoHyeonRegular'),
+      style: TextStyle(fontSize: 30),
     ),
     ChatScreen()
   ];
@@ -102,10 +103,7 @@ class NavigationState extends State<Navigation> {
             Navigator.of(context).push(_createRoute());
           },
         ),
-        title: Text(
-          'cinder',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w800),
-        ),
+        title: Logo,
         backgroundColor: Colors.white,
         elevation: 0,
       ),

@@ -2,6 +2,7 @@ import 'package:cinder/models/profileInfo.dart';
 import 'package:cinder/pages/detail.dart';
 import 'package:cinder/widgets/outlineCircleButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SwipeableCard extends StatefulWidget {
   const SwipeableCard({
@@ -26,11 +27,22 @@ class SwipeableCardState extends State<SwipeableCard> {
   @override
   void initState() {
     super.initState();
-    pics =
-        widget.profileInfo.profilePics.map((pic) => NetworkImage(pic)).toList();
+    pics = widget.profileInfo.profilePics
+        .map((pic) => Hero(
+            tag: pic,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                image: DecorationImage(
+                  image: NetworkImage(pic),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )))
+        .toList();
   }
 
-  List<ImageProvider>? pics;
+  List<Hero>? pics;
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +55,7 @@ class SwipeableCardState extends State<SwipeableCard> {
         clipBehavior: Clip.none,
         child: Stack(
           children: [
-            Hero(
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    image: DecorationImage(
-                        image: pics![_currentPicIndex], fit: BoxFit.cover)),
-                margin: EdgeInsets.zero,
-              ),
-              tag: "profile_pics",
-            ),
+            pics![_currentPicIndex],
             /* 
             buttons
            */
@@ -108,8 +111,8 @@ class SwipeableCardState extends State<SwipeableCard> {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.ideographic,
                     children: [
-                      const Text("name",
-                          style: TextStyle(
+                      Text(widget.profileInfo.username,
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 32.0,
                               fontWeight: FontWeight.w600)),
@@ -135,7 +138,8 @@ class SwipeableCardState extends State<SwipeableCard> {
                 ),
                 textAlign: TextAlign.left,
               ),
-              const Text("personal bio", style: TextStyle(color: Colors.white))
+              Text(widget.profileInfo.bio,
+                  style: TextStyle(color: Colors.white))
             ],
           ),
         ));
@@ -151,18 +155,18 @@ class SwipeableCardState extends State<SwipeableCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          OutlineCircleButton(
-            borderColor: Colors.yellow,
-            borderSize: 1.0,
-            radius: 40.0,
-            child: const Icon(
-              Icons.ac_unit,
-              color: Colors.yellow,
-            ),
-            onPressed: () {
-              // undo
-            },
-          ),
+          // OutlineCircleButton(
+          //   borderColor: Colors.yellow,
+          //   borderSize: 1.0,
+          //   radius: 40.0,
+          //   child: const Icon(
+          //     Icons.ac_unit,
+          //     color: Colors.yellow,
+          //   ),
+          //   onPressed: () {
+          //     // undo
+          //   },
+          // ),
           OutlineCircleButton(
               borderColor: Colors.red,
               borderSize: 1.0,
@@ -190,63 +194,66 @@ class SwipeableCardState extends State<SwipeableCard> {
                 color: Colors.green,
               ),
               onPressed: () => widget.onTapLike()),
-          OutlineCircleButton(
-            borderColor: Colors.purple,
-            borderSize: 1.0,
-            radius: 40.0,
-            child: const Icon(
-              Icons.ac_unit,
-              color: Colors.purple,
-            ),
-            onPressed: () {
-              // boost
-            },
-          ),
+          // OutlineCircleButton(
+          //   borderColor: Colors.purple,
+          //   borderSize: 1.0,
+          //   radius: 40.0,
+          //   child: const Icon(
+          //     Icons.ac_unit,
+          //     color: Colors.purple,
+          //   ),
+          //   onPressed: () {
+          //     // boost
+          //   },
+          // ),
         ],
       ),
     );
   }
 
   prevPic() {
-    print("prevPic");
     if (_currentPicIndex > 0) {
       setState(() {
         _currentPicIndex--;
       });
     } else {
       // move card for nudge;
+      HapticFeedback.lightImpact();
     }
     return null;
   }
 
   nextPic() {
-    print("nextPic");
     if (_currentPicIndex < pics!.length - 1) {
       setState(() {
         _currentPicIndex++;
       });
     } else {
       // move card for nudge;
+      HapticFeedback.lightImpact();
     }
     return null;
   }
-}
 
-Route _openDetail() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const DetailScreen(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
+  Route _openDetail() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => DetailScreen(
+        profileInfo: widget.profileInfo,
+        currentPicIndex: _currentPicIndex,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
 
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 }
