@@ -1,4 +1,4 @@
-name: cinder
+name: mocozi
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -43,6 +43,7 @@ dependencies:
   firebase_storage: ^10.2.5
   image_picker: ^0.8.4+4
   google_sign_in: ^5.2.3
+  flutter_easyloading: ^3.0.3
 
 dev_dependencies:
   flutter_test:

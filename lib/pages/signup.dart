@@ -1,7 +1,7 @@
-import 'package:cinder/pages/login.dart';
-import 'package:cinder/resources/auth_methods.dart';
-import 'package:cinder/utils/colors.dart';
-import 'package:cinder/widgets/TextInputField.dart';
+import 'package:mocozi/pages/login.dart';
+import 'package:mocozi/resources/auth_methods.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/widgets/TextInputField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Container(),
               ),
               Text(
-                "cinder",
+                "mocozi",
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 36,

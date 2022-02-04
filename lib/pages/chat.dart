@@ -1,9 +1,9 @@
-import 'package:cinder/utils/colors.dart';
-import 'package:cinder/widgets/chatListItem.dart';
-import 'package:cinder/widgets/friendListItem.dart';
-import 'package:cinder/widgets/friendSearchField.dart';
-import 'package:cinder/widgets/textInputField.dart';
-import 'package:cinder/widgets/textOpacityButton.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/widgets/chatListItem.dart';
+import 'package:mocozi/widgets/friendListItem.dart';
+import 'package:mocozi/widgets/friendSearchField.dart';
+import 'package:mocozi/widgets/textInputField.dart';
+import 'package:mocozi/widgets/textOpacityButton.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -13,10 +13,12 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen>
+    with AutomaticKeepAliveClientMixin {
   String tap = "chat";
   final TextEditingController _friendInputController = TextEditingController();
-
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     final inputBorder =

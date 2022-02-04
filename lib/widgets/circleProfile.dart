@@ -1,4 +1,4 @@
-import 'package:cinder/widgets/circleImage.dart';
+import 'package:mocozi/widgets/circleImage.dart';
 import 'package:flutter/material.dart';
 
 class CircleProfile extends StatelessWidget {

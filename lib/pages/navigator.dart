@@ -1,4 +1,4 @@
-import 'package:cinder/pages/chat.dart';
-import 'package:cinder/pages/home.dart';
-import 'package:cinder/pages/profile.dart';
+import 'package:mocozi/pages/chat.dart';
+import 'package:mocozi/pages/home.dart';
+import 'package:mocozi/pages/profile.dart';
 import 'package:flutter/material.dart';

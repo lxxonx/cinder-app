@@ -1,5 +1,5 @@
-import 'package:cinder/resources/auth_methods.dart';
-import 'package:cinder/widgets/textOpacityButton.dart';
+import 'package:mocozi/resources/auth_methods.dart';
+import 'package:mocozi/widgets/textOpacityButton.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {

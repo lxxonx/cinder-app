@@ -1,4 +1,4 @@
-import 'package:cinder/utils/colors.dart';
+import 'package:mocozi/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class TextOpacityButton extends StatefulWidget {

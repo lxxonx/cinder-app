@@ -1,4 +1,4 @@
-package com.hyunwon.cinder
+package com.hyunwon.mocozi
 
 import io.flutter.embedding.android.FlutterActivity
 

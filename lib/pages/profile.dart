@@ -1,8 +1,8 @@
-import 'package:cinder/pages/edit.dart';
-import 'package:cinder/pages/settings.dart';
-import 'package:cinder/widgets/circleButton.dart';
-import 'package:cinder/widgets/circleImage.dart';
-import 'package:cinder/widgets/circleProfile.dart';
+import 'package:mocozi/pages/edit.dart';
+import 'package:mocozi/pages/settings.dart';
+import 'package:mocozi/widgets/circleButton.dart';
+import 'package:mocozi/widgets/circleImage.dart';
+import 'package:mocozi/widgets/circleProfile.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:cinder/models/profileInfo.dart';
-import 'package:cinder/pages/settings.dart';
+import 'package:mocozi/models/profileInfo.dart';
+import 'package:mocozi/pages/settings.dart';
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -20,7 +20,9 @@ class _DetailScreenState extends State<DetailScreen> {
     pics = widget.profileInfo.profilePics
         .map(
           (pic) => Hero(
-            child: Image(image: NetworkImage(pic), fit: BoxFit.fill),
+            child: Container(
+                height: 500,
+                child: Image(image: NetworkImage(pic), fit: BoxFit.cover)),
             tag: pic,
           ),
         )
@@ -33,20 +35,25 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: 0,
-          elevation: 0,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 0,
+        elevation: 0,
+      ),
+      body: ListView(children: [
+        pics[_currentPic],
+        FloatingActionButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("hi"),
+          heroTag: Text(widget.profileInfo.profilePics[_currentPic]),
         ),
-        body: Column(children: [
-          pics[_currentPic],
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("hi"),
-            heroTag: Text(widget.profileInfo.profilePics[_currentPic]),
-          ),
-        ]));
+        Container(height: 200, color: Colors.green),
+        Container(height: 200, color: Colors.red),
+        Container(height: 200, color: Colors.pink),
+        Container(height: 200, color: Colors.purple),
+      ]),
+    );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:cinder/pages/chatRoom.dart';
+import 'package:mocozi/pages/chatRoom.dart';
 import 'package:flutter/material.dart';
 
 class ChatListItem extends StatelessWidget {

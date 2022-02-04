@@ -1,6 +1,6 @@
-import 'package:cinder/models/profileInfo.dart';
-import 'package:cinder/pages/detail.dart';
-import 'package:cinder/widgets/outlineCircleButton.dart';
+import 'package:mocozi/models/profileInfo.dart';
+import 'package:mocozi/pages/detail.dart';
+import 'package:mocozi/widgets/outlineCircleButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -46,17 +46,26 @@ class SwipeableCardState extends State<SwipeableCard> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanDown: (DragDownDetails) {
-        print(DragDownDetails);
-      },
+    return Draggable(
+      childWhenDragging: Card(
+        elevation: 5,
+        child: Container(
+          child: pics![_currentPicIndex],
+        ),
+      ),
+      feedback: Card(
+        elevation: 5,
+        child: Container(
+          child: pics![_currentPicIndex],
+        ),
+      ),
       child: Card(
         elevation: 5,
         clipBehavior: Clip.none,
         child: Stack(
           children: [
             pics![_currentPicIndex],
-            /* 
+            /*
             buttons
            */
             Row(
@@ -89,6 +98,33 @@ class SwipeableCardState extends State<SwipeableCard> {
       ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Positioned(
+  //     child: Draggable(
+  //       childWhenDragging: Container(),
+  //       feedback: Card(
+  //         elevation: 12,
+  //         shape:
+  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+  //         child: Container(
+  //           width: 240,
+  //           height: 300,
+  //         ),
+  //       ),
+  //       child: Card(
+  //         elevation: 12,
+  //         shape:
+  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+  //         child: Container(
+  //           width: 240,
+  //           height: 300,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget info() {
     return GestureDetector(
@@ -152,62 +188,7 @@ class SwipeableCardState extends State<SwipeableCard> {
           color: Colors.black,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(4), bottomRight: Radius.circular(4))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          // OutlineCircleButton(
-          //   borderColor: Colors.yellow,
-          //   borderSize: 1.0,
-          //   radius: 40.0,
-          //   child: const Icon(
-          //     Icons.ac_unit,
-          //     color: Colors.yellow,
-          //   ),
-          //   onPressed: () {
-          //     // undo
-          //   },
-          // ),
-          OutlineCircleButton(
-              borderColor: Colors.red,
-              borderSize: 1.0,
-              radius: 50.0,
-              child: const Icon(
-                Icons.ac_unit,
-                color: Colors.red,
-              ),
-              onPressed: () => widget.onTapDislike()),
-          OutlineCircleButton(
-              borderColor: Colors.blue,
-              borderSize: 1.0,
-              radius: 40.0,
-              child: const Icon(
-                Icons.ac_unit,
-                color: Colors.blue,
-              ),
-              onPressed: () => widget.onTapSuperlike()),
-          OutlineCircleButton(
-              borderColor: Colors.green,
-              borderSize: 1.0,
-              radius: 50.0,
-              child: const Icon(
-                Icons.ac_unit,
-                color: Colors.green,
-              ),
-              onPressed: () => widget.onTapLike()),
-          // OutlineCircleButton(
-          //   borderColor: Colors.purple,
-          //   borderSize: 1.0,
-          //   radius: 40.0,
-          //   child: const Icon(
-          //     Icons.ac_unit,
-          //     color: Colors.purple,
-          //   ),
-          //   onPressed: () {
-          //     // boost
-          //   },
-          // ),
-        ],
-      ),
+      height: 50,
     );
   }
 

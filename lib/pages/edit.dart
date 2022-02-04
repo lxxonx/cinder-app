@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:cinder/utils/colors.dart';
-import 'package:cinder/utils/pickImage.dart';
-import 'package:cinder/widgets/textOpacityButton.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/utils/pickImage.dart';
+import 'package:mocozi/widgets/textOpacityButton.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

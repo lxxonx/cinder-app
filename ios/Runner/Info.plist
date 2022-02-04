@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>App</string>
+	<string>Mocozi</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,20 +27,20 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.898353166760-spn7o6aaj0krcmkhuc60qesrkuu0bv2q</string>
+				<string>com.googleusercontent.apps.1032011661026-vkkrec4t5hcsp1fkpdf4ho4i7ofdtu6l</string>
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera Usage</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone Usage</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo Library Usage</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -1,13 +1,14 @@
-import 'package:cinder/pages/chat.dart';
-import 'package:cinder/pages/explore.dart';
-import 'package:cinder/pages/home.dart';
-import 'package:cinder/pages/login.dart';
-import 'package:cinder/pages/onBoard.dart';
-import 'package:cinder/pages/profile.dart';
-import 'package:cinder/pages/signup.dart';
-import 'package:cinder/resources/auth_methods.dart';
-import 'package:cinder/utils/colors.dart';
-import 'package:cinder/utils/logo.dart';
+import 'package:mocozi/pages/chat.dart';
+import 'package:mocozi/pages/explore.dart';
+import 'package:mocozi/pages/heart.dart';
+import 'package:mocozi/pages/home.dart';
+import 'package:mocozi/pages/login.dart';
+import 'package:mocozi/pages/onBoard.dart';
+import 'package:mocozi/pages/profile.dart';
+import 'package:mocozi/pages/signup.dart';
+import 'package:mocozi/resources/auth_methods.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/utils/logo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,11 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getBool('onBoard');
   String? token = await AuthMethods().getCurrentUser();
-  runApp(Cinder());
+  runApp(Mocozi());
 }
 
-class Cinder extends StatelessWidget {
-  const Cinder({Key? key}) : super(key: key);
+class Mocozi extends StatelessWidget {
+  const Mocozi({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,16 @@ class Cinder extends StatelessWidget {
       theme: ThemeData(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: secondaryColor,
+          unselectedItemColor: Colors.blueGrey,
+          selectedItemColor: primaryColor,
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        ),
+        appBarTheme: AppBarTheme(
+            backgroundColor: secondaryColor,
             elevation: 0,
             iconTheme: IconThemeData(color: primaryColor)),
         pageTransitionsTheme: const PageTransitionsTheme(
@@ -79,15 +88,18 @@ class Navigation extends StatefulWidget {
 class NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  final List<Widget> _widgetOptions = <Widget>[
+  final _pageController = PageController();
+  final List<Widget> _pages = <Widget>[
     const HomeScreen(),
     ExploreScreen(),
-    const Text(
-      'Places',
-      style: TextStyle(fontSize: 30),
-    ),
+    HeartScreen(),
     ChatScreen()
   ];
+  void onPageChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,49 +115,39 @@ class NavigationState extends State<Navigation> {
             Navigator.of(context).push(_createRoute());
           },
         ),
-        title: Logo,
-        backgroundColor: Colors.white,
+        title: Logo(),
+        backgroundColor: secondaryColor,
         elevation: 0,
       ),
-      bottomNavigationBar: Theme(
-        data: ThemeData(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-        ),
-        child: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.explore),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.compass_calibration),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble),
-              label: "",
-            )
-          ],
-          unselectedItemColor: Colors.blueGrey,
-          selectedItemColor: primaryColor,
-          currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble),
+            label: "",
+          )
+        ],
+        onTap: (index) {
+          _pageController.jumpToPage(index);
+        },
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: PageView(
+        controller: _pageController,
+        children: _pages,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(), // No sliding
       ),
     );
   }

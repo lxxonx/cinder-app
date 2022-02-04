@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:cinder/resources/storage_methods.dart';
+import 'package:mocozi/resources/storage_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cinder/models/user.dart' as model;
+import 'package:mocozi/models/user.dart' as model;
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
@@ -102,26 +102,22 @@ class AuthMethods {
     await _auth.signOut();
   }
 
-  Future<String> googleSignIn() async {
-    final GoogleSignInAccount? account = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth = await account!.authentication;
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
     );
 
-    final UserCredential authResult =
-        await _auth.signInWithCredential(credential);
-    final User? user = authResult.user;
-
-    assert(!user!.isAnonymous);
-    assert(await user!.getIdToken() != null);
-
-    currentUser = _auth.currentUser;
-    assert(user!.uid == currentUser!.uid);
-
-    return "success";
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   void googleSignOut() async {

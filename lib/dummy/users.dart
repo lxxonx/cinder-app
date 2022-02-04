@@ -1,4 +1,4 @@
-import 'package:cinder/models/profileInfo.dart';
+import 'package:mocozi/models/profileInfo.dart';
 
 ProfileInfo user1 = const ProfileInfo(
     username: "lxxonx",

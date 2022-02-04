@@ -1,6 +1,7 @@
-import 'package:cinder/resources/auth_methods.dart';
-import 'package:cinder/utils/colors.dart';
-import 'package:cinder/widgets/TextInputField.dart';
+import 'package:mocozi/resources/auth_methods.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/utils/logo.dart';
+import 'package:mocozi/widgets/TextInputField.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool loading = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   void login() async {
@@ -25,12 +27,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void googleLogin() async {
-    String res = await AuthMethods().googleSignIn();
-    print(res);
-    if (res == "success") {
-      // show toast;
-      Navigator.pushNamed(context, "/home");
-    }
+    setState(() {
+      loading = true;
+    });
+    await AuthMethods().signInWithGoogle();
+    setState(() {
+      loading = false;
+    });
+    Navigator.pushNamed(context, "/home");
   }
 
   @override
@@ -47,14 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 2,
                 child: Container(),
               ),
-              const Text(
-                "cinder",
-                style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Logo(size: 34),
               const SizedBox(
                 height: 24,
               ),
@@ -98,16 +95,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(4.0)),
-                  child: const Center(
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    color: Colors.white10,
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.android),
+                      Text(
+                        "Login with Google",
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 onTap: () {
