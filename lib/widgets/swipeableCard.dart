@@ -31,6 +31,8 @@ class SwipeableCardState extends State<SwipeableCard> {
         .map((pic) => Hero(
             tag: pic,
             child: Container(
+              width: 500,
+              height: 500,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
                 image: DecorationImage(
@@ -46,85 +48,54 @@ class SwipeableCardState extends State<SwipeableCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Draggable(
-      childWhenDragging: Card(
-        elevation: 5,
-        child: Container(
-          child: pics![_currentPicIndex],
-        ),
-      ),
-      feedback: Card(
-        elevation: 5,
-        child: Container(
-          child: pics![_currentPicIndex],
-        ),
-      ),
-      child: Card(
-        elevation: 5,
-        clipBehavior: Clip.none,
-        child: Stack(
-          children: [
-            pics![_currentPicIndex],
-            /*
-            buttons
-           */
-            Row(
+    return Card(
+      elevation: 5,
+      clipBehavior: Clip.none,
+      child: Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 80),
+            child: ListView(
               children: [
-                Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        prevPic();
-                      },
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        nextPic();
-                      },
-                    )),
+                pics![_currentPicIndex],
+                Text("dathia"),
+                pics![_currentPicIndex],
+                Text("dathia")
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                info(),
-                buttons(),
-              ],
-            )
-          ],
-        ),
+          ),
+          /*
+          buttons
+         */
+          Row(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      prevPic();
+                    },
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      nextPic();
+                    },
+                  )),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              info(),
+              buttons(),
+            ],
+          )
+        ],
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Positioned(
-  //     child: Draggable(
-  //       childWhenDragging: Container(),
-  //       feedback: Card(
-  //         elevation: 12,
-  //         shape:
-  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  //         child: Container(
-  //           width: 240,
-  //           height: 300,
-  //         ),
-  //       ),
-  //       child: Card(
-  //         elevation: 12,
-  //         shape:
-  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  //         child: Container(
-  //           width: 240,
-  //           height: 300,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget info() {
     return GestureDetector(

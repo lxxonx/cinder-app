@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mocozi</string>
+	<string>mocozi</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -20,23 +20,6 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.1032011661026-vkkrec4t5hcsp1fkpdf4ho4i7ofdtu6l</string>
-			</array>
-		</dict>
-	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>Camera Usage</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone Usage</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo Library Usage</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
