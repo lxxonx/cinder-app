@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Group {
-  late int uid;
+  late String uid;
   late String groupName;
-  late List<String> pics;
-  late Timestamp createTime;
+  late List<dynamic> pics;
+  late String createTime;
   late String bio;
   Group({
     uid,

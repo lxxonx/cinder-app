@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:mocozi/resources/storage_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mocozi/models/user.dart' as model;
+// import 'package:mocozi/models/user.dart' as model;
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
@@ -33,26 +33,24 @@ class AuthMethods {
           password: password,
         );
 
-        model.User _user = model.User(
-          username: username,
-          uid: cred.user!.uid,
-          uni: uni,
-          dep: dep,
-          email: email,
-          bio: "",
-          profilePics: [],
-          friends: [],
-          friendsReq: [],
-          likeTo: [],
-          likeFrom: [],
-          saves: [],
-        );
+        // model.User _user = model.User(
+        //   username: username,
+        //   uid: cred.user!.uid,
+        //   uni: uni,
+        //   dep: dep,
+        //   email: email,
+        //   bio: "",
+        //   profilePics: [],
+        //   friends: [],
+        //   friendsReq: [],
+        //   likeTo: [],
+        //   likeFrom: [],
+        //   saves: [],
+        // );
 
         // adding user in our database
-        await _firestore
-            .collection("users")
-            .doc(cred.user!.uid)
-            .set(_user.toJson());
+        await _firestore.collection("users").doc(cred.user!.uid);
+        // .set(_user.toJson());
 
         res = "success";
       } else {

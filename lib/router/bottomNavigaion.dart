@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mocozi/pages/chat.dart';
 import 'package:mocozi/pages/explore.dart';
 import 'package:mocozi/pages/heart.dart';
-import 'package:mocozi/pages/home.dart';
+import 'package:mocozi/app/views/screens/card_screen.dart';
 import 'package:mocozi/pages/login.dart';
 import 'package:mocozi/pages/onBoard.dart';
 import 'package:mocozi/pages/profile.dart';
@@ -78,7 +78,7 @@ class NavigationState extends State<Navigation> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final _pageController = PageController();
   final List<Widget> _pages = <Widget>[
-    const HomeScreen(),
+    CardScreen(),
     ExploreScreen(),
     HeartScreen(),
     ChatScreen()

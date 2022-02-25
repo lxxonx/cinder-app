@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:mocozi/app/controller/group_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,7 +18,9 @@ class HomePage extends StatelessWidget {
             icon: Icon(
               Icons.shopping_cart,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed("/cart");
+            },
           )
         ],
       ),
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(
             child: Obx(() {
-              print(groupController.groupList.value);
+              print(groupController.groupList);
               if (groupController.isLoading.value)
                 return Center(child: CircularProgressIndicator());
               else

@@ -1,6 +1,6 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
-import 'package:mocozi/app/model/group.dart';
+import 'package:mocozi/app/models/group.dart';
 import 'package:mocozi/app/services/remote_services.dart';
 
 class GroupController extends GetxController {
@@ -9,11 +9,11 @@ class GroupController extends GetxController {
 
   @override
   void onInit() {
-    fetchProducts();
+    fetchGroups();
     super.onInit();
   }
 
-  void fetchProducts() async {
+  void fetchGroups() async {
     try {
       isLoading(true);
       var groups = await RemoteServices.fetchGroups();
