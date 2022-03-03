@@ -9,6 +9,8 @@ class CardController extends GetxController {
   var isLoading = true.obs;
   var cards = <SwipeItem>[].obs;
   var groupList = <Group>[].obs;
+  var currentIndex = 0.obs;
+
   @override
   void onInit() {
     fetchGroups();
@@ -19,7 +21,8 @@ class CardController extends GetxController {
     try {
       isLoading(true);
       var groups = await RemoteServices.fetchGroups();
-      if (groups == []) return;
+      print("groups: " + groups.length.toString());
+      if (groups.length == 0) return;
 
       groupList.value = groups;
       List<SwipeItem> _swipeItems = <SwipeItem>[];

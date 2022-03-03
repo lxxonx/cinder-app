@@ -1,74 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/app/controller/group_controller.dart';
+import 'package:mocozi/app/controller/nav_controller.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/utils/logo.dart';
 
 class HomePage extends StatelessWidget {
-  final GroupController groupController = Get.put(GroupController());
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: Icon(
-          Icons.arrow_back_ios,
-        ),
-        actions: [
-          IconButton(
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
             icon: Icon(
-              Icons.shopping_cart,
+              Icons.person,
+              color: primaryColor,
             ),
             onPressed: () {
-              Get.toNamed("/cart");
+              // go to profile
+              Get.toNamed("/profile");
             },
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'ShopX',
-                    style: TextStyle(
-                        fontFamily: 'avenir',
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900),
-                  ),
-                ),
-                IconButton(
-                    icon: Icon(Icons.view_list_rounded), onPressed: () {}),
-                IconButton(icon: Icon(Icons.grid_view), onPressed: () {}),
-              ],
-            ),
           ),
-          Expanded(
-            child: Obx(() {
-              print(groupController.groupList);
-              if (groupController.isLoading.value)
-                return Center(child: CircularProgressIndicator());
-              else
-                // return StaggeredGridView.countBuilder(
-                //   crossAxisCount: 2,
-                //   itemCount: groupController.productList.length,
-                //   crossAxisSpacing: 16,
-                //   mainAxisSpacing: 16,
-                //   itemBuilder: (context, index) {
-                //     return ProductTile(groupController.productList[index]);
-                //   },
-                //   staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                // );
-                return ListView(
-                  children: groupController.groupList.map((group) {
-                    return Text(group.bio);
-                  }).toList(),
-                );
-            }),
-          )
-        ],
+          title: Logo(),
+          backgroundColor: secondaryColor,
+          elevation: 0,
+        ),
+        body: Get.put(NavController()).currentPage,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: Get.put(NavController()).currentIndex.value,
+          onTap: Get.put(NavController()).changePage,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.explore),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble),
+              label: "",
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,6 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
+import 'package:mocozi/app/controller/auth_controller.dart';
 import 'package:mocozi/app/routes/routes.dart';
 import 'package:mocozi/app/views/pages/home_page.dart';
 import 'package:mocozi/resources/auth_methods.dart';
@@ -7,18 +9,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mocozi/utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-bool? isViewed;
+import 'package:get/get.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  // isViewed = prefs.getBool('onBoard');
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await dotenv.load(fileName: ".env");
+  Get.put<AuthController>(AuthController());
+
   runApp(GetMaterialApp(
-      initialRoute: '/',
+      initialRoute: "/",
       getPages: routes,
+      debugShowCheckedModeBanner: false,
+      navigatorObservers: [
+        // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+      ],
       theme: ThemeData(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,

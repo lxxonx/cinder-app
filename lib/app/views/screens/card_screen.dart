@@ -1,17 +1,12 @@
 import 'dart:convert';
 
 import 'package:mocozi/app/controller/card_controller.dart';
-import 'package:mocozi/app/controller/group_controller.dart';
 import 'package:mocozi/app/models/group.dart';
-import 'package:mocozi/models/profileInfo.dart';
+import 'package:mocozi/app/views/components/swipeable_card.dart';
 import 'package:mocozi/utils/colors.dart';
 import 'package:mocozi/widgets/outlineCircleButton.dart';
 import 'package:mocozi/widgets/swipeableCard.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 
@@ -136,7 +131,8 @@ class CardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (_cardController.isLoading.value)
+      if (_cardController.isLoading.value == true ||
+          _cardController.groupList.value.length == 0)
         return Center(child: CircularProgressIndicator());
       else {
         var _matchEngine = MatchEngine(
@@ -153,20 +149,21 @@ class CardScreen extends StatelessWidget {
           child: SwipeCards(
             matchEngine: _matchEngine,
             itemBuilder: (BuildContext context, int index) {
-              return Container(
-                color: Colors.blue,
-                alignment: Alignment.center,
-                child: Text(
-                  _cardController.groupList[index].groupName,
-                  style: TextStyle(fontSize: 100),
-                ),
-              );
+              // return Container(
+              //   color: Colors.blue,
+              //   alignment: Alignment.center,
+              //   child: Text(
+              //     _cardController.groupList[index].groupname,
+              //     style: TextStyle(fontSize: 100),
+              //   ),
+              // );
+              return SwipeCard();
             },
             onStackFinished: () {
               print("finished");
             },
             itemChanged: (SwipeItem item, int index) {
-              print("item: ${item.content.groupName}, index: $index");
+              print("item: ${item.content.groupname}, index: $index");
             },
             upSwipeAllowed: false,
             fillSpace: false,

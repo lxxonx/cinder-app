@@ -8,27 +8,37 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mocozi/app/models/user.dart';
 import 'package:mocozi/resources/auth_methods.dart';
 
-class RemoteServices {
+class AuthServices {
   static var client = http.Client();
 
   static var env = dotenv.env['ENV'] ?? 'dev';
 
-  static var token = AuthMethods().getCurrentUser();
-
-  static Future<List<Group>> fetchGroups() async {
+  static Future<User> register({
+    uid: String,
+    email = String,
+    password = String,
+    username = String,
+    uni = String,
+    dep = String,
+  }) async {
     Uri url = env == 'dev'
         ? (Platform.isAndroid
-            ? Uri.parse('http://10.0.2.2:8080/api/groups')
-            : Uri.parse('http://192.168.9.174:8080/api/groups'))
+            ? Uri.parse('http://10.0.2.2:8080/api/users/signup')
+            : Uri.parse('http://192.168.9.174:8080/api/users/signup'))
         : Uri.parse("some url");
-    var response = await client.get(url);
+    var response = await client.post(url, body: {
+      'uid': uid,
+      'email': email,
+      'password': password,
+      'username': username,
+      'uni': uni,
+      'dep': dep,
+    });
     if (response.statusCode >= 200 && response.statusCode < 300) {
       var clientResponse = json.decode(response.body.toString());
       ClientResponse cr = ClientResponse.fromJson(clientResponse);
-      var groups = cr.data["groups"];
-      List<dynamic> ds = groups.map((model) => Group.fromJson(model)).toList();
-      List<Group> groupList = List<Group>.from(ds);
-      return groupList;
+      var me = User.fromJson(cr.data["me"]);
+      return me;
     } else {
       throw Exception('Failed to load groups');
     }

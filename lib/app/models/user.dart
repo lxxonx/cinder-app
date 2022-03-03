@@ -4,14 +4,13 @@ class User {
   // final String uid;
   // final String email;
   final String username;
-  final String bio;
+  final String? bio;
   final String uni;
   final String dep; //
   // final List friends;
   // final List friendsReq;
   // final List likeTo;
   // final List likeFrom;
-  final List profilePics;
   // final List saves;
 
   const User({
@@ -25,26 +24,22 @@ class User {
     // required this.friendsReq,
     // required this.likeTo,
     // required this.likeFrom,
-    required this.profilePics,
     // required this.saves,
   });
 
-  static User fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
-
+  static User fromJson(Map<String, dynamic> json) {
     return User(
-      username: snapshot["username"],
-      // uid: snapshot["uid"],
-      // email: snapshot["email"],
-      bio: snapshot["bio"],
-      uni: snapshot["uni"],
-      dep: snapshot["dep"],
-      // friends: snapshot["friends"],
-      // friendsReq: snapshot["friendsReq"],
-      // likeTo: snapshot["likeTo"],
-      // likeFrom: snapshot["likeFrom"],
-      profilePics: snapshot["profilePics"],
-      // saves: snapshot["saves"],
+      username: json["username"],
+      // uid: json["uid"],
+      // email: json["email"],
+      bio: json["bio"],
+      uni: json["uni"],
+      dep: json["dep"],
+      // friends: json["friends"],
+      // friendsReq: json["friendsReq"],
+      // likeTo: json["likeTo"],
+      // likeFrom: json["likeFrom"],
+      // saves: json["saves"],
     );
   }
 
@@ -59,7 +54,6 @@ class User {
         // "friendsReq": friendsReq,
         // "likeTo": likeTo,
         // "likeFrom": likeFrom,
-        "profilePics": profilePics,
         // "saves": saves,
       };
 }

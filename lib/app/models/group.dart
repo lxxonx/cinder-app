@@ -1,34 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mocozi/app/models/user.dart';
 
 class Group {
   late String uid;
-  late String groupName;
-  late List<dynamic> pics;
-  late String createTime;
+  late String groupname;
+  late String createdAt;
   late String bio;
+  late List<User> members;
   Group({
     uid,
     groupName,
-    pics,
     createTime,
     bio,
+    members,
   });
 
   Group.fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
-    groupName = json['groupName'];
-    pics = json['pics'];
+    groupname = json['groupname'];
     bio = json['bio'];
-    createTime = json['createTime'];
+    createdAt = json['createdAt'];
+    var mem = json['edges']['members'];
+    List<dynamic> ds = mem.map((model) => User.fromJson(model)).toList();
+    members = List<User>.from(ds);
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['uid'] = uid;
-    data['groupName'] = groupName;
-    data['pics'] = pics;
-    data['createTime'] = createTime;
+    data['groupname'] = groupname;
+    data['createdAt'] = createdAt;
     data['bio'] = bio;
+    data['members'] = members;
     return data;
   }
 }
