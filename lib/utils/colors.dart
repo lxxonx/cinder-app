@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Color primaryColor = Colors.black87;
+// 5f4a8b ultra violet
+const Color primaryColor = const Color(0xff5f4a8b);
 const Color secondaryColor = Colors.white;
 const Color backgroundColor = Colors.red;

@@ -91,15 +91,9 @@ class LoginPage extends StatelessWidget {
                 height: 24,
               ),
               TextInputField(
-                hintText: "email",
-                controller: authController.emailController,
+                hintText: "username",
+                controller: authController.phoneController,
                 keyboardType: TextInputType.text,
-              ),
-              TextInputField(
-                hintText: "password",
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                controller: authController.passwordController,
               ),
               InkWell(
                 child: Container(
@@ -121,7 +115,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 onTap: () {
                   // login
-                  authController.Login();
+                  authController.signUpWithPhoneNumber();
                 },
               ),
               InkWell(
@@ -139,7 +133,7 @@ class LoginPage extends StatelessWidget {
                     children: [
                       Icon(Icons.android),
                       Text(
-                        "Login with Google",
+                        "계정 만들기",
                         style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
@@ -150,7 +144,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 onTap: () {
                   // login
-                  authController.signInWithGoogle();
+                  authController.signUpWithGoogle();
                 },
               ),
               Flexible(child: Container(), flex: 2),

@@ -144,15 +144,15 @@ class SwipeCard extends StatelessWidget {
                 color: Colors.red,
               ),
               onPressed: () => {}),
-          OutlineCircleButton(
-              borderColor: Colors.blue,
-              borderSize: 1.0,
-              radius: 40.0,
-              child: const Icon(
-                Icons.star,
-                color: Colors.blue,
-              ),
-              onPressed: () => {}),
+          // OutlineCircleButton(
+          //     borderColor: Colors.blue,
+          //     borderSize: 1.0,
+          //     radius: 40.0,
+          //     child: const Icon(
+          //       Icons.star,
+          //       color: Colors.blue,
+          //     ),
+          //     onPressed: () => {}),
           OutlineCircleButton(
               borderColor: Colors.green,
               borderSize: 1.0,
