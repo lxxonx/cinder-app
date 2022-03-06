@@ -1,12 +1,12 @@
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:mocozi/app/models/group.dart';
-import 'package:mocozi/app/services/remote_services.dart';
+import 'package:mocozi/app/services/group_services.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 class CardController extends GetxController {
-  var isLoading = true.obs;
+  var isLoading = false.obs;
+  var hasMore = true.obs;
   var cards = <SwipeItem>[].obs;
   var groupList = <Group>[].obs;
   var currentIndex = 0.obs;
@@ -20,9 +20,13 @@ class CardController extends GetxController {
   void fetchGroups() async {
     try {
       isLoading(true);
-      var groups = await RemoteServices.fetchGroups();
+      var groups = await GroupServices.fetchGroups();
       print("groups: " + groups.length.toString());
-      if (groups.length == 0) return;
+      if (groups.isEmpty) {
+        isLoading(false);
+        hasMore(false);
+        return;
+      }
 
       groupList.value = groups;
       List<SwipeItem> _swipeItems = <SwipeItem>[];

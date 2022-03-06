@@ -6,14 +6,14 @@ import 'package:mocozi/widgets/textInputField.dart';
 import 'package:mocozi/widgets/textOpacityButton.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
-  ChatScreen({Key? key}) : super(key: key);
+class ChatPageScreen extends StatefulWidget {
+  ChatPageScreen({Key? key}) : super(key: key);
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _ChatPageScreenState createState() => _ChatPageScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen>
+class _ChatPageScreenState extends State<ChatPageScreen>
     with AutomaticKeepAliveClientMixin {
   String tap = "chat";
   final TextEditingController _friendInputController = TextEditingController();

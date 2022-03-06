@@ -1,4 +1,4 @@
-class User {
+class Friend {
   // final String uid;
   // final String email;
   final String username;
@@ -8,15 +8,13 @@ class User {
   final String dep; //
   final String gender;
   final int birthYear;
-  final bool? isVerified;
-  final String status;
   // final List friends;
   // final List friendsReq;
   // final List likeTo;
   // final List likeFrom;
   // final List saves;
 
-  const User({
+  const Friend({
     required this.username,
     required this.actualName,
     // required this.uid,
@@ -26,8 +24,6 @@ class User {
     required this.dep,
     required this.gender,
     required this.birthYear,
-    required this.isVerified,
-    required this.status,
     // required this.friends,
     // required this.friendsReq,
     // required this.likeTo,
@@ -35,8 +31,8 @@ class User {
     // required this.saves,
   });
 
-  static User fromJson(Map<String, dynamic> json) {
-    return User(
+  static Friend fromJson(Map<String, dynamic> json) {
+    return Friend(
       username: json["username"],
       actualName: json["actual_name"],
       // uid: json["uid"],
@@ -46,8 +42,6 @@ class User {
       dep: json["dep"],
       birthYear: json["birth_year"],
       gender: json["gender"],
-      isVerified: json["is_verified"],
-      status: json["status"],
       // createdAt: json["created_at"],
       // friends: json["friends"],
       // friendsReq: json["friendsReq"],
@@ -66,8 +60,6 @@ class User {
     data["dep"] = dep;
     data["birth_year"] = birthYear;
     data["gender"] = gender;
-    data["is_verified"] = isVerified;
-    data["status"] = status;
     return data;
   }
 }

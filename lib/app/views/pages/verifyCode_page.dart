@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/app/controller/auth_controller.dart';
+import 'package:mocozi/app/controller/phoneVerify_controller.dart';
 import 'package:mocozi/utils/colors.dart';
 import 'package:mocozi/widgets/textOpacityButton.dart';
 
 class VerifyCodePage extends StatelessWidget {
-  final AuthController _authController = AuthController.to;
+  final PhoneVerifyController _phoneVerifyController =
+      Get.find(tag: "phoneVerify");
   static const double dist = 3.0;
 
   VerifyCodePage({Key? key}) : super(key: key);
@@ -30,13 +31,13 @@ class VerifyCodePage extends StatelessWidget {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.number,
             enabled: true,
-            controller: _authController.controller1,
+            controller: _phoneVerifyController.controller1,
             autofocus: true,
-            focusNode: _authController.controller1fn,
+            focusNode: _phoneVerifyController.controller1fn,
             onChanged: (ct) {
               if (ct.length > 0) {
-                _fieldFocusChange(context, _authController.controller1fn,
-                    _authController.controller2fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller1fn,
+                    _phoneVerifyController.controller2fn);
               }
             },
             textAlign: TextAlign.center,
@@ -54,18 +55,18 @@ class VerifyCodePage extends StatelessWidget {
             keyboardType: TextInputType.number,
             onChanged: (ct) {
               if (ct.length > 0) {
-                _fieldFocusChange(context, _authController.controller2fn,
-                    _authController.controller3fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller2fn,
+                    _phoneVerifyController.controller3fn);
               } else if (ct.length == 0) {
-                _fieldFocusChange(context, _authController.controller2fn,
-                    _authController.controller1fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller2fn,
+                    _phoneVerifyController.controller1fn);
               }
             },
             inputFormatters: [
               LengthLimitingTextInputFormatter(1),
             ],
-            controller: _authController.controller2,
-            focusNode: _authController.controller2fn,
+            controller: _phoneVerifyController.controller2,
+            focusNode: _phoneVerifyController.controller2fn,
             enabled: true,
             textAlign: TextAlign.center,
             // style: TextStyle(
@@ -80,11 +81,11 @@ class VerifyCodePage extends StatelessWidget {
           child: TextField(
             onChanged: (ct) {
               if (ct.length > 0) {
-                _fieldFocusChange(context, _authController.controller3fn,
-                    _authController.controller4fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller3fn,
+                    _phoneVerifyController.controller4fn);
               } else if (ct.length == 0) {
-                _fieldFocusChange(context, _authController.controller3fn,
-                    _authController.controller2fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller3fn,
+                    _phoneVerifyController.controller2fn);
               }
             },
             inputFormatters: [
@@ -92,8 +93,8 @@ class VerifyCodePage extends StatelessWidget {
             ],
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
-            controller: _authController.controller3,
-            focusNode: _authController.controller3fn,
+            controller: _phoneVerifyController.controller3,
+            focusNode: _phoneVerifyController.controller3fn,
             textAlign: TextAlign.center,
             enabled: true,
             // style: TextStyle(
@@ -108,11 +109,11 @@ class VerifyCodePage extends StatelessWidget {
           child: TextField(
             onChanged: (ct) {
               if (ct.length > 0) {
-                _fieldFocusChange(context, _authController.controller4fn,
-                    _authController.controller5fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller4fn,
+                    _phoneVerifyController.controller5fn);
               } else if (ct.length == 0) {
-                _fieldFocusChange(context, _authController.controller4fn,
-                    _authController.controller3fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller4fn,
+                    _phoneVerifyController.controller3fn);
               }
             },
             inputFormatters: [
@@ -121,8 +122,8 @@ class VerifyCodePage extends StatelessWidget {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
-            controller: _authController.controller4,
-            focusNode: _authController.controller4fn,
+            controller: _phoneVerifyController.controller4,
+            focusNode: _phoneVerifyController.controller4fn,
             enabled: true,
             // style: TextStyle(
             //     fontSize: appDimens.text24, color: AppColors.greyText),
@@ -136,11 +137,11 @@ class VerifyCodePage extends StatelessWidget {
           child: TextField(
             onChanged: (ct) {
               if (ct.length > 0) {
-                _fieldFocusChange(context, _authController.controller5fn,
-                    _authController.controller6fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller5fn,
+                    _phoneVerifyController.controller6fn);
               } else if (ct.length == 0) {
-                _fieldFocusChange(context, _authController.controller5fn,
-                    _authController.controller4fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller5fn,
+                    _phoneVerifyController.controller4fn);
               }
             },
             inputFormatters: [
@@ -148,8 +149,8 @@ class VerifyCodePage extends StatelessWidget {
             ],
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
-            controller: _authController.controller5,
-            focusNode: _authController.controller5fn,
+            controller: _phoneVerifyController.controller5,
+            focusNode: _phoneVerifyController.controller5fn,
             textAlign: TextAlign.center,
             enabled: true,
             // style: TextStyle(
@@ -164,8 +165,8 @@ class VerifyCodePage extends StatelessWidget {
           child: TextField(
             onChanged: (ct) {
               if (ct.length == 0) {
-                _fieldFocusChange(context, _authController.controller6fn,
-                    _authController.controller5fn);
+                _fieldFocusChange(context, _phoneVerifyController.controller6fn,
+                    _phoneVerifyController.controller5fn);
               }
             },
             inputFormatters: [
@@ -174,8 +175,8 @@ class VerifyCodePage extends StatelessWidget {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.done,
-            controller: _authController.controller6,
-            focusNode: _authController.controller6fn,
+            controller: _phoneVerifyController.controller6,
+            focusNode: _phoneVerifyController.controller6fn,
             enabled: true,
             // style: TextStyle(
             //     fontSize: appDimens.text24, color: AppColors.greyText),
@@ -206,7 +207,7 @@ class VerifyCodePage extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(right: 8),
-                    child: Text(_authController.phoneNumber,
+                    child: Text(_phoneVerifyController.phoneNumber,
                         style: TextStyle(fontSize: 16)),
                   ),
                   TextOpacityButton(
@@ -268,14 +269,26 @@ class VerifyCodePage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: _authController.hasPhoneNumber.value == false
-                      ? Colors.black12
-                      : primaryColor,
+                  color:
+                      (_phoneVerifyController.controller1.text.trim() == "" ||
+                              _phoneVerifyController.controller2.text.trim() ==
+                                  "" ||
+                              _phoneVerifyController.controller3.text.trim() ==
+                                  "" ||
+                              _phoneVerifyController.controller4.text.trim() ==
+                                  "" ||
+                              _phoneVerifyController.controller5.text
+                                      .trim() ==
+                                  "" ||
+                              _phoneVerifyController.controller6.text.trim() ==
+                                  "")
+                          ? Colors.black12
+                          : primaryColor,
                   borderRadius: BorderRadius.circular(4.0),
                   border: Border.all(color: Colors.white, width: 1),
                 ),
                 child: Center(
-                  child: _authController.isLoading.value
+                  child: _phoneVerifyController.isLoading.value
                       ? CircularProgressIndicator()
                       : Text(
                           "계속하기",
@@ -287,7 +300,7 @@ class VerifyCodePage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                return _authController.verifyCode();
+                return _phoneVerifyController.verifyCode();
               }
               // call phone verify func
 

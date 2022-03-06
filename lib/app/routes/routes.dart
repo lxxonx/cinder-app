@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:mocozi/app/views/pages/home_page.dart';
+import 'package:mocozi/app/views/pages/edit_page.dart';
 import 'package:mocozi/app/views/pages/home_page.dart';
 import 'package:mocozi/app/views/pages/login_page.dart';
+import 'package:mocozi/app/views/pages/setting_page.dart';
 import 'package:mocozi/app/views/pages/signup_page.dart';
 import 'package:mocozi/app/views/pages/splash_page.dart';
 import 'package:mocozi/app/views/pages/verifyCode_page.dart';
@@ -24,12 +25,8 @@ var routes = [
     page: () => ExploreScreen(),
   ),
   GetPage(
-    name: '/profile',
-    page: () => ProfileScreen(name: "lxxlxx"),
-    transition: Transition.leftToRight,
-    curve: Curves.ease,
-    preventDuplicates: true,
-    popGesture: false,
+    name: '/signUp',
+    page: () => SignupPage(),
   ),
   GetPage(
     name: '/login',
@@ -51,6 +48,22 @@ var routes = [
     name: '/verifyCode',
     page: () => VerifyCodePage(),
     transition: Transition.rightToLeftWithFade,
+    curve: Curves.ease,
+    preventDuplicates: true,
+    popGesture: false,
+  ),
+  GetPage(
+    name: '/edit',
+    page: () => EditPage(),
+    transition: Transition.downToUp,
+    curve: Curves.ease,
+    preventDuplicates: true,
+    popGesture: false,
+  ),
+  GetPage(
+    name: '/settings',
+    page: () => SettingPage(),
+    transition: Transition.downToUp,
     curve: Curves.ease,
     preventDuplicates: true,
     popGesture: false,

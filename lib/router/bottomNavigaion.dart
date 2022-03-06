@@ -11,7 +11,6 @@ import 'package:mocozi/pages/profile.dart';
 import 'package:mocozi/pages/signup.dart';
 import 'package:mocozi/utils/colors.dart';
 import 'package:mocozi/utils/logo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
 class Mocozi extends StatelessWidget {
@@ -81,7 +80,7 @@ class NavigationState extends State<Navigation> {
     CardScreen(),
     ExploreScreen(),
     HeartScreen(),
-    ChatScreen()
+    ChatPageScreen()
   ];
   void onPageChanged(int index) {
     setState(() {

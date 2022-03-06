@@ -1,6 +1,9 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
 import 'package:mocozi/app/controller/auth_controller.dart';
+import 'package:mocozi/app/controller/cam_controller.dart';
+import 'package:mocozi/app/controller/friend_controller.dart';
+import 'package:mocozi/app/controller/nav_controller.dart';
 import 'package:mocozi/app/routes/routes.dart';
 import 'package:mocozi/app/views/pages/home_page.dart';
 import 'package:mocozi/resources/auth_methods.dart';
@@ -15,7 +18,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
+
   Get.put<AuthController>(AuthController());
+  Get.put<FriendController>(FriendController());
+  Get.put<CamController>(CamController());
 
   runApp(GetMaterialApp(
       initialRoute: "/",

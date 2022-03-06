@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:mocozi/app/controller/auth_controller.dart';
+import 'package:mocozi/app/views/pages/edit_page.dart';
 import 'package:mocozi/pages/edit.dart';
 import 'package:mocozi/pages/settings.dart';
 import 'package:mocozi/widgets/circleButton.dart';
@@ -6,9 +8,9 @@ import 'package:mocozi/widgets/circleImage.dart';
 import 'package:mocozi/widgets/circleProfile.dart';
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
-
+class ProfilePage extends StatelessWidget {
+  ProfilePage({Key? key}) : super(key: key);
+  AuthController _authController = AuthController.to;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +33,14 @@ class ProfileScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         // Navigator.of(context).push(_openEdit("preview"));
-                        Get.off(ProfileEditScreen(state: "preview"));
+                        Get.to(EditPage());
                       },
                       child: const CircleProfile(
                           image: NetworkImage(
                               "https://www.acumarketing.com/acupuncture-websites/wp-content/uploads/2020/01/anonymous-avatar-sm.jpg")),
                     ),
                     Text(
-                      "name",
+                      _authController.curUser.value!.actualName,
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -51,14 +53,14 @@ class ProfileScreen extends StatelessWidget {
                         CircleButton(
                           onPressed: () {
                             // Navigator.of(context).push(_openSettings());
-                            Get.off(SettingsScreen());
+                            Get.toNamed('/settings');
                           },
                           child: Icon(Icons.settings),
                         ),
                         CircleButton(
                           onPressed: () {
                             // Navigator.of(context).push(_openEdit("edit"));
-                            Get.off(ProfileEditScreen(state: "edit"));
+                            Get.toNamed('/edit');
                           },
                           child: Icon(Icons.edit),
                         ),
@@ -70,10 +72,11 @@ class ProfileScreen extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                  color: Colors.blueGrey,
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Center(child: Text("광고 자리"))),
+                color: Colors.blueGrey,
+                height: double.infinity,
+                width: double.infinity,
+                // child: Center(child: Text("광고 자리")),
+              ),
             )
           ],
         ),

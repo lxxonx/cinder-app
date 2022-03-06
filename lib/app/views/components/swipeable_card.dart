@@ -1,11 +1,10 @@
-import 'package:mocozi/pages/detail.dart';
-import 'package:mocozi/widgets/outlineCircleButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:mocozi/app/models/group.dart';
 
 class SwipeCard extends StatelessWidget {
-  const SwipeCard({Key? key}) : super(key: key);
+  SwipeCard({Key? key, required this.group}) : super(key: key);
 
+  Group group;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -135,33 +134,7 @@ class SwipeCard extends StatelessWidget {
           //     // undo
           //   },
           // ),
-          OutlineCircleButton(
-              borderColor: Colors.red,
-              borderSize: 1.0,
-              radius: 50.0,
-              child: const Icon(
-                Icons.not_interested,
-                color: Colors.red,
-              ),
-              onPressed: () => {}),
-          // OutlineCircleButton(
-          //     borderColor: Colors.blue,
-          //     borderSize: 1.0,
-          //     radius: 40.0,
-          //     child: const Icon(
-          //       Icons.star,
-          //       color: Colors.blue,
-          //     ),
-          //     onPressed: () => {}),
-          OutlineCircleButton(
-              borderColor: Colors.green,
-              borderSize: 1.0,
-              radius: 50.0,
-              child: const Icon(
-                Icons.favorite,
-                color: Colors.green,
-              ),
-              onPressed: () => {}),
+
           // OutlineCircleButton(
           //   borderColor: Colors.purple,
           //   borderSize: 1.0,

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:mocozi/app/models/user.dart';
 
 class Group {
@@ -7,6 +7,7 @@ class Group {
   late String createdAt;
   late String bio;
   late List<User> members;
+  late List<ImageProvider?> pics;
   Group({
     uid,
     groupName,

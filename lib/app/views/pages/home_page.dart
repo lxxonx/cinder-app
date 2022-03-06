@@ -1,40 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mocozi/app/controller/nav_controller.dart';
+import 'package:mocozi/app/views/pages/profile_page.dart';
 import 'package:mocozi/utils/colors.dart';
 import 'package:mocozi/utils/logo.dart';
 
 class HomePage extends StatelessWidget {
+  HomePage({Key? key}) : super(key: key);
+  final NavController _nav = Get.put(NavController());
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.person,
-              color: primaryColor,
+            leading: IconButton(
+              icon: Icon(
+                Icons.person,
+                color: primaryColor,
+              ),
+              onPressed: () {
+                // go to profile
+                Get.to(ProfilePage());
+              },
             ),
-            onPressed: () {
-              // go to profile
-              Get.toNamed("/profile");
-            },
-          ),
-          title: Logo(),
-          backgroundColor: secondaryColor,
-          elevation: 0,
-        ),
-        body: Get.put(NavController()).currentPage,
+            title: Logo(),
+            backgroundColor: secondaryColor,
+            elevation: 0,
+            actions: [
+              IconButton(icon: Icon(Icons.notifications), onPressed: () {})
+            ]),
+        body: _nav.currentPage,
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: Get.put(NavController()).currentIndex.value,
-          onTap: Get.put(NavController()).changePage,
+          currentIndex: _nav.currentIndex.value,
+          onTap: _nav.changePage,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.explore),
+              icon: Icon(Icons.people),
               label: "",
             ),
             BottomNavigationBarItem(

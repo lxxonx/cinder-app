@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mocozi/app/controller/auth_controller.dart';
+import 'package:mocozi/app/controller/phoneVerify_controller.dart';
 import 'package:mocozi/utils/colors.dart';
 
 class VerifyPhonePage extends StatelessWidget {
-  final AuthController _authController = AuthController.to;
+  final PhoneVerifyController _phoneVerifyController =
+      Get.put(PhoneVerifyController(), tag: "phoneVerify");
   VerifyPhonePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -43,11 +45,11 @@ class VerifyPhonePage extends StatelessWidget {
                 ),
                 onChanged: (value) {
                   value.isEmpty
-                      ? _authController.hasPhoneNumber.value = false
-                      : _authController.hasPhoneNumber.value = true;
+                      ? _phoneVerifyController.hasPhoneNumber.value = false
+                      : _phoneVerifyController.hasPhoneNumber.value = true;
                 },
                 keyboardType: TextInputType.number,
-                controller: _authController.phoneController,
+                controller: _phoneVerifyController.phoneController,
               ),
             ),
             Container(
@@ -65,15 +67,15 @@ class VerifyPhonePage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: _authController.hasPhoneNumber.value == false ||
-                          _authController.isLoading.value == true
+                  color: _phoneVerifyController.hasPhoneNumber.value == false ||
+                          _phoneVerifyController.isLoading.value == true
                       ? Colors.black12
                       : primaryColor,
                   borderRadius: BorderRadius.circular(4.0),
                   border: Border.all(color: Colors.white, width: 1),
                 ),
                 child: Center(
-                  child: _authController.isLoading.value
+                  child: _phoneVerifyController.isLoading.value
                       ? CircularProgressIndicator()
                       : Text(
                           "계속하기",
@@ -85,8 +87,8 @@ class VerifyPhonePage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                if (_authController.hasPhoneNumber.value == true) {
-                  return _authController.signUpWithPhoneNumber();
+                if (_phoneVerifyController.hasPhoneNumber.value == true) {
+                  return _phoneVerifyController.signUpWithPhoneNumber();
                 } else {
                   return;
                 }

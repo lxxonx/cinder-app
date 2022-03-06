@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'dart:core';
 import 'package:get/get.dart';
 import 'package:mocozi/app/controller/auth_controller.dart';
-import 'package:mocozi/app/controller/welcome_controller.dart';
 import 'package:mocozi/app/views/pages/signup_page.dart';
 import 'package:mocozi/pages/signup.dart';
 import 'package:mocozi/utils/colors.dart';
@@ -13,7 +12,6 @@ import 'package:mocozi/widgets/textInputField.dart';
 
 class WelcomePage extends StatelessWidget {
   final AuthController authController = AuthController.to;
-  final WelcomeController welcomeController = Get.put(WelcomeController());
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,22 +63,19 @@ class WelcomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4.0),
                     border: Border.all(color: Colors.white, width: 1),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "로그인",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: const Center(
+                    child: Text(
+                      "로그인",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 onTap: () {
                   // login
-                  Get.off(SignupPage());
+                  Get.toNamed("/verifyPhone");
                 },
               ),
               Container(
