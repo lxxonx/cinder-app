@@ -5,11 +5,11 @@ import 'package:mocozi/app/controller/phoneVerify_controller.dart';
 import 'package:mocozi/utils/colors.dart';
 
 class VerifyPhonePage extends StatelessWidget {
-  final PhoneVerifyController _phoneVerifyController =
-      Get.put(PhoneVerifyController(), tag: "phoneVerify");
   VerifyPhonePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final PhoneVerifyController _phoneVerifyController =
+        Get.put(PhoneVerifyController(), tag: "phoneVerify");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

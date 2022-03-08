@@ -20,10 +20,10 @@ class FriendController extends GetxController {
   late List<Widget> pages;
 
   TextEditingController searchController = TextEditingController();
-  var friendsList = <User>[].obs;
+  var friendsList = <Friend>[].obs;
   var requestsList = <Friend>[].obs;
   var myGroups = <Group>[].obs;
-  var searchResult = "".obs;
+  var searchResult = Rxn<Friend>();
 
   @override
   void onReady() {
@@ -94,7 +94,7 @@ class FriendController extends GetxController {
     var _query = searchController.text;
     var friend = await FriendServices.searchFriends(_query);
     if (friend == null) {
-      searchResult.value = "검색 결과가 없습니다";
+      searchResult.value = null;
     } else {
       searchResult.value = friend;
     }
@@ -102,13 +102,12 @@ class FriendController extends GetxController {
   }
 
   void resetResult() {
-    searchResult.value = "";
+    searchResult.value = null;
     searchController.text = "";
   }
 
-  void sendRequest() async {
-    searchLoading(true);
-    var res = await FriendServices.sendRequest(searchController.text);
+  void sendRequest(friendName) async {
+    var res = await FriendServices.sendRequest(friendName);
     if (res) {
       Get.snackbar(
         "성공",
@@ -118,6 +117,22 @@ class FriendController extends GetxController {
         colorText: Colors.white,
       );
       resetResult();
+    }
+  }
+
+  void acceptFriend(String username) async {
+    searchLoading(true);
+    var res = await FriendServices.acceptFriend(username);
+    if (res) {
+      Get.snackbar(
+        "성공",
+        "친구 추가 완료",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.lightGreen,
+        colorText: Colors.white,
+      );
+      requestsList.removeWhere((element) => element.username == username);
+      getFriendsList();
     }
     searchLoading(false);
   }

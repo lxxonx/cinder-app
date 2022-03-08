@@ -8,15 +8,17 @@ class PhoneVerifyController extends GetxController {
   var hasCode = false.obs;
   // var isSubmitting = false.obs;
 
-  TextEditingController phoneController = TextEditingController();
+  static PhoneVerifyController to = Get.find();
 
-  TextEditingController controller1 = TextEditingController();
-  TextEditingController controller2 = TextEditingController();
-  TextEditingController controller3 = TextEditingController();
-  TextEditingController controller4 = TextEditingController();
-  TextEditingController controller5 = TextEditingController();
-  TextEditingController controller6 = TextEditingController();
-  TextEditingController currController = TextEditingController();
+  late TextEditingController phoneController;
+
+  late TextEditingController controller1;
+  late TextEditingController controller2;
+  late TextEditingController controller3;
+  late TextEditingController controller4;
+  late TextEditingController controller5;
+  late TextEditingController controller6;
+  late TextEditingController currController;
 
   FocusNode controller1fn = FocusNode();
   FocusNode controller2fn = FocusNode();
@@ -31,6 +33,7 @@ class PhoneVerifyController extends GetxController {
 
   @override
   void onClose() {
+    phoneController.dispose();
     currController.dispose();
     controller1.dispose();
     controller2.dispose();
@@ -41,10 +44,18 @@ class PhoneVerifyController extends GetxController {
     super.onClose();
   }
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    phoneController = TextEditingController();
+    currController = TextEditingController();
+    controller1 = TextEditingController();
+    controller2 = TextEditingController();
+    controller3 = TextEditingController();
+    controller4 = TextEditingController();
+    controller5 = TextEditingController();
+    controller6 = TextEditingController();
+    super.onInit();
+  }
 
   void signUpWithPhoneNumber() async {
     phoneNumber = phoneController.text.trim();
@@ -70,6 +81,9 @@ class PhoneVerifyController extends GetxController {
         verificationFailed: (FirebaseAuthException authException) {
           print(authException.code);
           print(authException.message);
+          if (authException.message!.contains("invalid-verification-code")) {
+            Get.snackbar("인증코드를 확인해주세요", "입력한 인증코드가 올바르지 않습니다.");
+          }
         },
         codeSent: (String verificationId, int? resendToken) {
           print("code sent");

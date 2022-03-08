@@ -6,8 +6,6 @@ import 'package:mocozi/utils/colors.dart';
 import 'package:mocozi/widgets/textOpacityButton.dart';
 
 class VerifyCodePage extends StatelessWidget {
-  final PhoneVerifyController _phoneVerifyController =
-      Get.find(tag: "phoneVerify");
   static const double dist = 3.0;
 
   VerifyCodePage({Key? key}) : super(key: key);
@@ -19,6 +17,8 @@ class VerifyCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PhoneVerifyController _phoneVerifyController =
+        Get.find(tag: "phoneVerify");
     List<Widget> widgetList = [
       Padding(
         padding: const EdgeInsets.only(right: dist, left: dist),

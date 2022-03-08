@@ -1,13 +1,13 @@
 class User {
   // final String uid;
-  // final String email;
+  // final String email;          username: me?.username,
   final String username;
   final String actualName;
   final String? bio;
   final String uni;
   final String dep; //
   final String gender;
-  final int birthYear;
+  final String birthYear;
   final bool? isVerified;
   final String status;
   // final List friends;
@@ -21,7 +21,7 @@ class User {
     required this.actualName,
     // required this.uid,
     // required this.email,
-    required this.bio,
+    this.bio,
     required this.uni,
     required this.dep,
     required this.gender,

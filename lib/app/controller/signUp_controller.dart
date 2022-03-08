@@ -176,6 +176,7 @@ class SignUpController extends GetxController {
       if (cr.ok) {
         // 학생증 등록 페이지 이동
         Get.offAll(StudentCardPage());
+        Get.snackbar("성공", "학생증을 등록하여 본인인증을 완료해주세요");
       } else {
         Get.snackbar('Error', cr.message.toString(),
             snackPosition: SnackPosition.TOP,

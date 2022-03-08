@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mocozi/app/models/user.dart';
 
 class Group {
-  late String uid;
   late String groupname;
-  late String createdAt;
+  // late String createdAt;
   late String bio;
   late List<User> members;
   late List<ImageProvider?> pics;
   Group({
-    uid,
     groupName,
     createTime,
     bio,
@@ -17,10 +15,9 @@ class Group {
   });
 
   Group.fromJson(Map<String, dynamic> json) {
-    uid = json['uid'];
-    groupname = json['groupname'];
+    groupname = json["groupname"];
     bio = json['bio'];
-    createdAt = json['createdAt'];
+    // createdAt = json['createdAt'];
     var mem = json['edges']['members'];
     List<dynamic> ds = mem.map((model) => User.fromJson(model)).toList();
     members = List<User>.from(ds);
@@ -28,9 +25,8 @@ class Group {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['uid'] = uid;
     data['groupname'] = groupname;
-    data['createdAt'] = createdAt;
+    // data['createdAt'] = createdAt;
     data['bio'] = bio;
     data['members'] = members;
     return data;

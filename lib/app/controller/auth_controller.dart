@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mocozi/app/controller/friend_controller.dart';
+import 'package:mocozi/app/controller/message_controller.dart';
+import 'package:mocozi/app/controller/phoneVerify_controller.dart';
 import 'package:mocozi/app/models/user.dart' as model;
 import 'package:mocozi/app/services/auth_services.dart';
 import 'package:mocozi/app/views/pages/home_page.dart';
@@ -94,6 +96,8 @@ class AuthController extends GetxController {
     } else {
       var me = await AuthServices.me();
       curUser.value = me;
+      MessageController.to.userName = curUser.value!.actualName;
+      MessageController.to.connectSokcetIO();
       switch (me!.status) {
         case "phone_number_verified":
           return Get.offAll(SignupPage());

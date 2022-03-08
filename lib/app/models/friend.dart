@@ -7,6 +7,7 @@ class Friend {
   final String uni;
   final String dep; //
   final String gender;
+  final String? avatar;
   final int birthYear;
   // final List friends;
   // final List friendsReq;
@@ -19,10 +20,11 @@ class Friend {
     required this.actualName,
     // required this.uid,
     // required this.email,
-    required this.bio,
+    this.bio = "",
     required this.uni,
     required this.dep,
     required this.gender,
+    this.avatar = "",
     required this.birthYear,
     // required this.friends,
     // required this.friendsReq,
@@ -40,6 +42,7 @@ class Friend {
       bio: json["bio"],
       uni: json["uni"],
       dep: json["dep"],
+      avatar: json["avatar"],
       birthYear: json["birth_year"],
       gender: json["gender"],
       // createdAt: json["created_at"],
@@ -58,6 +61,7 @@ class Friend {
     data["bio"] = bio;
     data["uni"] = uni;
     data["dep"] = dep;
+    data["avatar"] = avatar;
     data["birth_year"] = birthYear;
     data["gender"] = gender;
     return data;

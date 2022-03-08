@@ -3,6 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:mocozi/app/controller/auth_controller.dart';
 import 'package:mocozi/app/controller/cam_controller.dart';
 import 'package:mocozi/app/controller/friend_controller.dart';
+import 'package:mocozi/app/controller/message_controller.dart';
 import 'package:mocozi/app/controller/nav_controller.dart';
 import 'package:mocozi/app/routes/routes.dart';
 import 'package:mocozi/app/views/pages/home_page.dart';
@@ -21,6 +22,7 @@ void main() async {
 
   Get.put<AuthController>(AuthController());
   Get.put<FriendController>(FriendController());
+  Get.put<MessageController>(MessageController());
   Get.put<CamController>(CamController());
 
   runApp(GetMaterialApp(

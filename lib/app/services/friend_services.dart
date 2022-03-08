@@ -6,11 +6,10 @@ import 'package:get/get.dart';
 import 'package:mocozi/app/controller/auth_controller.dart';
 import 'package:mocozi/app/models/client_response.dart';
 import 'package:mocozi/app/models/friend.dart';
-import 'package:mocozi/app/models/user.dart';
 import 'package:mocozi/app/services/remote_services.dart';
 
 class FriendServices {
-  static Future<List<User>?> fetchFriends() async {
+  static Future<List<Friend>?> fetchFriends() async {
     Uri url = RemoteServices.env == 'dev'
         ? (Platform.isAndroid
             ? Uri.parse('http://10.0.2.2:8080/api/friends')
@@ -22,12 +21,15 @@ class FriendServices {
       'Authorization': 'Bearer $uid',
     });
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      var clientResponse = json.decode(utf8.decode(response.bodyBytes));
-      ClientResponse cr = ClientResponse.fromJson(clientResponse);
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    ClientResponse cr = ClientResponse.fromJson(clientResponse);
+    if (cr.ok) {
       var fr = cr.data!["friends"];
-      List<dynamic> ds = fr.map((model) => User.fromJson(model)).toList();
-      List<User> friendsList = List<User>.from(ds);
+      if (fr.length == 0 || fr == null) {
+        return [];
+      }
+      List<dynamic> ds = fr.map((model) => Friend.fromJson(model)).toList();
+      List<Friend> friendsList = List<Friend>.from(ds);
       return friendsList;
     } else {
       // show toast
@@ -35,24 +37,27 @@ class FriendServices {
     }
   }
 
-  static Future<String?> searchFriends(String friendName) async {
+  static Future<Friend?> searchFriends(String friendName) async {
     Uri url = RemoteServices.env == 'dev'
         ? (Platform.isAndroid
-            ? Uri.parse('http://10.0.2.2:8080/api/friends/search')
-            : Uri.parse('http://localhost:8080/api/friends/search'))
+            ? Uri.parse(
+                'http://10.0.2.2:8080/api/friends/search?fName=${friendName}')
+            : Uri.parse(
+                'http://localhost:8080/api/friends/search?fName=${friendName}'))
         : Uri.parse("some url");
 
-    print(friendName);
-    var response = await RemoteServices.client.post(url, body: {
-      "friendName": friendName,
+    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    var response = await RemoteServices.client.get(url, headers: {
+      'Authorization': 'Bearer $uid',
     });
 
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
     ClientResponse cr = ClientResponse.fromJson(clientResponse);
 
     if (cr.ok) {
-      var friend = cr.data!["friend"];
-      print(friend);
+      var fr = cr.data!["friend"];
+      print(fr);
+      var friend = Friend.fromJson(fr);
       return friend;
     } else {
       return null;
@@ -62,16 +67,17 @@ class FriendServices {
   static Future<bool> sendRequest(String friendName) async {
     Uri url = RemoteServices.env == 'dev'
         ? (Platform.isAndroid
-            ? Uri.parse('http://10.0.2.2:8080/api/friends/req')
-            : Uri.parse('http://localhost:8080/api/friends/req'))
+            ? Uri.parse('http://10.0.2.2:8080/api/friends/request')
+            : Uri.parse('http://localhost:8080/api/friends/request'))
         : Uri.parse("some url");
     String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
     var response = await RemoteServices.client.post(url, body: {
-      "friendName": friendName,
+      "friend_name": friendName,
     }, headers: {
       'Authorization': 'Bearer $uid',
     });
 
+    print(response.body.toString());
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
     ClientResponse cr = ClientResponse.fromJson(clientResponse);
     if (!cr.ok) {
@@ -83,8 +89,8 @@ class FriendServices {
   static Future<List<Friend>?> getRequest() async {
     Uri url = RemoteServices.env == 'dev'
         ? (Platform.isAndroid
-            ? Uri.parse('http://10.0.2.2:8080/api/friends/req')
-            : Uri.parse('http://localhost:8080/api/friends/req'))
+            ? Uri.parse('http://10.0.2.2:8080/api/friends/request')
+            : Uri.parse('http://localhost:8080/api/friends/request'))
         : Uri.parse("some url");
     String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
     var response = await RemoteServices.client.get(url, headers: {
@@ -96,6 +102,9 @@ class FriendServices {
 
     if (cr.ok) {
       var fr = cr.data!["requests"];
+      if (fr == null || fr.length == 0) {
+        return [];
+      }
       List<dynamic> ds = fr.map((model) => Friend.fromJson(model)).toList();
       List<Friend> requests = List<Friend>.from(ds);
       return requests;
@@ -106,5 +115,26 @@ class FriendServices {
           duration: Duration(seconds: 2));
       return null;
     }
+  }
+
+  static Future<bool> acceptFriend(String friendName) async {
+    Uri url = RemoteServices.env == 'dev'
+        ? (Platform.isAndroid
+            ? Uri.parse('http://10.0.2.2:8080/api/friends/accept')
+            : Uri.parse('http://localhost:8080/api/friends/accept'))
+        : Uri.parse("some url");
+    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    var response = await RemoteServices.client.post(url, body: {
+      "friend_name": friendName,
+    }, headers: {
+      'Authorization': 'Bearer $uid',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    ClientResponse cr = ClientResponse.fromJson(clientResponse);
+    if (!cr.ok) {
+      Get.snackbar("오류", cr.message.toString());
+    }
+    return cr.ok;
   }
 }

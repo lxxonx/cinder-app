@@ -21,7 +21,7 @@ class CardController extends GetxController {
     try {
       isLoading(true);
       var groups = await GroupServices.fetchGroups();
-      print("groups: " + groups.length.toString());
+      // print("groups: " + groups.length.toString());
       if (groups.isEmpty) {
         isLoading(false);
         hasMore(false);
