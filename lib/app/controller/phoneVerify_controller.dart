@@ -33,14 +33,6 @@ class PhoneVerifyController extends GetxController {
 
   @override
   void onClose() {
-    phoneController.dispose();
-    currController.dispose();
-    controller1.dispose();
-    controller2.dispose();
-    controller3.dispose();
-    controller4.dispose();
-    controller5.dispose();
-    controller6.dispose();
     super.onClose();
   }
 
@@ -130,8 +122,6 @@ class PhoneVerifyController extends GetxController {
       try {
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: _verificationId, smsCode: otp);
-
-        print(credential.providerId);
 
         await FirebaseAuth.instance
             .signInWithCredential(credential)

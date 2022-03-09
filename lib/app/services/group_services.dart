@@ -35,22 +35,34 @@ class GroupServices {
     }
   }
 
-  static Future<Group> joinGroup(List<String> friends, String groupname) async {
+  static Future<Group?> createGroup({
+    groupname: String,
+    friendNames: List<String>,
+    bio: String,
+    pic_url: String,
+  }) async {
     Uri url = RemoteServices.env == 'dev'
         ? (Platform.isAndroid
-            ? Uri.parse('http://10.0.2.2:8080/api/groups/join')
-            : Uri.parse('http://localhost:8080/api/groups/join'))
+            ? Uri.parse('http://10.0.2.2:8080/api/groups/create')
+            : Uri.parse('http://localhost:8080/api/groups/create'))
         : Uri.parse("some url");
 
-    var response = await RemoteServices.client.post(url);
+    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    var response = await RemoteServices.client.get(url, headers: {
+      'Authorization': 'Bearer $uid',
+    });
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    ClientResponse cr = ClientResponse.fromJson(clientResponse);
+    if (cr.ok) {
+      var gd = cr.data!["group"];
+      if (gd == null) {
+        return null;
+      }
+      Group group = Group.fromJson(gd);
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      var clientResponse = json.decode(utf8.decode(response.bodyBytes));
-      ClientResponse cr = ClientResponse.fromJson(clientResponse);
-      var group = Group.fromJson(cr.data!["group"]);
       return group;
     } else {
-      throw Exception('Failed to join group');
+      throw Exception('Failed to load groups');
     }
   }
 
@@ -79,22 +91,44 @@ class GroupServices {
       throw Exception('Failed to load groups');
     }
   }
-  //   static Future<Group> joinGroup(List<String> friends, String groupname) async {
-  //   Uri url = RemoteServices.env == 'dev'
-  //       ? (Platform.isAndroid
-  //           ? Uri.parse('http://10.0.2.2:8080/api/groups/join')
-  //           : Uri.parse('http://localhost:8080/api/groups/join'))
-  //       : Uri.parse("some url");
 
-  //   var response = await RemoteServices.client.post(url);
+  static Future<bool> likeGroup(String groupname) async {
+    Uri url = RemoteServices.env == 'dev'
+        ? (Platform.isAndroid
+            ? Uri.parse('http://10.0.2.2:8080/api/groups/like')
+            : Uri.parse('http://localhost:8080/api/groups/like'))
+        : Uri.parse("some url");
+    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    var response = await RemoteServices.client.post(url, body: {
+      'group_name': groupname,
+    }, headers: {
+      'Authorization': 'Bearer $uid',
+    });
 
-  //   var clientResponse = json.decode(utf8.decode(response.bodyBytes));
-  //   ClientResponse cr = ClientResponse.fromJson(clientResponse);
-  //   if (cr.ok) {
-  //     var group = Group.fromJson(cr.data!["group"]);
-  //     return group;
-  //   } else {
-  //     throw Exception('Failed to join group');
-  //   }
-  // }
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    ClientResponse cr = ClientResponse.fromJson(clientResponse);
+    if (cr.ok) {
+    } else {}
+    return cr.ok;
+  }
+
+  static Future<bool> dislikeGroup(String groupname) async {
+    Uri url = RemoteServices.env == 'dev'
+        ? (Platform.isAndroid
+            ? Uri.parse('http://10.0.2.2:8080/api/groups/dislike')
+            : Uri.parse('http://localhost:8080/api/groups/dislike'))
+        : Uri.parse("some url");
+    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    var response = await RemoteServices.client.post(url, body: {
+      'group_name': groupname,
+    }, headers: {
+      'Authorization': 'Bearer $uid',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    ClientResponse cr = ClientResponse.fromJson(clientResponse);
+    if (cr.ok) {
+    } else {}
+    return cr.ok;
+  }
 }

@@ -178,8 +178,7 @@ class FriendScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _friendController.acceptFriend(
-                            _friendController.friendsList[index].username);
+                        openBottomSheet();
                       },
                       child: Container(
                         margin: EdgeInsets.only(right: 10),
@@ -197,6 +196,33 @@ class FriendScreen extends StatelessWidget {
           );
         }),
       ],
+    );
+  }
+
+  void openBottomSheet() {
+    Get.bottomSheet(
+      Column(
+        children: [
+          const SizedBox(height: 20),
+          const Center(
+            child: Text(
+              'Bottom Sheet',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
     );
   }
 }

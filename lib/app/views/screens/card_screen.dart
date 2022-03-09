@@ -1,4 +1,4 @@
-import 'package:mocozi/app/controller/card_controller.dart';
+import 'package:mocozi/app/controller/group_controller.dart';
 import 'package:mocozi/app/views/components/swipeable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/swipe_cards.dart';
@@ -121,7 +121,7 @@ import 'package:get/get.dart';
 // }
 
 class CardScreen extends StatelessWidget {
-  final CardController _cardController = Get.put(CardController());
+  final GroupController _cardController = Get.put(GroupController());
   @override
   Widget build(BuildContext context) {
     return Obx(() {

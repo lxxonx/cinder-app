@@ -1,51 +1,127 @@
-import 'package:get/state_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mocozi/app/models/group.dart';
-import 'package:mocozi/app/services/group_services.dart';
-import 'package:swipe_cards/draggable_card.dart';
-import 'package:swipe_cards/swipe_cards.dart';
+import 'package:mocozi/app/views/pages/friend_page.dart';
+import 'package:mocozi/pages/explore.dart';
+import 'package:mocozi/pages/heart.dart';
+import 'package:mocozi/app/views/screens/card_screen.dart';
 
 class CardController extends GetxController {
-  var isLoading = false.obs;
-  var hasMore = true.obs;
-  var cards = <SwipeItem>[].obs;
-  var groupList = <Group>[].obs;
-  var currentIndex = 0.obs;
+  CardController({Key? key, required this.group});
 
-  @override
+  final currentIndex = 0.obs;
+  late Group group;
+  late List<Widget> pages = [];
+  late List<Widget> info = [];
   void onInit() {
-    fetchGroups();
     super.onInit();
+
+    pages = [
+      ListView(
+        children: [
+          Container(
+            width: 450,
+            height: 450,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(group.pics[0]),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Text(group.bio),
+          ),
+        ],
+      ),
+      HeartScreen(),
+      ExploreScreen(),
+    ];
+    group.members.map((m) {
+      return ListView(
+        children: [
+          Container(
+            width: 450,
+            height: 450,
+            // decoration: BoxDecoration(
+            //   image: DecorationImage(
+            //     image: NetworkImage(m.pics[0]),
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
+          ),
+        ],
+      );
+    }).toList();
+
+    info = [
+      GestureDetector(
+          onTap: () {
+            // Navigator.of(context).push(_openDetail());
+          },
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.transparent, Colors.black])),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.ideographic,
+                      children: [
+                        // Text(widget.profileInfo.username,
+                        //     style: const TextStyle(
+                        //         color: Colors.white,
+                        //         fontSize: 32.0,
+                        //         fontWeight: FontWeight.w600)),
+                        Container(
+                            margin: const EdgeInsets.only(left: 8),
+                            child: Text(group.groupname,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w600))),
+                      ],
+                    ),
+                    const Icon(
+                      Icons.info,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+                Text(
+                  group.bio,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                // Text(widget.profileInfo.bio,
+                //     style: TextStyle(color: Colors.white))
+              ],
+            ),
+          )),
+    ];
   }
 
-  void fetchGroups() async {
-    try {
-      isLoading(true);
-      var groups = await GroupServices.fetchGroups();
-      // print("groups: " + groups.length.toString());
-      if (groups.isEmpty) {
-        isLoading(false);
-        hasMore(false);
-        return;
-      }
+  Widget get currentPage => pages[currentIndex.value];
 
-      groupList.value = groups;
-      List<SwipeItem> _swipeItems = <SwipeItem>[];
-      for (Group group in groups) {
-        _swipeItems.add(SwipeItem(
-            content: group,
-            likeAction: () {
-              print("like");
-            },
-            nopeAction: () {
-              print("nope");
-            },
-            onSlideUpdate: (SlideRegion? region) async {
-              print("Region $region");
-            }));
-      }
-      cards.value = _swipeItems;
-    } finally {
-      isLoading(false);
+  void nextPage() {
+    if (currentIndex < pages.length - 1) {
+      currentIndex.value++;
+    }
+  }
+
+  void prevPage() {
+    if (currentIndex > 0) {
+      currentIndex.value--;
     }
   }
 }

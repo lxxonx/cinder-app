@@ -96,8 +96,7 @@ class AuthController extends GetxController {
     } else {
       var me = await AuthServices.me();
       curUser.value = me;
-      MessageController.to.userName = curUser.value!.actualName;
-      MessageController.to.connectSokcetIO();
+      // MessageController.to.connectSokcetIO();
       switch (me!.status) {
         case "phone_number_verified":
           return Get.offAll(SignupPage());

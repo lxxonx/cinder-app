@@ -62,6 +62,7 @@ class AuthServices {
       var clientResponse = json.decode(utf8.decode(response.bodyBytes));
       ClientResponse cr = ClientResponse.fromJson(clientResponse);
 
+      print(clientResponse);
       if (cr.ok) {
         var me = model.User.fromJson(cr.data!["me"]);
         return me;
@@ -71,7 +72,7 @@ class AuthServices {
         return null;
       }
     } catch (e) {
-      print(e);
+      print("me error: " + e.toString());
       Get.snackbar("오류발생", "오류가 발생했습니다 다시 로그인해주세요");
 
       FirebaseAuth.instance.signOut();
@@ -112,6 +113,45 @@ class AuthServices {
         Get.offNamed("/");
       }
       return cr.ok;
+    } catch (e) {
+      print(e);
+      Get.snackbar("err", "upload fail");
+      return false;
+    }
+  }
+
+  static Future<bool> uploadPic(XFile file) async {
+    Uri url = RemoteServices.env == 'dev'
+        ? (Platform.isAndroid
+            ? Uri.parse('http://10.0.2.2:8080/api/users/pic')
+            : Uri.parse('http://192.168.9.174:8080/api/users/pic'))
+        : Uri.parse("some url");
+    try {
+      var _file = await file.path;
+      // putting in uint8list format -> Upload task like a future but not future
+
+      String uid =
+          await AuthController.to.firebaseUser.value!.getIdToken(false);
+      var request = new http.MultipartRequest("POST", url);
+      request.headers['Authorization'] = 'Bearer $uid';
+      request.files.add(await http.MultipartFile.fromPath("photo", _file));
+      var statusCode = await request.send().then((res) {
+        print(res.toString());
+        return res.statusCode;
+      });
+      if (statusCode >= 200 && statusCode < 300) {
+        return true;
+      } else {
+        return false;
+      }
+      // var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+      // ClientResponse cr = ClientResponse.fromJson(clientResponse);
+
+      // if (cr.ok) {
+      //   Get.snackbar("학생증 전송에 성공했습니다", "본인 확인까지 최대 하루가 소요됩니다");
+      //   Get.offNamed("/");
+      // }
+      // return cr.ok;
     } catch (e) {
       print(e);
       Get.snackbar("err", "upload fail");

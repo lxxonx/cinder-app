@@ -6,7 +6,7 @@ class Group {
   // late String createdAt;
   late String bio;
   late List<User> members;
-  late List<ImageProvider?> pics;
+  late List<dynamic> pics;
   Group({
     groupName,
     createTime,
@@ -18,9 +18,13 @@ class Group {
     groupname = json["groupname"];
     bio = json['bio'];
     // createdAt = json['createdAt'];
-    var mem = json['edges']['members'];
+    var mem = json['group_members'];
     List<dynamic> ds = mem.map((model) => User.fromJson(model)).toList();
     members = List<User>.from(ds);
+    pics = json['pics'].map((pic) {
+      return pic['url'];
+    }).toList();
+    // pics = json['pics']['url'] as List<String>;
   }
 
   Map<String, dynamic> toJson() {

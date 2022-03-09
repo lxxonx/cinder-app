@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mocozi/app/controller/auth_controller.dart';
+import 'package:mocozi/app/controller/cam_controller.dart';
 import 'package:mocozi/app/controller/edit_controller.dart';
+import 'package:mocozi/app/services/auth_services.dart';
 import 'package:mocozi/app/views/components/long_texbox.dart';
 import 'package:mocozi/app/views/components/textbox.dart';
 import 'package:mocozi/utils/colors.dart';
@@ -36,9 +40,34 @@ class EditPage extends StatelessWidget {
               width: double.infinity,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) =>
-                    Container(height: 180, width: 150, color: Colors.pink),
-                itemCount: 5,
+                itemBuilder: (context, index) {
+                  print(index);
+                  print(editController.pics.length);
+                  if (index < editController.pics.length) {
+                    return Container(
+                      height: 180,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(editController.pics[index],
+                              headers: {
+                                "auth":
+                                    "{'uid': '${AuthController.to.firebaseUser.value!.uid}'}"
+                              }),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return GestureDetector(
+                        onTap: () {
+                          openDialog();
+                        },
+                        child: Container(
+                            height: 180, width: 150, color: Colors.pink));
+                  }
+                },
+                itemCount: editController.pics.length + 1,
               )),
           TextBox(
             label: "유저이름",
@@ -166,6 +195,46 @@ class EditPage extends StatelessWidget {
               // call signUp func
             },
           ),
+        ],
+      ),
+    );
+  }
+
+  void openDialog() {
+    Get.dialog(
+      SimpleDialog(
+        title: Text("사진 업로드"),
+        children: [
+          TextButton(
+              child: const Text("사진 촬영하기"),
+              onPressed: () async {
+                final _pickedFile = await CamController.picker.pickImage(
+                  source: ImageSource.camera,
+                  maxHeight: 500,
+                  maxWidth: 500,
+                );
+
+                if (_pickedFile != null) {
+                  await AuthServices.uploadPic(_pickedFile);
+                } else {
+                  print('No image selected.');
+                }
+              }),
+          TextButton(
+              child: const Text("갤러리에서 선택하기"),
+              onPressed: () async {
+                final _pickedFile = await CamController.picker.pickImage(
+                  source: ImageSource.camera,
+                  maxHeight: 500,
+                  maxWidth: 500,
+                );
+
+                if (_pickedFile != null) {
+                  await AuthServices.uploadPic(_pickedFile);
+                } else {
+                  print('No image selected.');
+                }
+              }),
         ],
       ),
     );

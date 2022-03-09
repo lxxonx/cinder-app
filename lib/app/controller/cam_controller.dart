@@ -8,10 +8,10 @@ class CamController extends GetxController {
   var isLoading = false.obs;
   var isCardSent = false.obs;
   static CamController get to => Get.find();
-  final _picker = ImagePicker();
+  static final picker = ImagePicker();
 
   Future<void> uploadStudentCard() async {
-    final _pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final _pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     if (_pickedFile != null) {
       isLoading(true);

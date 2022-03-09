@@ -3,9 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mocozi/app/controller/auth_controller.dart';
-import 'package:mocozi/app/services/auth_services.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class MessageController extends GetxController {

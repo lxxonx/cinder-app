@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mocozi/app/const/departments.dart';
 import 'package:mocozi/app/const/universities.dart';
 import 'package:mocozi/app/controller/auth_controller.dart';
+import 'package:mocozi/app/controller/cam_controller.dart';
+import 'package:mocozi/app/services/auth_services.dart';
 
 class EditController extends GetxController {
   static EditController get to => Get.find();
@@ -31,7 +34,7 @@ class EditController extends GetxController {
   var username = "".obs;
   var actualName = "".obs;
   var birthYear = "".obs;
-  var imageList = <String>[].obs;
+  var pics = <String>[].obs;
 
   void selectUni(context) {
     List<String> unis = [];
@@ -56,6 +59,8 @@ class EditController extends GetxController {
               onSelectedItemChanged: (selected) {
                 uni.value = unis[selected];
               },
+              scrollController: FixedExtentScrollController(
+                  initialItem: unis.indexOf(uni.value)),
               useMagnifier: true,
               backgroundColor: Colors.white,
               magnification: 1.5,
@@ -90,6 +95,8 @@ class EditController extends GetxController {
               onSelectedItemChanged: (selected) {
                 dep.value = deps[selected];
               },
+              scrollController: FixedExtentScrollController(
+                  initialItem: deps.indexOf(dep.value)),
               useMagnifier: true,
               backgroundColor: Colors.white,
               magnification: 1.5,
@@ -127,6 +134,8 @@ class EditController extends GetxController {
               onSelectedItemChanged: (selected) {
                 gender.value = genders[selected];
               },
+              scrollController: FixedExtentScrollController(
+                  initialItem: genders.indexOf(gender.value)),
               useMagnifier: true,
               backgroundColor: Colors.white,
               magnification: 1.5,
@@ -167,5 +176,20 @@ class EditController extends GetxController {
     uni.value = user.uni;
     dep.value = user.dep;
     gender.value = user.gender;
+    pics.value = user.pics;
+  }
+
+  void uploadPic() async {
+    final _pickedFile =
+        await CamController.picker.pickImage(source: ImageSource.gallery);
+
+    if (_pickedFile != null) {
+      isLoading(true);
+      await AuthServices.uploadPic(_pickedFile);
+      update();
+    } else {
+      print('No image selected.');
+    }
+    isLoading(false);
   }
 }
