@@ -1,19 +1,11 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/route_manager.dart';
-import 'package:mocozi/app/controller/auth_controller.dart';
-import 'package:mocozi/app/controller/cam_controller.dart';
-import 'package:mocozi/app/controller/friend_controller.dart';
-import 'package:mocozi/app/controller/message_controller.dart';
-import 'package:mocozi/app/controller/nav_controller.dart';
-import 'package:mocozi/app/routes/routes.dart';
-import 'package:mocozi/app/views/pages/home_page.dart';
-import 'package:mocozi/resources/auth_methods.dart';
-import 'package:mocozi/router/bottomNavigaion.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mocozi/utils/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:mocozi/routes/routes.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,16 +14,13 @@ void main() async {
 
   Get.put<AuthController>(AuthController());
   Get.put<FriendController>(FriendController());
-  Get.put<MessageController>(MessageController());
-  Get.put<CamController>(CamController());
+  // Get.put<MessageController>(MessageController());
+  // Get.put<CamController>(CamController());
 
   runApp(GetMaterialApp(
       initialRoute: "/",
       getPages: routes,
       debugShowCheckedModeBanner: false,
-      navigatorObservers: [
-        // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
-      ],
       theme: ThemeData(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -43,7 +32,7 @@ void main() async {
           showSelectedLabels: false,
           showUnselectedLabels: false,
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
             backgroundColor: secondaryColor,
             elevation: 0,
             iconTheme: IconThemeData(color: primaryColor)),

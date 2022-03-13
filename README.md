@@ -1,4 +1,4 @@
-# app
+# mocozi
 
 A new Flutter project.
 
