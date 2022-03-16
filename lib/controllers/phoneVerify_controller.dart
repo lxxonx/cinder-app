@@ -59,26 +59,22 @@ class PhoneVerifyController extends GetxController {
   }
 
   void signUpWithPhoneNumber() async {
-    phoneNumber = phoneController.text.trim();
-    String phoneNumberWithCountryCode = "+82" + phoneNumber.substring(1);
-
-    print(phoneNumberWithCountryCode);
     isLoading.value = true;
     try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber = phoneController.text.trim();
+      String phoneNumberWithCountryCode = "+82" + phoneNumber.substring(1);
+      await AuthController.to.auth.verifyPhoneNumber(
         phoneNumber: phoneNumberWithCountryCode,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          // await FirebaseAuth.instance.signInWithCredential(credential);
-          return;
+          print("what");
+          await AuthController.to.auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException authException) {
-          print(authException.code);
-          // print(authException.message);
+          print(authException);
           if (authException.message!.contains("invalid-verification-code")) {
             Get.snackbar("인증코드를 확인해주세요", "입력한 인증코드가 올바르지 않습니다.");
           }
         },
-        // autoRetrievedSmsCodeForTesting: "321321",
         codeSent: (String verificationId, int? resendToken) {
           print("code sent");
           _verificationId = verificationId;
@@ -86,13 +82,17 @@ class PhoneVerifyController extends GetxController {
           Get.toNamed("/verifyCode");
           hasPhoneNumber.value = false;
           currController = controller1;
-          print(_verificationId);
         },
         timeout: const Duration(minutes: 2),
         codeAutoRetrievalTimeout: (String verificationId) {
           _verificationId = verificationId;
         },
       );
+      print("pass");
+
+      // await AuthController.to.auth
+      //     .signInWithPhoneNumber(phoneNumberWithCountryCode);
+      isLoading.value = false;
     } catch (e) {
       print(e);
       isLoading.value = false;
@@ -124,8 +124,6 @@ class PhoneVerifyController extends GetxController {
       try {
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: _verificationId, smsCode: otp);
-
-        print(credential.providerId);
 
         await FirebaseAuth.instance
             .signInWithCredential(credential)

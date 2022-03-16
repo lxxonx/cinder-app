@@ -68,7 +68,6 @@ class FriendController extends GetxController {
       } else {
         requestsList.value = requests;
       }
-      print(requests);
     } catch (e) {
       print(e);
     }

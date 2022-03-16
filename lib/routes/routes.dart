@@ -32,6 +32,7 @@ var routes = [
   //   preventDuplicates: true,
   //   popGesture: true,
   // ),
+
   GetPage(
     name: '/verifyPhone',
     page: () => VerifyPhonePage(),

@@ -5,19 +5,14 @@ import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 
 class CardScreen extends StatelessWidget {
-  final GroupController _cardController = Get.put(GroupController());
+  final GroupController _cardController = GroupController.to;
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (_cardController.isLoading.value == true)
         return Center(child: CircularProgressIndicator());
       if (_cardController.groupList.isEmpty) {
-        if (_cardController.hasMore.value == false) {
-          return Center(child: Text("No Groups"));
-        } else {
-          // fetch more groups
-          return Center(child: Text("No Groups"));
-        }
+        return Center(child: Text("No Groups"));
       }
       var _matchEngine = MatchEngine(
         swipeItems: _cardController.cards,
@@ -41,7 +36,9 @@ class CardScreen extends StatelessWidget {
             //     style: TextStyle(fontSize: 100),
             //   ),
             // );
-            return SwipeableCard(group: _cardController.groupList[index]);
+            return SwipeableCard(
+              matchEngine: _matchEngine,
+            );
           },
           onStackFinished: () {
             print("finished");

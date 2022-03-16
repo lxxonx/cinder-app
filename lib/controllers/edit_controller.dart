@@ -190,18 +190,12 @@ class EditController extends GetxController {
   void save() async {
     isLoading(true);
     var bio = bioController.text;
-    var result = await RemoteServices.updateProfile(
+    await RemoteServices.updateProfile(
       gender: gender.value,
       uni: uni.value,
       dep: dep.value,
       bio: bio,
     );
-
-    if (result) {
-      Get.snackbar("성공", "프로필 업데이트에 성공했습니다 ");
-
-      Get.back();
-    }
     isLoading(false);
   }
 }

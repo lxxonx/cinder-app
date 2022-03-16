@@ -3,6 +3,7 @@ import 'package:mocozi/model/group.dart';
 import 'package:mocozi/services/remote_service.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:get/get.dart';
 
 class GroupController extends GetxController {
   var isLoading = false.obs;
@@ -11,26 +12,28 @@ class GroupController extends GetxController {
   var groupList = <Group>[].obs;
   var currentIndex = 0.obs;
 
-  @override
-  void onInit() {
-    fetchGroups();
-    super.onInit();
-  }
+  static GroupController to = Get.find();
+
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   void fetchGroups() async {
     try {
       isLoading(true);
       var groups = await RemoteServices.fetchGroups();
-      print("groups: " + groups.length.toString());
+
+      groupList.value = groups;
       if (groups.isEmpty) {
         isLoading(false);
-        hasMore(false);
         return;
       }
 
       // groupList.value = groups;
       List<SwipeItem> _swipeItems = <SwipeItem>[];
       for (Group group in groups) {
+        print(group.pics.length);
         _swipeItems.add(SwipeItem(
             content: group,
             likeAction: () async {

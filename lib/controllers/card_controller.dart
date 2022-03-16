@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mocozi/model/group.dart';
+import 'package:mocozi/screens/groupCard_screen.dart';
+import 'package:mocozi/screens/group_screen.dart';
+import 'package:mocozi/screens/memberInfo_screen.dart';
+import 'package:mocozi/screens/member_screen.dart';
 
 class CardController extends GetxController {
   CardController({Key? key, required this.group});
@@ -11,44 +16,13 @@ class CardController extends GetxController {
   late List<Widget> info = [];
   void onInit() {
     super.onInit();
-
     pages = [
-      ListView(
-        children: [
-          Container(
-            width: 450,
-            height: 450,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(group.pics[0].url),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(group.bio!),
-          ),
-        ],
-      ),
+      GroupCardScreen(group: group),
     ];
-    group.members.map((m) {
-      return ListView(
-        children: [
-          Container(
-            width: 450,
-            height: 450,
-            // decoration: BoxDecoration(
-            //   image: DecorationImage(
-            //     image: NetworkImage(m.pics[0]),
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
-          ),
-        ],
-      );
+    var memWidget = group.members.map((m) {
+      return MemberCardScreen(member: m);
     }).toList();
-
+    pages.addAll(memWidget);
     info = [
       GestureDetector(
           onTap: () {
@@ -103,6 +77,11 @@ class CardController extends GetxController {
             ),
           )),
     ];
+
+    var memInfos = group.members.map((m) {
+      return MemberInfoScreen(member: m);
+    }).toList();
+    info.addAll(memInfos);
   }
 
   Widget get currentPage => pages[currentIndex.value];
@@ -110,12 +89,16 @@ class CardController extends GetxController {
   void nextPage() {
     if (currentIndex < pages.length - 1) {
       currentIndex.value++;
+    } else {
+      HapticFeedback.lightImpact();
     }
   }
 
   void prevPage() {
     if (currentIndex > 0) {
       currentIndex.value--;
+    } else {
+      HapticFeedback.lightImpact();
     }
   }
 }

@@ -167,15 +167,15 @@ class SignUpController extends GetxController {
           margin: EdgeInsets.all(10));
       return;
     }
-    if (actualName.contains(RegExp('d'))) {
-      Get.snackbar('Error', '올바른 이름을 입력해주세요',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          borderRadius: 10,
-          margin: EdgeInsets.all(10));
-      return;
-    }
+    // if (actualName.contains(RegExp('d'))) {
+    //   Get.snackbar('Error', '올바른 이름을 입력해주세요',
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       backgroundColor: Colors.red,
+    //       colorText: Colors.white,
+    //       borderRadius: 10,
+    //       margin: EdgeInsets.all(10));
+    //   return;
+    // }
     if (!birthYear.isNum) {
       Get.snackbar('Error', '올바른 생년월일을 입력해주세요',
           snackPosition: SnackPosition.BOTTOM,

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mocozi/model/chat_room.dart';
+import 'package:mocozi/pages/chatRoom_page.dart';
 
 class ChatItem extends StatelessWidget {
-  const ChatItem({Key? key}) : super(key: key);
+  const ChatItem({Key? key, required this.chatRoom}) : super(key: key);
+
+  final ChatRoom chatRoom;
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +26,25 @@ class ChatItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "name",
+                  chatRoom.uid,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,
                     letterSpacing: -1,
                   ),
                 ),
-                Text("last message")
+                Text(chatRoom.lastMessage.message)
               ],
             )
           ],
         )),
       ),
       onTap: () {
+        Get.to(
+          ChatRoomPage(roomName: chatRoom.uid),
+          transition: Transition.rightToLeft,
+          curve: Curves.easeInCirc,
+        );
         // move to chat
       },
     );

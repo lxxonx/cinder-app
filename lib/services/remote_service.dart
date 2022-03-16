@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/model/chat_room.dart';
 import 'package:mocozi/model/group.dart';
 import 'package:mocozi/model/http_response.dart';
 import 'package:mocozi/model/user.dart';
@@ -15,24 +16,28 @@ class Apis {
       : 'http://192.168.9.174:8080/api';
 
   // user apis
-  static var registerUserApi = Uri.parse('${baseUrl}/users/register');
-  static var currentUserApi = Uri.parse('${baseUrl}/users/current');
-  static var updateUserApi = Uri.parse('${baseUrl}/users/update');
-  static var uploadPicApi = Uri.parse('${baseUrl}/users/pic');
-  static var uploadStudentCardApi = Uri.parse('${baseUrl}/users/sc');
+  static var registerUserApi = Uri.parse('$baseUrl/users/register');
+  static var currentUserApi = Uri.parse('$baseUrl/users/current');
+  static var updateUserApi = Uri.parse('$baseUrl/users/update');
+  static var uploadPicApi = Uri.parse('$baseUrl/users/pic');
+  static var uploadStudentCardApi = Uri.parse('$baseUrl/users/sc');
 
   // friend apis
-  static var fetchFriendApi = Uri.parse('${baseUrl}/friends/');
-  static var searchFriendApi = Uri.parse('${baseUrl}/friends/search');
-  static var searchFriendBase = '${baseUrl}/friends/search';
-  static var requestFriendApi = Uri.parse('${baseUrl}/friends/request');
-  static var acceptFriendApi = Uri.parse('${baseUrl}/friends/accept');
+  static var fetchFriendApi = Uri.parse('$baseUrl/friends/');
+  static var searchFriendApi = Uri.parse('$baseUrl/friends/search');
+  static var searchFriendBase = '$baseUrl/friends/search';
+  static var requestFriendApi = Uri.parse('$baseUrl/friends/request');
+  static var acceptFriendApi = Uri.parse('$baseUrl/friends/accept');
 
   // group apis
-  static var fetchGroupApi = Uri.parse('${baseUrl}/groups/');
-  static var fetchMyGroupApi = Uri.parse('${baseUrl}/groups/my');
-  static var likeGroupApi = Uri.parse('${baseUrl}/groups/like');
-  static var dislikeGroupApi = Uri.parse('${baseUrl}/groups/dislike');
+  static var fetchGroupApi = Uri.parse('$baseUrl/groups/');
+  static var fetchMyGroupApi = Uri.parse('$baseUrl/groups/my');
+  static var createGroupApi = Uri.parse('$baseUrl/groups/create');
+  static var likeGroupApi = Uri.parse('$baseUrl/groups/like');
+  static var dislikeGroupApi = Uri.parse('$baseUrl/groups/dislike');
+
+  // chat apis
+  static var fetchChatListApi = Uri.parse('$baseUrl/chats/list');
 }
 
 class RemoteServices {
@@ -78,7 +83,6 @@ class RemoteServices {
     String token =
         await AuthController.to.firebaseUser.value!.getIdToken(false);
 
-    String uid = AuthController.to.firebaseUser.value!.uid;
     var response = await RemoteServices.client.put(Apis.updateUserApi, body: {
       "uni": uni,
       "dep": dep,
@@ -89,8 +93,12 @@ class RemoteServices {
     });
 
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+
     HttpResponse cr = HttpResponse.fromJson(clientResponse);
+
     if (cr.ok) {
+      Get.snackbar("성공", "프로필 업데이트에 성공했습니다 ");
+      Get.back();
       AuthController.to.curUser.value = User.fromJson(cr.data!['me']);
     }
     return cr.ok;
@@ -134,7 +142,6 @@ class RemoteServices {
           .then((value) => json.decode(value));
       var res = HttpResponse.fromJson(j);
 
-      print(res.data);
       if (res.ok) {
         return Pic.fromJson(res.data!);
       } else {
@@ -178,11 +185,12 @@ class RemoteServices {
 
 // friends services
   static Future<List<User>> fetchFriends() async {
-    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response =
         await RemoteServices.client.get(Apis.fetchFriendApi, headers: {
-      'Authorization': 'Bearer $uid',
+      'Authorization': 'Bearer $token',
     });
 
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -202,11 +210,12 @@ class RemoteServices {
   }
 
   static Future<List<User>> fetchRequests() async {
-    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response =
         await RemoteServices.client.get(Apis.requestFriendApi, headers: {
-      'Authorization': 'Bearer $uid',
+      'Authorization': 'Bearer $token',
     });
 
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -226,12 +235,13 @@ class RemoteServices {
   }
 
   static Future<bool> sendRequest(String friendName) async {
-    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
     var response =
         await RemoteServices.client.post(Apis.requestFriendApi, body: {
       "friend_name": friendName,
     }, headers: {
-      'Authorization': 'Bearer $uid',
+      'Authorization': 'Bearer $token',
     });
 
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -243,12 +253,13 @@ class RemoteServices {
   }
 
   static Future<User?> searchFriend(String friendName) async {
-    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response = await RemoteServices.client.get(
         Uri.http("10.0.2.2:8080", "/api/friends/search", {"fName": friendName}),
         headers: {
-          'Authorization': 'Bearer $uid',
+          'Authorization': 'Bearer $token',
         });
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
     HttpResponse cr = HttpResponse.fromJson(clientResponse);
@@ -284,11 +295,12 @@ class RemoteServices {
 
 // group services
   static Future<List<Group>> fetchGroups() async {
-    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response =
         await RemoteServices.client.get(Apis.fetchGroupApi, headers: {
-      'Authorization': 'Bearer $uid',
+      'Authorization': 'Bearer $token',
     });
 
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -331,12 +343,39 @@ class RemoteServices {
     }
   }
 
+  static Future<Group?> createGroup(
+    String groupName,
+    List<String> members,
+  ) async {
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
+
+    var response = await RemoteServices.client.post(Apis.createGroupApi, body: {
+      "group_name": groupName,
+      "members": json.encode(members),
+    }, headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    if (cr.ok) {
+      var group = cr.data!["group"];
+      var groupData = Group.fromJson(group);
+      return groupData;
+    } else {
+      Get.snackbar("실패", cr.message.toString());
+      return null;
+    }
+  }
+
   static Future<bool> likeGroup(String groupName) async {
-    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response =
         await RemoteServices.client.post(Apis.likeGroupApi, headers: {
-      'Authorization': 'Bearer $uid',
+      'Authorization': 'Bearer $token',
     }, body: {
       'group_name': groupName,
     });
@@ -350,11 +389,12 @@ class RemoteServices {
   }
 
   static Future<bool> dislikeGroup(String groupName) async {
-    String uid = await AuthController.to.firebaseUser.value!.getIdToken(false);
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response =
         await RemoteServices.client.post(Apis.dislikeGroupApi, headers: {
-      'Authorization': 'Bearer $uid',
+      'Authorization': 'Bearer $token',
     }, body: {
       'group_name': groupName,
     });
@@ -365,5 +405,32 @@ class RemoteServices {
     } else {}
 
     return cr.ok;
+  }
+
+  static Future<List<ChatRoom>>? fetchChatList() async {
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
+
+    var response =
+        await RemoteServices.client.get(Apis.fetchChatListApi, headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+
+    HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    if (cr.ok) {
+      var chatRooms = cr.data!["chat_rooms"];
+      if (chatRooms == null || chatRooms.length == 0) {
+        return [];
+      }
+
+      List<dynamic> ds =
+          chatRooms.map((model) => ChatRoom.fromJson(model)).toList();
+      List<ChatRoom> chatRoomList = List<ChatRoom>.from(ds);
+      return chatRoomList;
+    } else {
+      throw Exception('Failed to load chat rooms');
+    }
   }
 }

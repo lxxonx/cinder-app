@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:mocozi/controllers/group_controller.dart';
 import 'package:mocozi/model/user.dart' as model;
 import 'package:mocozi/pages/home_page.dart';
 import 'package:mocozi/pages/signUp_page.dart';
@@ -51,18 +52,21 @@ class AuthController extends GetxController {
           FriendController.to.getFriendsList();
           FriendController.to.getRequestsList();
           FriendController.to.getMyGroup();
+          GroupController.to.fetchGroups();
           return Get.offAll(HomePage());
         case "first_time":
           // 학생증 인증 끝나고 처음 입장
           FriendController.to.getFriendsList();
           FriendController.to.getRequestsList();
           FriendController.to.getMyGroup();
+          GroupController.to.fetchGroups();
           return Get.offAll(HomePage());
         case "normal":
           // 학생증 인증 끝났을 때
           FriendController.to.getFriendsList();
           FriendController.to.getRequestsList();
           FriendController.to.getMyGroup();
+          GroupController.to.fetchGroups();
           return Get.offAll(HomePage());
       }
     }

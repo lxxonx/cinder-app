@@ -13,20 +13,20 @@ class CircleProfile extends StatelessWidget {
       alignment: AlignmentDirectional.bottomCenter,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5),
-          padding: EdgeInsets.all(5),
+          margin: const EdgeInsets.only(bottom: 5),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
                   colors: [Colors.pink, Colors.pink, Colors.yellow.shade900],
-                  stops: [0, 0.6, 0.9],
+                  stops: const [0, 0.6, 0.9],
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft)),
           child: Container(
               child: CircleImage(image: image, size: size),
-              padding: EdgeInsets.all(5),
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.white)),
+              padding: const EdgeInsets.all(5),
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.white)),
         ),
         Container(
             width: size - 70,

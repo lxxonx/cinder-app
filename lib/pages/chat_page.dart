@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mocozi/components/chat_item.dart';
 import 'package:mocozi/components/opacity_button.dart';
+import 'package:mocozi/controllers/chat_controller.dart';
 import 'package:mocozi/utils/colors.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({Key? key}) : super(key: key);
-
+  ChatPage({Key? key}) : super(key: key);
+  final ChatController _chatController = Get.put(ChatController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +20,15 @@ class ChatPage extends StatelessWidget {
                 style: TextStyle(
                     color: primaryColor, fontWeight: FontWeight.bold)),
           ),
-          Expanded(child: ListView.builder(itemBuilder: ((context, index) {
-            return ChatItem();
-          }))),
+          Expanded(
+              child: ListView.builder(
+            itemBuilder: ((context, index) {
+              return ChatItem(
+                chatRoom: _chatController.chatList[index],
+              );
+            }),
+            itemCount: _chatController.chatList.length,
+          )),
         ],
       ),
     );

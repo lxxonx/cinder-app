@@ -10,18 +10,29 @@ class Group {
 
   @JsonKey(includeIfNull: false)
   List<Pic> pics;
-  @JsonKey(includeIfNull: false)
-  List<User> members;
+  @JsonKey(name: "group_members", includeIfNull: false)
+  List<Member> members;
 
   Group(
     this.groupname, {
     this.bio,
     List<Pic>? pics,
-    List<User>? members,
+    List<Member>? members,
   })  : pics = pics ?? <Pic>[],
-        members = members ?? <User>[];
+        members = members ?? <Member>[];
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
 
   Map<String, dynamic> toJson() => _$GroupToJson(this);
+}
+
+@JsonSerializable()
+class Member {
+  final User users;
+
+  Member(this.users);
+
+  factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MemberToJson(this);
 }

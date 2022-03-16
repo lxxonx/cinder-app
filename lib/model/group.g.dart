@@ -12,8 +12,8 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
       pics: (json['pics'] as List<dynamic>?)
           ?.map((e) => Pic.fromJson(e as Map<String, dynamic>))
           .toList(),
-      members: (json['members'] as List<dynamic>?)
-          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+      members: (json['group_members'] as List<dynamic>?)
+          ?.map((e) => Member.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -30,6 +30,14 @@ Map<String, dynamic> _$GroupToJson(Group instance) {
 
   writeNotNull('bio', instance.bio);
   val['pics'] = instance.pics;
-  val['members'] = instance.members;
+  val['group_members'] = instance.members;
   return val;
 }
+
+Member _$MemberFromJson(Map<String, dynamic> json) => Member(
+      User.fromJson(json['users'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$MemberToJson(Member instance) => <String, dynamic>{
+      'users': instance.users,
+    };

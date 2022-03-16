@@ -3,16 +3,17 @@ import 'package:get/get.dart';
 import 'package:mocozi/components/outline_circle_button.dart';
 import 'package:mocozi/controllers/card_controller.dart';
 import 'package:mocozi/model/group.dart';
+import 'package:swipe_cards/swipe_cards.dart';
 
 class SwipeableCard extends StatelessWidget {
-  SwipeableCard({Key? key, required this.group}) : super(key: key);
-  Group group;
+  SwipeableCard({Key? key, required this.matchEngine}) : super(key: key);
+  final MatchEngine matchEngine;
   @override
   Widget build(BuildContext context) {
-    CardController cardController = Get.put(CardController(group: group));
+    CardController cardController = Get.put(
+        CardController(group: matchEngine.currentItem!.content as Group));
     return Card(
       elevation: 5,
-      clipBehavior: Clip.none,
       child: Stack(
         children: [
           Container(
@@ -66,25 +67,27 @@ class SwipeableCard extends StatelessWidget {
           OutlineCircleButton(
             borderColor: Colors.red,
             borderSize: 2.0,
-            radius: 50.0,
+            radius: 40.0,
             child: const Icon(
               Icons.close,
               color: Colors.red,
             ),
             onPressed: () {
               // undo
+              matchEngine.currentItem!.nope();
             },
           ),
           OutlineCircleButton(
             borderColor: Colors.green,
             borderSize: 2.0,
-            radius: 50.0,
+            radius: 40.0,
             child: const Icon(
               Icons.favorite,
               color: Colors.green,
             ),
             onPressed: () {
               // boost
+              matchEngine.currentItem!.like();
             },
           ),
         ],

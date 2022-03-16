@@ -28,7 +28,7 @@ class FriendItem extends StatelessWidget {
                   ),
             Container(
               child: Text(friend.actualName!),
-              margin: EdgeInsets.only(left: 8),
+              margin: const EdgeInsets.only(left: 8),
             )
           ],
         ));

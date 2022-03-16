@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:mocozi/components/friend_item.dart';
 import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:mocozi/controllers/groupCreate_controller.dart';
+import 'package:mocozi/pages/groupCreate_page.dart';
 import 'package:mocozi/utils/colors.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 
-class GroupCreateScreen extends StatelessWidget {
+class GroupCreateScreen extends StatefulWidget {
+  @override
+  _GroupCreateScreenState createState() => _GroupCreateScreenState();
+}
+
+class _GroupCreateScreenState extends State<GroupCreateScreen> {
   final FriendController _friendController = FriendController.to;
+  final GroupCreateController _groupCreateController =
+      Get.put(GroupCreateController());
+  bool _checked = false;
   @override
   Widget build(BuildContext context) {
+    final inputBorder =
+        OutlineInputBorder(borderSide: Divider.createBorderSide(context));
     return Column(
       children: [
-        Text("search box"),
+        TextField(
+          controller: _groupCreateController.nameController,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
+            hintText: "친구의 이름을 입력해주세요",
+            border: inputBorder,
+            enabledBorder: inputBorder,
+            focusedBorder: inputBorder,
+          ),
+          keyboardAppearance: Brightness.light,
+          keyboardType: TextInputType.text,
+        ),
         Obx(
           () => Expanded(
             child: ListView.builder(
@@ -28,16 +51,17 @@ class GroupCreateScreen extends StatelessWidget {
                     FriendItem(
                       friend: _friendController.friendsList[index],
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: const Text(
-                          '그룹 만들기',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ),
-                    ),
+                    Checkbox(
+                        value: _checked,
+                        onChanged: (value) {
+                          setState(() {
+                            _checked = value!;
+                          });
+                          if (value!) {
+                            _groupCreateController.checked
+                                .add(_friendController.friendsList[index]);
+                          } else {}
+                        }),
                   ],
                 ),
               ),
@@ -66,8 +90,8 @@ class GroupCreateScreen extends StatelessWidget {
             ),
           ),
           onTap: () {
-            // login
-            // Get.toNamed("/verifyPhone");
+            // _groupCreateController.createGroup();
+            Get.to(GroupCreatePage());
           },
         ),
       ],

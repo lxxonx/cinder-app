@@ -36,7 +36,7 @@ class WelcomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4.0)),
                   child: const Center(
                     child: Text(
-                      "계정 만들기",
+                      "핸드폰으로 계속하기",
                       style: TextStyle(
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
@@ -49,31 +49,31 @@ class WelcomePage extends StatelessWidget {
                   Get.toNamed("/verifyPhone");
                 },
               ),
-              InkWell(
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 4),
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(4.0),
-                    border: Border.all(color: Colors.white, width: 1),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "로그인",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                onTap: () {
-                  // login
-                  Get.toNamed("/verifyPhone");
-                },
-              ),
+              // InkWell(
+              //   child: Container(
+              //     margin: EdgeInsets.symmetric(vertical: 4),
+              //     width: double.infinity,
+              //     height: 50,
+              //     decoration: BoxDecoration(
+              //       color: primaryColor,
+              //       borderRadius: BorderRadius.circular(4.0),
+              //       border: Border.all(color: Colors.white, width: 1),
+              //     ),
+              //     child: const Center(
+              //       child: Text(
+              //         "로그인",
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     // login
+              //     Get.toNamed("/verifyPhone");
+              //   },
+              // ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(
