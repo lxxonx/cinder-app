@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
-import 'package:mocozi/model/http_response.dart';
-import 'package:mocozi/model/user.dart';
-import 'package:mocozi/pages/studentCard_page.dart';
-import 'package:mocozi/services/remote_service.dart';
-import 'package:mocozi/utils/departments.dart';
-import 'package:mocozi/utils/universities.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/model/http_response.dart';
+import 'package:MOCOZI/model/user.dart';
+import 'package:MOCOZI/pages/studentCard_page.dart';
+import 'package:MOCOZI/services/remote_service.dart';
+import 'package:MOCOZI/utils/departments.dart';
+import 'package:MOCOZI/utils/universities.dart';
 
 class SignUpController extends GetxController {
   static SignUpController get to => Get.find();

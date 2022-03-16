@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mocozi/pages/edit_page.dart';
-import 'package:mocozi/pages/profile_page.dart';
-import 'package:mocozi/services/remote_service.dart';
+import 'package:MOCOZI/pages/edit_page.dart';
+import 'package:MOCOZI/pages/profile_page.dart';
+import 'package:MOCOZI/services/remote_service.dart';
 
 class CamController extends GetxController {
   var isLoading = false.obs;

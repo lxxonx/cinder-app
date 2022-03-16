@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mocozi/model/user.dart';
+import 'package:MOCOZI/model/user.dart';
 part 'group.g.dart';
 
 @JsonSerializable()

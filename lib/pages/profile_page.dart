@@ -1,9 +1,9 @@
-import 'package:get/get.dart';
-import 'package:mocozi/components/circle_button.dart';
-import 'package:mocozi/components/circle_profile.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:mocozi/pages/edit_page.dart';
+import 'package:get/get.dart';
+import 'package:MOCOZI/components/circle_button.dart';
+import 'package:MOCOZI/components/circle_profile.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/pages/edit_page.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);

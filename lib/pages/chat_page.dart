@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/components/chat_item.dart';
-import 'package:mocozi/components/opacity_button.dart';
-import 'package:mocozi/controllers/chat_controller.dart';
-import 'package:mocozi/utils/colors.dart';
+import 'package:MOCOZI/components/chat_item.dart';
+import 'package:MOCOZI/components/opacity_button.dart';
+import 'package:MOCOZI/controllers/chat_controller.dart';
+import 'package:MOCOZI/utils/colors.dart';
 
 class ChatPage extends StatelessWidget {
   ChatPage({Key? key}) : super(key: key);

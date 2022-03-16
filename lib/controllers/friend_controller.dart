@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/model/group.dart';
-import 'package:mocozi/model/user.dart';
-import 'package:mocozi/screens/friend_screen.dart';
-import 'package:mocozi/screens/group_screen.dart';
-import 'package:mocozi/services/remote_service.dart';
+import 'package:MOCOZI/model/group.dart';
+import 'package:MOCOZI/model/user.dart';
+import 'package:MOCOZI/screens/friend_screen.dart';
+import 'package:MOCOZI/screens/group_screen.dart';
+import 'package:MOCOZI/services/remote_service.dart';
 
 class FriendController extends GetxController {
   static FriendController to = Get.find();

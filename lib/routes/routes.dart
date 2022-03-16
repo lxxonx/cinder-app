@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:mocozi/pages/edit_page.dart';
-import 'package:mocozi/pages/home_page.dart';
-import 'package:mocozi/pages/settings_page.dart';
-import 'package:mocozi/pages/splash_page.dart';
-import 'package:mocozi/pages/verifyCode_page.dart';
-import 'package:mocozi/pages/verifyPhone_page.dart';
+import 'package:MOCOZI/pages/edit_page.dart';
+import 'package:MOCOZI/pages/home_page.dart';
+import 'package:MOCOZI/pages/settings_page.dart';
+import 'package:MOCOZI/pages/splash_page.dart';
+import 'package:MOCOZI/pages/verifyCode_page.dart';
+import 'package:MOCOZI/pages/verifyPhone_page.dart';
 
 var routes = [
   GetPage(

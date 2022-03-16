@@ -1,4 +1,4 @@
-import 'package:mocozi/utils/colors.dart';
+import 'package:MOCOZI/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class OpacityButton extends StatefulWidget {

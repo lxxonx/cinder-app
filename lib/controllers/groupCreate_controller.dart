@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
-import 'package:mocozi/controllers/friend_controller.dart';
-import 'package:mocozi/model/group.dart';
-import 'package:mocozi/model/user.dart';
-import 'package:mocozi/services/remote_service.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/controllers/friend_controller.dart';
+import 'package:MOCOZI/model/group.dart';
+import 'package:MOCOZI/model/user.dart';
+import 'package:MOCOZI/services/remote_service.dart';
 
 class GroupCreateController extends GetxController {
   var isLoading = false.obs;

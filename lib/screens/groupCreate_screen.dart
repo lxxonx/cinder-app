@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mocozi/components/friend_item.dart';
-import 'package:mocozi/controllers/friend_controller.dart';
-import 'package:mocozi/controllers/groupCreate_controller.dart';
-import 'package:mocozi/pages/groupCreate_page.dart';
-import 'package:mocozi/utils/colors.dart';
+import 'package:MOCOZI/components/friend_item.dart';
+import 'package:MOCOZI/controllers/friend_controller.dart';
+import 'package:MOCOZI/controllers/groupCreate_controller.dart';
+import 'package:MOCOZI/pages/groupCreate_page.dart';
+import 'package:MOCOZI/utils/colors.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 

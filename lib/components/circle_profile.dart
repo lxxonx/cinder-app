@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mocozi/components/circle_image.dart';
+import 'package:MOCOZI/components/circle_image.dart';
 
 class CircleProfile extends StatelessWidget {
   const CircleProfile({Key? key, required this.image, this.size = 180})

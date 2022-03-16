@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mocozi/controllers/friend_controller.dart';
-import 'package:mocozi/model/group.dart';
-import 'package:mocozi/model/user.dart';
+import 'package:MOCOZI/controllers/friend_controller.dart';
+import 'package:MOCOZI/model/group.dart';
+import 'package:MOCOZI/model/user.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 
@@ -45,7 +45,7 @@ class MemberCardScreen extends StatelessWidget {
     ];
     return SingleChildScrollView(
         child: Column(
-      children: list,
-    ));
+            // children: list,
+            ));
   }
 }

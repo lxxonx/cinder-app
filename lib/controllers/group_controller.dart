@@ -1,6 +1,6 @@
 import 'package:get/state_manager.dart';
-import 'package:mocozi/model/group.dart';
-import 'package:mocozi/services/remote_service.dart';
+import 'package:MOCOZI/model/group.dart';
+import 'package:MOCOZI/services/remote_service.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mocozi/model/group.dart';
+import 'package:MOCOZI/model/group.dart';
 
 class MemberInfoScreen extends StatelessWidget {
   const MemberInfoScreen({Key? key, required this.member}) : super(key: key);

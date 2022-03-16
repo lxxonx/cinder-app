@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-
 import 'dart:core';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mocozi/components/long_text_box.dart';
-import 'package:mocozi/components/text_input_field.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
-import 'package:mocozi/controllers/groupCreate_controller.dart';
-import 'package:mocozi/model/user.dart';
-import 'package:mocozi/utils/colors.dart';
-import 'package:mocozi/utils/logo.dart';
+import 'package:MOCOZI/components/long_text_box.dart';
+import 'package:MOCOZI/components/text_input_field.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/controllers/groupCreate_controller.dart';
+import 'package:MOCOZI/model/user.dart';
+import 'package:MOCOZI/utils/colors.dart';
+import 'package:MOCOZI/utils/logo.dart';
 
 class GroupCreatePage extends StatelessWidget {
   GroupCreatePage({Key? key}) : super(key: key);

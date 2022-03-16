@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/controllers/friend_controller.dart';
-import 'package:mocozi/controllers/group_controller.dart';
-import 'package:mocozi/model/user.dart' as model;
-import 'package:mocozi/pages/home_page.dart';
-import 'package:mocozi/pages/signUp_page.dart';
-import 'package:mocozi/pages/studentCard_page.dart';
-import 'package:mocozi/pages/welcome_page.dart';
-import 'package:mocozi/services/remote_service.dart';
+import 'package:MOCOZI/controllers/friend_controller.dart';
+import 'package:MOCOZI/controllers/group_controller.dart';
+import 'package:MOCOZI/model/user.dart' as model;
+import 'package:MOCOZI/pages/home_page.dart';
+import 'package:MOCOZI/pages/signUp_page.dart';
+import 'package:MOCOZI/pages/studentCard_page.dart';
+import 'package:MOCOZI/pages/welcome_page.dart';
+import 'package:MOCOZI/services/remote_service.dart';
 
 class AuthController extends GetxController {
   var isLoading = false.obs;

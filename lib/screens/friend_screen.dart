@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/components/friend_item.dart';
-import 'package:mocozi/components/opacity_button.dart';
-import 'package:mocozi/controllers/friend_controller.dart';
-import 'package:mocozi/screens/groupCreate_screen.dart';
+import 'package:MOCOZI/components/friend_item.dart';
+import 'package:MOCOZI/components/opacity_button.dart';
+import 'package:MOCOZI/controllers/friend_controller.dart';
+import 'package:MOCOZI/screens/groupCreate_screen.dart';
 
 class FriendScreen extends StatelessWidget {
   final FriendController _friendController = FriendController.to;

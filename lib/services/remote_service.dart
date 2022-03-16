@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
-import 'package:mocozi/model/chat_room.dart';
-import 'package:mocozi/model/group.dart';
-import 'package:mocozi/model/http_response.dart';
-import 'package:mocozi/model/user.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/model/chat_room.dart';
+import 'package:MOCOZI/model/group.dart';
+import 'package:MOCOZI/model/http_response.dart';
+import 'package:MOCOZI/model/user.dart';
 
 class Apis {
   static final baseUrl = Platform.isAndroid
@@ -128,7 +128,7 @@ class RemoteServices {
 
   static Future<Pic?> uploadPic(XFile file) async {
     try {
-      var _file = await file.path;
+      var _file = file.path;
       // putting in uint8list format -> Upload task like a future but not future
 
       String token =

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/controllers/cam_controller.dart';
-import 'package:mocozi/utils/colors.dart';
-import 'package:mocozi/utils/logo.dart';
+import 'package:MOCOZI/controllers/cam_controller.dart';
+import 'package:MOCOZI/utils/colors.dart';
+import 'package:MOCOZI/utils/logo.dart';
 
 class StudentCardPage extends StatelessWidget {
   CamController? camController = Get.put(CamController());

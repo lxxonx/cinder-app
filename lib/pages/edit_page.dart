@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mocozi/components/labeled_text_box.dart';
-import 'package:mocozi/components/long_text_box.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
-import 'package:mocozi/controllers/edit_controller.dart';
-import 'package:mocozi/services/remote_service.dart';
-import 'package:mocozi/utils/colors.dart';
+import 'package:MOCOZI/components/labeled_text_box.dart';
+import 'package:MOCOZI/components/long_text_box.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/controllers/edit_controller.dart';
+import 'package:MOCOZI/services/remote_service.dart';
+import 'package:MOCOZI/utils/colors.dart';
 
 class EditPage extends StatelessWidget {
   EditPage({

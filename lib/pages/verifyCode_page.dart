@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/components/opacity_button.dart';
-import 'package:mocozi/controllers/phoneVerify_controller.dart';
-import 'package:mocozi/utils/colors.dart';
+import 'package:MOCOZI/components/opacity_button.dart';
+import 'package:MOCOZI/controllers/phoneVerify_controller.dart';
+import 'package:MOCOZI/utils/colors.dart';
 
 class VerifyCodePage extends StatelessWidget {
   static const double dist = 3.0;

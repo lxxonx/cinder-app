@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
-import 'package:mocozi/controllers/friend_controller.dart';
-import 'package:mocozi/routes/routes.dart';
-import 'package:mocozi/utils/colors.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/controllers/friend_controller.dart';
+import 'package:MOCOZI/routes/routes.dart';
+import 'package:MOCOZI/utils/colors.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {

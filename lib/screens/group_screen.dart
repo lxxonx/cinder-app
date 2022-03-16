@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:MOCOZI/controllers/friend_controller.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/components/outline_circle_button.dart';
-import 'package:mocozi/controllers/card_controller.dart';
-import 'package:mocozi/model/group.dart';
+import 'package:MOCOZI/components/outline_circle_button.dart';
+import 'package:MOCOZI/controllers/card_controller.dart';
+import 'package:MOCOZI/model/group.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 class SwipeableCard extends StatelessWidget {

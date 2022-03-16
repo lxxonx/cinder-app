@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mocozi/components/text_input_field.dart';
-import 'package:mocozi/controllers/auth_controller.dart';
-import 'package:mocozi/controllers/signUp_controller.dart';
-import 'package:mocozi/services/remote_service.dart';
-import 'package:mocozi/utils/colors.dart';
-import 'package:mocozi/utils/logo.dart';
+import 'package:MOCOZI/components/text_input_field.dart';
+import 'package:MOCOZI/controllers/auth_controller.dart';
+import 'package:MOCOZI/controllers/signUp_controller.dart';
+import 'package:MOCOZI/services/remote_service.dart';
+import 'package:MOCOZI/utils/colors.dart';
+import 'package:MOCOZI/utils/logo.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);

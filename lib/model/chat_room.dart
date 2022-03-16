@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mocozi/model/message.dart';
+import 'package:MOCOZI/model/message.dart';
 part 'chat_room.g.dart';
 
 @JsonSerializable()
