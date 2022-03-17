@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'dart:core';
 import 'package:get/get.dart';
-import 'package:MOCOZI/controllers/auth_controller.dart';
-import 'package:MOCOZI/utils/colors.dart';
-import 'package:MOCOZI/utils/logo.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/utils/logo.dart';
 
 class WelcomePage extends StatelessWidget {
   final AuthController authController = AuthController.to;

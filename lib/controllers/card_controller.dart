@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:MOCOZI/model/group.dart';
-import 'package:MOCOZI/screens/groupCard_screen.dart';
-import 'package:MOCOZI/screens/group_screen.dart';
-import 'package:MOCOZI/screens/memberInfo_screen.dart';
-import 'package:MOCOZI/screens/member_screen.dart';
+import 'package:mocozi/model/group.dart';
+import 'package:mocozi/screens/groupCard_screen.dart';
+import 'package:mocozi/screens/group_screen.dart';
+import 'package:mocozi/screens/memberInfo_screen.dart';
+import 'package:mocozi/screens/member_screen.dart';
 
 class CardController extends GetxController {
   CardController({Key? key, required this.group});
@@ -19,8 +19,8 @@ class CardController extends GetxController {
     pages = [
       GroupCardScreen(group: group),
     ];
-    var memWidget = group.members.map((m) {
-      return MemberCardScreen(member: m);
+    var memWidget = group.members.map((u) {
+      return MemberCardScreen(user: u);
     }).toList();
     pages.addAll(memWidget);
     info = [
@@ -79,7 +79,7 @@ class CardController extends GetxController {
     ];
 
     var memInfos = group.members.map((m) {
-      return MemberInfoScreen(member: m);
+      return MemberInfoScreen(user: m);
     }).toList();
     info.addAll(memInfos);
   }

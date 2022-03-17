@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:MOCOZI/components/text_input_field.dart';
-import 'package:MOCOZI/controllers/auth_controller.dart';
-import 'package:MOCOZI/controllers/signUp_controller.dart';
-import 'package:MOCOZI/services/remote_service.dart';
-import 'package:MOCOZI/utils/colors.dart';
-import 'package:MOCOZI/utils/logo.dart';
+import 'package:mocozi/components/profile_pic.dart';
+import 'package:mocozi/components/profile_pic_plus.dart';
+import 'package:mocozi/components/text_input_field.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/controllers/signUp_controller.dart';
+import 'package:mocozi/utils/colors.dart';
+import 'package:mocozi/utils/logo.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);
@@ -32,8 +33,8 @@ class SignUpPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text("프로필 사진"),
                     ),
                     SizedBox(
@@ -48,28 +49,28 @@ class SignUpPage extends StatelessWidget {
                                 ? AuthController.to.curUser.value!.pics!.length
                                 : 0;
                             if (index < len) {
-                              return Container(
-                                height: 180,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      AuthController
-                                          .to.curUser.value!.pics![index].url,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                              return ProfilePic(
+                                pic: AuthController
+                                    .to.curUser.value!.pics![index].url,
+                                onPressed: () => signUpController.deletePic(
+                                    AuthController
+                                        .to.curUser.value!.pics![index].uid),
                               );
+                              // Container(
+                              //   height: 180,
+                              //   width: 150,
+                              //   decoration: BoxDecoration(
+                              //     image: DecorationImage(
+                              //       image: NetworkImage(
+                              //         AuthController
+                              //             .to.curUser.value!.pics![index].url,
+                              //       ),
+                              //       fit: BoxFit.cover,
+                              //     ),
+                              //   ),
+                              // );
                             } else {
-                              return GestureDetector(
-                                  onTap: () {
-                                    openDialog();
-                                  },
-                                  child: Container(
-                                      height: 180,
-                                      width: 150,
-                                      color: Colors.pink));
+                              return ProfilePicPlus(onPressed: openDialog);
                             }
                           },
                           itemCount: AuthController
@@ -239,7 +240,7 @@ class SignUpPage extends StatelessWidget {
               child: const Text("갤러리에서 선택하기"),
               onPressed: () async {
                 final _pickedFile = await ImagePicker().pickImage(
-                  source: ImageSource.camera,
+                  source: ImageSource.gallery,
                   maxHeight: 500,
                   maxWidth: 500,
                 );

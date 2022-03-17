@@ -51,8 +51,9 @@ class User {
 @JsonSerializable()
 class Pic {
   final String url;
+  final String uid;
 
-  Pic(this.url);
+  Pic(this.url, this.uid);
 
   factory Pic.fromJson(Map<String, dynamic> json) => _$PicFromJson(json);
 

@@ -7,7 +7,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera.flash" />
-    <application
+   <application
         android:label="mocozi"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

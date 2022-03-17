@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:MOCOZI/controllers/auth_controller.dart';
-import 'package:MOCOZI/model/chat_room.dart';
-import 'package:MOCOZI/model/group.dart';
-import 'package:MOCOZI/model/http_response.dart';
-import 'package:MOCOZI/model/user.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/model/chat_room.dart';
+import 'package:mocozi/model/group.dart';
+import 'package:mocozi/model/http_response.dart';
+import 'package:mocozi/model/user.dart';
 
 class Apis {
   static final baseUrl = Platform.isAndroid
@@ -20,6 +20,7 @@ class Apis {
   static var currentUserApi = Uri.parse('$baseUrl/users/current');
   static var updateUserApi = Uri.parse('$baseUrl/users/update');
   static var uploadPicApi = Uri.parse('$baseUrl/users/pic');
+  static var deletePicApi = Uri.parse('$baseUrl/users/pic');
   static var uploadStudentCardApi = Uri.parse('$baseUrl/users/sc');
 
   // friend apis
@@ -34,6 +35,7 @@ class Apis {
   static var fetchMyGroupApi = Uri.parse('$baseUrl/groups/my');
   static var createGroupApi = Uri.parse('$baseUrl/groups/create');
   static var likeGroupApi = Uri.parse('$baseUrl/groups/like');
+  static var uploadGroupPicApi = Uri.parse('$baseUrl/groups/pic');
   static var dislikeGroupApi = Uri.parse('$baseUrl/groups/dislike');
 
   // chat apis
@@ -143,7 +145,7 @@ class RemoteServices {
       var res = HttpResponse.fromJson(j);
 
       if (res.ok) {
-        return Pic.fromJson(res.data!);
+        return Pic.fromJson(res.data!["pic"]);
       } else {
         Get.snackbar("사진 업로드 실패", "다시 시도해주세요! 🔧");
         return null;
@@ -152,6 +154,31 @@ class RemoteServices {
       print(e);
       Get.snackbar("err", "upload fail");
       return null;
+    }
+  }
+
+  static Future<bool> deletePic(String picUid) async {
+    try {
+      String token =
+          await AuthController.to.firebaseUser.value!.getIdToken(false);
+      final response = await client.delete(Apis.deletePicApi, headers: {
+        "Authorization": "Bearer ${token}",
+      }, body: {
+        "pic_id": picUid,
+      });
+      var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+
+      print(clientResponse);
+      var res = HttpResponse.fromJson(clientResponse);
+      if (res.ok) {
+        return res.ok;
+      } else {
+        Get.snackbar("오류발생", res.message.toString());
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to load current user');
     }
   }
 
@@ -343,28 +370,94 @@ class RemoteServices {
     }
   }
 
-  static Future<Group?> createGroup(
-    String groupName,
+  static Future<bool> createGroup(
     List<String> members,
+    String groupName,
+    String bio,
+    List<XFile> pics,
   ) async {
-    String token =
-        await AuthController.to.firebaseUser.value!.getIdToken(false);
+    try {
+      // putting in uint8list format -> Upload task like a future but not future
 
-    var response = await RemoteServices.client.post(Apis.createGroupApi, body: {
-      "group_name": groupName,
-      "members": json.encode(members),
-    }, headers: {
-      'Authorization': 'Bearer $token',
-    });
+      String token =
+          await AuthController.to.firebaseUser.value!.getIdToken(false);
+      var request = http.MultipartRequest("POST", Apis.createGroupApi);
+      request.headers['Authorization'] = 'Bearer $token';
+      for (int i = 0; i < pics.length; i++) {
+        var file = await http.MultipartFile.fromPath(
+          'photos', pics[i].path,
+          // contentType: Mediatype('image', 'jpeg'),
+        );
+        request.files.add(file);
+      }
+      request.fields['group_name'] = groupName;
+      request.fields['bio'] = bio;
+      request.fields['members'] = json.encode(members);
+      // request.files.addAll(await http.MultipartFile.fromPath("photos", pics.path));
+      var j = await request
+          .send()
+          .then((res) => res.stream.bytesToString())
+          .then((value) => json.decode(value));
+      var res = HttpResponse.fromJson(j);
 
-    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
-    HttpResponse cr = HttpResponse.fromJson(clientResponse);
-    if (cr.ok) {
-      var group = cr.data!["group"];
-      var groupData = Group.fromJson(group);
-      return groupData;
-    } else {
-      Get.snackbar("실패", cr.message.toString());
+      if (res.ok) {
+        // return Pic.fromJson(res.data!["pic"]);
+        return res.ok;
+      } else {
+        Get.snackbar("사진 업로드 실패", "다시 시도해주세요! 🔧");
+        return res.ok;
+      }
+    } catch (e) {
+      print(e);
+      Get.snackbar("err", "upload fail");
+      return false;
+    }
+
+    // var response = await RemoteServices.client.post(Apis.createGroupApi, body: {
+    //   "group_name": groupName,
+    //   "members": json.encode(members),
+    //   "bio": bio,
+    // }, headers: {
+    //   'Authorization': 'Bearer $token',
+    // });
+
+    // var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    // HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    // if (cr.ok) {
+    //   var group = cr.data!["group"];
+    //   var groupData = Group.fromJson(group);
+    //   return groupData;
+    // } else {
+    //   Get.snackbar("실패", cr.message.toString());
+    //   return null;
+    // }
+  }
+
+  static Future<Pic?> uploadGroupPic(XFile file) async {
+    try {
+      var _file = file.path;
+      // putting in uint8list format -> Upload task like a future but not future
+
+      String token =
+          await AuthController.to.firebaseUser.value!.getIdToken(false);
+      var request = http.MultipartRequest("POST", Apis.uploadGroupPicApi);
+      request.headers['Authorization'] = 'Bearer $token';
+      request.files.add(await http.MultipartFile.fromPath("photo", _file));
+      var j = await request
+          .send()
+          .then((res) => res.stream.bytesToString())
+          .then((value) => json.decode(value));
+      var res = HttpResponse.fromJson(j);
+
+      if (res.ok) {
+        return Pic.fromJson(res.data!["pic"]);
+      } else {
+        Get.snackbar("사진 업로드 실패", "다시 시도해주세요! 🔧");
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      Get.snackbar("err", "upload fail");
       return null;
     }
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:MOCOZI/controllers/phoneVerify_controller.dart';
-import 'package:MOCOZI/utils/colors.dart';
+import 'package:mocozi/controllers/phoneVerify_controller.dart';
+import 'package:mocozi/utils/colors.dart';
 
 class VerifyPhonePage extends StatelessWidget {
   VerifyPhonePage({Key? key}) : super(key: key);

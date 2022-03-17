@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:MOCOZI/model/user.dart';
+import 'package:mocozi/model/user.dart';
 part 'group.g.dart';
 
 @JsonSerializable()
@@ -11,15 +11,15 @@ class Group {
   @JsonKey(includeIfNull: false)
   List<Pic> pics;
   @JsonKey(name: "group_members", includeIfNull: false)
-  List<Member> members;
+  List<User> members;
 
   Group(
     this.groupname, {
     this.bio,
     List<Pic>? pics,
-    List<Member>? members,
+    List<User>? members,
   })  : pics = pics ?? <Pic>[],
-        members = members ?? <Member>[];
+        members = members ?? <User>[];
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
 

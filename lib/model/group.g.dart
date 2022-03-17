@@ -13,7 +13,7 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
           ?.map((e) => Pic.fromJson(e as Map<String, dynamic>))
           .toList(),
       members: (json['group_members'] as List<dynamic>?)
-          ?.map((e) => Member.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

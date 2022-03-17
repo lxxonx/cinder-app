@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:MOCOZI/controllers/friend_controller.dart';
-import 'package:MOCOZI/model/group.dart';
+import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:mocozi/model/group.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 
@@ -26,6 +26,7 @@ class GroupCardScreen extends StatelessWidget {
         child: Text(group.bio!),
       ),
       ...group.pics.map((e) {
+        if (group.pics.indexOf(e) == 0) return Container();
         return Container(
           width: 450,
           height: 450,

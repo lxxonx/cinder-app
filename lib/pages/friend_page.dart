@@ -1,6 +1,6 @@
-import 'package:MOCOZI/components/opacity_button.dart';
-import 'package:MOCOZI/controllers/friend_controller.dart';
-import 'package:MOCOZI/utils/colors.dart';
+import 'package:mocozi/components/opacity_button.dart';
+import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:mocozi/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

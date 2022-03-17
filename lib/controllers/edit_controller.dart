@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:MOCOZI/controllers/auth_controller.dart';
-import 'package:MOCOZI/model/user.dart';
-import 'package:MOCOZI/services/remote_service.dart';
-import 'package:MOCOZI/utils/departments.dart';
-import 'package:MOCOZI/utils/universities.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/model/user.dart';
+import 'package:mocozi/services/remote_service.dart';
+import 'package:mocozi/utils/departments.dart';
+import 'package:mocozi/utils/universities.dart';
 
 class EditController extends GetxController {
   static EditController get to => Get.find();
@@ -31,9 +31,6 @@ class EditController extends GetxController {
   var uni = "대학교를 선택하세요".obs;
   var dep = "단과대를 선택하세요".obs;
   var gender = "성별을 선택하세요".obs;
-  var username = "".obs;
-  var actualName = "".obs;
-  var birthYear = "".obs;
 
   void selectUni(context) {
     List<String> unis = [];
@@ -168,10 +165,7 @@ class EditController extends GetxController {
 
   void getUser() {
     var user = AuthController.to.curUser.value;
-    username.value = user!.username!;
-    actualName.value = user.actualName!;
-    bioController.text = user.bio!;
-    birthYear.value = user.birthYear.toString();
+    bioController.text = user!.bio!;
     uni.value = user.uni!;
     dep.value = user.dep!;
     gender.value = user.gender!;
@@ -184,6 +178,16 @@ class EditController extends GetxController {
       AuthController.to.curUser.value!.pics!.add(pic);
     }
 
+    isLoading(false);
+  }
+
+  void deletePic(_picUid) async {
+    isLoading(true);
+    var res = await RemoteServices.deletePic(_picUid);
+    if (res) {
+      AuthController.to.curUser.value!.pics!
+          .removeWhere((pic) => pic.uid == _picUid);
+    }
     isLoading(false);
   }
 

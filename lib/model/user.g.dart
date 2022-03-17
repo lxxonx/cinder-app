@@ -47,8 +47,10 @@ Map<String, dynamic> _$UserToJson(User instance) {
 
 Pic _$PicFromJson(Map<String, dynamic> json) => Pic(
       json['url'] as String,
+      json['uid'] as String,
     );
 
 Map<String, dynamic> _$PicToJson(Pic instance) => <String, dynamic>{
       'url': instance.url,
+      'uid': instance.uid,
     };

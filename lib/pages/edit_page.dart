@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:MOCOZI/components/labeled_text_box.dart';
-import 'package:MOCOZI/components/long_text_box.dart';
-import 'package:MOCOZI/controllers/auth_controller.dart';
-import 'package:MOCOZI/controllers/edit_controller.dart';
-import 'package:MOCOZI/services/remote_service.dart';
-import 'package:MOCOZI/utils/colors.dart';
+import 'package:mocozi/components/labeled_text_box.dart';
+import 'package:mocozi/components/long_text_box.dart';
+import 'package:mocozi/components/profile_pic.dart';
+import 'package:mocozi/components/profile_pic_plus.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/controllers/edit_controller.dart';
+import 'package:mocozi/utils/colors.dart';
 
 class EditPage extends StatelessWidget {
   EditPage({
     Key? key,
   }) : super(key: key);
   final EditController editController = Get.put(EditController());
+  final AuthController _auth = AuthController.to;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,49 +42,36 @@ class EditPage extends StatelessWidget {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    var len =
-                        AuthController.to.curUser.value?.pics?.length != null
-                            ? AuthController.to.curUser.value!.pics!.length
-                            : 0;
+                    var len = _auth.curUser.value?.pics?.length != null
+                        ? _auth.curUser.value!.pics!.length
+                        : 0;
                     if (index < len) {
-                      return Container(
-                        height: 180,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              AuthController.to.curUser.value!.pics![index].url,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      );
-                    } else {
-                      return GestureDetector(
-                          onTap: () {
-                            openDialog();
+                      return ProfilePic(
+                          onPressed: () {
+                            editController.deletePic(
+                                _auth.curUser.value!.pics![index].uid);
                           },
-                          child: Container(
-                              height: 180, width: 150, color: Colors.pink));
+                          pic: _auth.curUser.value!.pics![index].url);
+                    } else {
+                      return ProfilePicPlus(onPressed: openDialog);
                     }
                   },
-                  itemCount:
-                      AuthController.to.curUser.value?.pics?.length != null
-                          ? AuthController.to.curUser.value!.pics!.length + 1
-                          : 1,
+                  itemCount: _auth.curUser.value?.pics?.length != null
+                      ? _auth.curUser.value!.pics!.length + 1
+                      : 1,
                 ));
           }),
           LabeledTextBox(
             label: "유저이름",
-            text: editController.username.value,
+            text: _auth.curUser.value!.username,
           ),
           LabeledTextBox(
             label: "본명",
-            text: editController.actualName.value,
+            text: _auth.curUser.value!.actualName,
           ),
           LabeledTextBox(
             label: "출생연도",
-            text: editController.birthYear.value,
+            text: _auth.curUser.value!.birthYear,
           ),
           GestureDetector(
             onTap: () {

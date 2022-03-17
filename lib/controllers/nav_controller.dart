@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:MOCOZI/pages/chat_page.dart';
-import 'package:MOCOZI/pages/friend_page.dart';
-import 'package:MOCOZI/pages/heart_page.dart';
-import 'package:MOCOZI/screens/card_screen.dart';
+import 'package:mocozi/pages/chat_page.dart';
+import 'package:mocozi/pages/friend_page.dart';
+import 'package:mocozi/pages/heart_page.dart';
+import 'package:mocozi/screens/card_screen.dart';
 
 class NavController extends GetxController {
   final currentIndex = 0.obs;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:MOCOZI/components/swipeable_card.dart';
-import 'package:MOCOZI/controllers/group_controller.dart';
+import 'package:mocozi/components/swipeable_card.dart';
+import 'package:mocozi/controllers/group_controller.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 

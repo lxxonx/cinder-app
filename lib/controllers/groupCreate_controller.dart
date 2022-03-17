@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:MOCOZI/controllers/auth_controller.dart';
-import 'package:MOCOZI/controllers/friend_controller.dart';
-import 'package:MOCOZI/model/group.dart';
-import 'package:MOCOZI/model/user.dart';
-import 'package:MOCOZI/services/remote_service.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
+import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:mocozi/model/group.dart';
+import 'package:mocozi/model/user.dart';
+import 'package:mocozi/services/remote_service.dart';
 
 class GroupCreateController extends GetxController {
   var isLoading = false.obs;
+  var sendingRequest = false.obs;
   var currentIndex = 0.obs;
   var checked = <User>[].obs;
   var pics = <Pic>[].obs;
+  var assets = <XFile>[].obs;
 
   static GroupCreateController get to => Get.find();
+
+  TextEditingController friendNameController = TextEditingController();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController bioController = TextEditingController();
@@ -23,6 +28,7 @@ class GroupCreateController extends GetxController {
   }
 
   void createGroup() async {
+    isLoading(true);
     var groupname = nameController.text;
     if (groupname.isEmpty) {
       Get.snackbar("오류", "그룹 이름을 입력해주세요");
@@ -33,21 +39,36 @@ class GroupCreateController extends GetxController {
       return;
     }
     var res = await RemoteServices.createGroup(
-      groupname,
       checked.map((u) => u.username!).toList(),
+      groupname,
+      bioController.text,
+      assets,
     );
 
-    if (res != null) {
-      FriendController.to.myGroups.add(res);
+    if (res) {
+      FriendController.to.getMyGroup();
+      Get.back();
     }
+
+    isLoading(false);
+    // if (res != null) {
+    //   FriendController.to.myGroups.add(res);
+    // }
   }
 
-  void uploadPic(_pickedFile) async {
+  // void uploadPic(_pickedFile) async {
+  //   isLoading(true);
+  //   var pic = await RemoteServices.uploadPic(_pickedFile);
+  //   if (pic != null) {
+  //     pics.add(pic);
+  //   }
+  //   isLoading(false);
+  // }
+
+  void deletePic(index) async {
     isLoading(true);
-    var pic = await RemoteServices.uploadPic(_pickedFile);
-    if (pic != null) {
-      pics.add(pic);
-    }
+    // await Re
+    assets.removeAt(index);
     isLoading(false);
   }
 }

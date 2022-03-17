@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:MOCOZI/components/circle_image.dart';
-import 'package:MOCOZI/model/user.dart';
+import 'package:mocozi/components/circle_image.dart';
+import 'package:mocozi/model/user.dart';
 
 class FriendItem extends StatelessWidget {
   FriendItem({

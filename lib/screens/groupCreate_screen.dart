@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:MOCOZI/components/friend_item.dart';
-import 'package:MOCOZI/controllers/friend_controller.dart';
-import 'package:MOCOZI/controllers/groupCreate_controller.dart';
-import 'package:MOCOZI/pages/groupCreate_page.dart';
-import 'package:MOCOZI/utils/colors.dart';
+import 'package:mocozi/components/friend_item.dart';
+import 'package:mocozi/controllers/friend_controller.dart';
+import 'package:mocozi/controllers/groupCreate_controller.dart';
+import 'package:mocozi/pages/groupCreate_page.dart';
+import 'package:mocozi/utils/colors.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +24,8 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
     return Column(
       children: [
         TextField(
-          controller: _groupCreateController.nameController,
+          controller: _groupCreateController.friendNameController,
+          onChanged: (value) {},
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
             hintText: "친구의 이름을 입력해주세요",

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:MOCOZI/controllers/friend_controller.dart';
-import 'package:MOCOZI/model/group.dart';
-import 'package:MOCOZI/model/user.dart';
-import 'package:swipe_cards/swipe_cards.dart';
-import 'package:get/get.dart';
+import 'package:mocozi/model/user.dart';
 
 class MemberCardScreen extends StatelessWidget {
-  const MemberCardScreen({Key? key, required this.member}) : super(key: key);
-  final Member member;
+  const MemberCardScreen({Key? key, required this.user}) : super(key: key);
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +14,18 @@ class MemberCardScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           image: DecorationImage(
-            image: NetworkImage(member.users.pics![0].url.split(".jpg")[0] +
-                "_8.jpg?alt=media"),
+            image: NetworkImage(
+                user.pics![0].url.split(".jpg")[0] + "_8.jpg?alt=media"),
             fit: BoxFit.cover,
           ),
         ),
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Text(member.users.bio!),
+        child: Text(user.bio!),
       ),
-      ...member.users.pics!.map((e) {
+      ...user.pics!.map((e) {
+        if (user.pics!.indexOf(e) == 0) return Container();
         return Container(
           width: 450,
           height: 450,
@@ -45,7 +42,7 @@ class MemberCardScreen extends StatelessWidget {
     ];
     return SingleChildScrollView(
         child: Column(
-            // children: list,
-            ));
+      children: list,
+    ));
   }
 }

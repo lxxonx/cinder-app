@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:MOCOZI/model/group.dart';
+import 'package:mocozi/model/user.dart';
 
 class MemberInfoScreen extends StatelessWidget {
-  const MemberInfoScreen({Key? key, required this.member}) : super(key: key);
-  final Member member;
+  const MemberInfoScreen({Key? key, required this.user}) : super(key: key);
+  final User user;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -33,8 +33,7 @@ class MemberInfoScreen extends StatelessWidget {
                       //         fontWeight: FontWeight.w600)),
                       Container(
                           margin: const EdgeInsets.only(left: 8),
-                          child: Text(
-                              "${member.users.uni!}/${member.users.dep!}",
+                          child: Text("${user.uni}/${user.dep}",
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18.0,
@@ -48,7 +47,7 @@ class MemberInfoScreen extends StatelessWidget {
                 ],
               ),
               Text(
-                member.users.bio!,
+                user.bio!,
                 style: TextStyle(
                   color: Colors.white,
                 ),

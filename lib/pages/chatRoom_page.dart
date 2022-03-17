@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:MOCOZI/components/chat_item.dart';
-import 'package:MOCOZI/components/text_input_field.dart';
-import 'package:MOCOZI/controllers/message_controller.dart';
-import 'package:MOCOZI/utils/colors.dart';
+import 'package:mocozi/components/chat_item.dart';
+import 'package:mocozi/components/text_input_field.dart';
+import 'package:mocozi/controllers/message_controller.dart';
+import 'package:mocozi/utils/colors.dart';
 
 class ChatRoomPage extends StatelessWidget {
   ChatRoomPage({Key? key, required this.roomName}) : super(key: key);
