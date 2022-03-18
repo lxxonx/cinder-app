@@ -71,7 +71,7 @@ class EditPage extends StatelessWidget {
           ),
           LabeledTextBox(
             label: "출생연도",
-            text: _auth.curUser.value!.birthYear,
+            text: _auth.curUser.value!.birthYear.toString(),
           ),
           GestureDetector(
             onTap: () {

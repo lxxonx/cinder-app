@@ -33,6 +33,8 @@ class ProfilePage extends StatelessWidget {
                         Get.to(EditPage());
                       },
                       child: CircleProfile(
+                          actualName:
+                              _authController.curUser.value!.actualName!,
                           image: NetworkImage(
                               _authController.curUser.value!.avatar!,
                               scale: 2)),

@@ -13,7 +13,11 @@ class CamController extends GetxController {
   static final picker = ImagePicker();
 
   Future<void> uploadStudentCard() async {
-    final _pickedFile = await picker.pickImage(source: ImageSource.camera);
+    final _pickedFile = await picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 400,
+        maxWidth: 400,
+        imageQuality: 50);
 
     if (_pickedFile != null) {
       isLoading(true);
