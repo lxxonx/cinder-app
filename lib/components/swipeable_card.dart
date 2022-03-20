@@ -6,12 +6,12 @@ import 'package:mocozi/model/group.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 class SwipeableCard extends StatelessWidget {
-  SwipeableCard({Key? key, required this.matchEngine}) : super(key: key);
-  final MatchEngine matchEngine;
+  SwipeableCard({Key? key, required this.card}) : super(key: key);
+  final SwipeItem card;
   @override
   Widget build(BuildContext context) {
-    CardController cardController = Get.put(CardController(
-        key: key, group: matchEngine.currentItem!.content as Group));
+    CardController cardController =
+        Get.put(CardController(key: key, group: card.content));
     return Card(
       elevation: 5,
       child: Stack(
@@ -74,7 +74,7 @@ class SwipeableCard extends StatelessWidget {
             ),
             onPressed: () {
               // undo
-              matchEngine.currentItem!.nope();
+              card.nope();
             },
           ),
           OutlineCircleButton(
@@ -87,7 +87,7 @@ class SwipeableCard extends StatelessWidget {
             ),
             onPressed: () {
               // boost
-              matchEngine.currentItem!.like();
+              card.like();
             },
           ),
         ],

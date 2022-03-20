@@ -21,6 +21,12 @@ class GroupCardScreen extends StatelessWidget {
           ),
         ),
       ),
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12.0),
+        child: Text(
+          "자기소개",
+        ),
+      ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Text(group.bio!),
@@ -41,6 +47,7 @@ class GroupCardScreen extends StatelessWidget {
     ];
     return SingleChildScrollView(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: list,
     ));
   }

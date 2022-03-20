@@ -11,10 +11,10 @@ import 'package:mocozi/model/http_response.dart';
 import 'package:mocozi/model/user.dart';
 
 class Apis {
-  // static final baseUrl = Platform.isAndroid
-  //     ? 'http://10.0.2.2:8080/api'
-  //     : 'http://192.168.9.174:8080/api';
-  static const baseUrl = "https://mocozi.blackmonkeys.biz/api";
+  static final baseUrl = Platform.isAndroid
+      ? 'http://10.0.2.2:8080/api'
+      : 'http://192.168.9.174:8080/api';
+  // static const baseUrl = "https://mocozi.blackmonkeys.biz/api";
 
   // user apis
   static var registerUserApi = Uri.parse('$baseUrl/users/register');
@@ -285,7 +285,8 @@ class RemoteServices {
         await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response = await RemoteServices.client.get(
-        Uri.http("10.0.2.2:8080", "/api/friends/search", {"fName": friendName}),
+        Uri.http(Apis.baseUrl.split("/")[2], "/api/friends/search",
+            {"fName": friendName}),
         headers: {
           'Authorization': 'Bearer $token',
         });
