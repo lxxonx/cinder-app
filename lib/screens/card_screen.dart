@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mocozi/components/swipe_card.dart';
 import 'package:mocozi/components/swipeable_card.dart';
 import 'package:mocozi/controllers/group_controller.dart';
 import 'package:swipe_cards/swipe_cards.dart';
@@ -12,11 +13,12 @@ class CardScreen extends StatelessWidget {
       if (_groupController.isLoading.value == true)
         return Center(child: CircularProgressIndicator());
       if (_groupController.groupList.isEmpty) {
-        return Center(child: Text("No Groups"));
+        return Center(child: Text("볼 그룹이 없습니다🥲"));
       }
-      var _matchEngine = MatchEngine(
-        swipeItems: _groupController.cards,
-      );
+      if (_groupController.hasMore.value == false) {
+        return Center(child: Text("볼 그룹이 없습니다🥲"));
+      }
+
       return Container(
         margin: const EdgeInsets.fromLTRB(5, 20, 5, 40),
         padding: const EdgeInsets.only(bottom: 8, top: 0, left: 8, right: 8),
@@ -26,21 +28,22 @@ class CardScreen extends StatelessWidget {
                 bottomLeft: Radius.circular(4),
                 bottomRight: Radius.circular(4))),
         child: SwipeCards(
-          matchEngine: _matchEngine,
+          matchEngine: _groupController.matchEngine,
           itemBuilder: (BuildContext context, int index) {
             // return Container(
             //   color: Colors.blue,
             //   alignment: Alignment.center,
             //   child: Text(
-            //     _cardController.groupList[index].groupname,
+            //     _groupController.groupList[index].groupname,
             //     style: TextStyle(fontSize: 100),
             //   ),
             // );
-            return SwipeableCard(
+            return SwipeCard(
                 key: UniqueKey(), card: _groupController.cards[index]);
           },
           onStackFinished: () {
             print("finished");
+            _groupController.fetchGroups();
           },
           itemChanged: (SwipeItem item, int index) {
             print("item: ${item.content.groupname}, index: $index");

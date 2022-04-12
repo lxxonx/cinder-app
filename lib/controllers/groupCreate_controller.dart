@@ -14,6 +14,7 @@ class GroupCreateController extends GetxController {
   var checked = <User>[].obs;
   var pics = <Pic>[].obs;
   var assets = <XFile>[].obs;
+  var searchMyFriendsList = <User>[].obs;
 
   static GroupCreateController get to => Get.find();
 
@@ -70,5 +71,17 @@ class GroupCreateController extends GetxController {
     // await Re
     assets.removeAt(index);
     isLoading(false);
+  }
+
+  void searchMyFriends() async {
+    var _query = friendNameController.text.trim();
+    if (_query.isEmpty) {
+      return;
+    }
+    RemoteServices.searchMyFriends(_query).then((res) {
+      if (res != null) {
+        searchMyFriendsList.addAll(res);
+      }
+    });
   }
 }

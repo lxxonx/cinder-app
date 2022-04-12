@@ -8,13 +8,14 @@ import 'package:mocozi/controllers/auth_controller.dart';
 import 'package:mocozi/model/chat_room.dart';
 import 'package:mocozi/model/group.dart';
 import 'package:mocozi/model/http_response.dart';
+import 'package:mocozi/model/message.dart';
 import 'package:mocozi/model/user.dart';
 
 class Apis {
-  static final baseUrl = Platform.isAndroid
-      ? 'http://10.0.2.2:8080/api'
-      : 'http://192.168.9.174:8080/api';
-  // static const baseUrl = "https://mocozi.blackmonkeys.biz/api";
+  // static final baseUrl = Platform.isAndroid
+  //     ? 'http://10.0.2.2:8080/api'
+  //     : 'http://192.168.9.174:8080/api';
+  static const baseUrl = "https://mocozi.blackmonkeys.biz/api";
 
   // user apis
   static var registerUserApi = Uri.parse('$baseUrl/users/register');
@@ -41,6 +42,7 @@ class Apis {
 
   // chat apis
   static var fetchChatListApi = Uri.parse('$baseUrl/chats/list');
+  static var fetchMessagesApi = Uri.parse('$baseUrl/chats/');
 }
 
 class RemoteServices {
@@ -285,7 +287,7 @@ class RemoteServices {
         await AuthController.to.firebaseUser.value!.getIdToken(false);
 
     var response = await RemoteServices.client.get(
-        Uri.http(Apis.baseUrl.split("/")[2], "/api/friends/search",
+        Uri.https(Apis.baseUrl.split("/")[2], "/api/friends/search",
             {"fName": friendName}),
         headers: {
           'Authorization': 'Bearer $token',
@@ -320,6 +322,54 @@ class RemoteServices {
       Get.snackbar("오류", cr.message.toString());
     }
     return cr.ok;
+  }
+
+  static Future<List<User>> searchMyFriends(String friendName) async {
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
+
+    var response = await RemoteServices.client.get(
+        Uri.https(Apis.baseUrl.split("/")[2], "/api/friends/search/my",
+            {"fName": friendName}),
+        headers: {
+          'Authorization': 'Bearer $token',
+        });
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    if (cr.ok) {
+      var friends = cr.data!["friends"];
+      if (friends.isEmpty) {
+        return [];
+      }
+      var friendData =
+          friends.map<List<User>>((f) => User.fromJson(f)).toList();
+      return friendData;
+    } else {
+      Get.snackbar("실패", cr.message.toString());
+      return [];
+    }
+
+    // return null;
+  }
+
+  static Future<bool> deleteFriend(String friend_name) async {
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
+
+    var uri = Uri.https(Apis.baseUrl.split("/")[2], "/api/friends/delete",
+        {"friend_name": friend_name});
+    var response = await RemoteServices.client.delete(uri, headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    if (cr.ok) {
+      fetchFriends();
+      return cr.ok;
+    } else {
+      throw Exception('Fail to delete friend');
+    }
   }
 
 // group services
@@ -478,6 +528,9 @@ class RemoteServices {
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
     HttpResponse cr = HttpResponse.fromJson(clientResponse);
     if (cr.ok) {
+      if (cr.message == "matched") {
+        // Get.snackbar("성공", "매치 성공");
+      }
     } else {}
 
     return cr.ok;
@@ -496,6 +549,9 @@ class RemoteServices {
 
     var clientResponse = json.decode(utf8.decode(response.bodyBytes));
     HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    //
+    // TODO: 여기서 에러가 나면 어떻게 할까?
+    //
     if (cr.ok) {
     } else {}
 
@@ -527,5 +583,70 @@ class RemoteServices {
     } else {
       throw Exception('Failed to load chat rooms');
     }
+  }
+
+  static Future<List<Message>>? fetchMessages(roomId) async {
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
+
+    Uri uri = Uri.parse(Apis.baseUrl + "/chats/$roomId");
+    var response = await RemoteServices.client.get(uri, headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+
+    HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    if (cr.ok) {
+      var messages = cr.data!["messages"];
+      if (messages == null || messages.length == 0) {
+        return [];
+      }
+
+      List<dynamic> ds =
+          messages.map((model) => Message.fromJson(model)).toList();
+      List<Message> messageList = List<Message>.from(ds);
+      return messageList;
+    } else {
+      throw Exception('Failed to load chat rooms');
+    }
+  }
+
+  static Future<bool> deleteGroup() async {
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
+
+    var uri = Uri.https(
+      Apis.baseUrl.split("/")[2],
+      "/api/groups/delete",
+    );
+
+    var response = await RemoteServices.client.delete(uri, headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    return cr.ok;
+  }
+
+  static Future<bool> reportGroup(groupname) async {
+    String token =
+        await AuthController.to.firebaseUser.value!.getIdToken(false);
+
+    var uri = Uri.https(
+      Apis.baseUrl.split("/")[2],
+      "/api/groups/report",
+    );
+
+    var response = await RemoteServices.client.post(uri, body: {
+      'groupname': groupname
+    }, headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    var clientResponse = json.decode(utf8.decode(response.bodyBytes));
+    HttpResponse cr = HttpResponse.fromJson(clientResponse);
+    return cr.ok;
   }
 }

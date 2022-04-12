@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mocozi/components/chat_item.dart';
 import 'package:mocozi/components/opacity_button.dart';
+import 'package:mocozi/controllers/auth_controller.dart';
 import 'package:mocozi/controllers/chat_controller.dart';
+import 'package:mocozi/controllers/friend_controller.dart';
 import 'package:mocozi/utils/colors.dart';
 
 class ChatPage extends StatelessWidget {
@@ -20,15 +22,28 @@ class ChatPage extends StatelessWidget {
                 style: TextStyle(
                     color: primaryColor, fontWeight: FontWeight.bold)),
           ),
-          Expanded(
-              child: ListView.builder(
-            itemBuilder: ((context, index) {
-              return ChatItem(
-                chatRoom: _chatController.chatList[index],
+          Obx(() {
+            if (_chatController.chatList.length == 0 &&
+                FriendController.to.myGroups.length == 0) {
+              return const Expanded(
+                child: Center(
+                  child: Text(
+                    "채팅방을 생성하려면\n먼저 그룹을 만들어주세요!\n⚙️",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               );
-            }),
-            itemCount: _chatController.chatList.length,
-          )),
+            }
+            return Expanded(
+                child: ListView.builder(
+              itemBuilder: ((context, index) {
+                return ChatItem(
+                  chatRoom: _chatController.chatList[index],
+                );
+              }),
+              itemCount: _chatController.chatList.length,
+            ));
+          })
         ],
       ),
     );

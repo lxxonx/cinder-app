@@ -147,7 +147,12 @@ class FriendScreen extends StatelessWidget {
           );
         }),
         Obx(() => _friendController.friendsList.isEmpty
-            ? Center(child: Text('친구가 없습니다.'))
+            ? Expanded(
+                child: Center(
+                    child: Text(
+                '친구가 없습니다.\n😢',
+                textAlign: TextAlign.center,
+              )))
             : Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -176,18 +181,19 @@ class FriendScreen extends StatelessWidget {
                     FriendItem(
                       friend: _friendController.friendsList[index],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        openBottomSheet();
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: const Text(
-                          '그룹 만들기',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ),
-                    ),
+                    Row(children: [
+                      IconButton(
+                          onPressed: () {
+                            _friendController.openBottomSheet();
+                          },
+                          icon: Icon(Icons.add, color: Colors.blue)),
+                      IconButton(
+                          onPressed: () {
+                            _friendController.deleteFriend(
+                                _friendController.friendsList[index]);
+                          },
+                          icon: Icon(Icons.close, color: Colors.red))
+                    ]),
                   ],
                 ),
               ),
@@ -196,17 +202,6 @@ class FriendScreen extends StatelessWidget {
           );
         }),
       ],
-    );
-  }
-
-  void openBottomSheet() {
-    Get.bottomSheet(
-      GroupCreateScreen(),
-      backgroundColor: Colors.white,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
     );
   }
 }

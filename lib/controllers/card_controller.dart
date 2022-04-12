@@ -9,11 +9,14 @@ import 'package:mocozi/screens/member_screen.dart';
 
 class CardController extends GetxController {
   CardController({Key? key, required this.group});
+  GlobalKey key = GlobalKey();
 
   final currentIndex = 0.obs;
   late Group group;
   late List<Widget> pages = [];
   late List<Widget> info = [];
+
+  @override
   void onInit() {
     super.onInit();
     pages = [
@@ -79,9 +82,9 @@ class CardController extends GetxController {
     ];
 
     var memInfos = group.members.map((m) {
-      return MemberInfoScreen(user: m);
+      // return MemberInfoScreen(user: m);
     }).toList();
-    info.addAll(memInfos);
+    // info.addAll(memInfos);
   }
 
   Widget get currentPage => pages[currentIndex.value];

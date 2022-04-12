@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mocozi/model/user.dart';
+import 'package:get/get.dart';
+import 'package:mocozi/pages/detail_page.dart';
 
 class MemberInfoScreen extends StatelessWidget {
-  const MemberInfoScreen({Key? key, required this.user}) : super(key: key);
+  const MemberInfoScreen(
+      {Key? key, required this.user, required this.toDetailPage})
+      : super(key: key);
   final User user;
+  final Function toDetailPage;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          // Navigator.of(context).push(_openDetail());
+          toDetailPage();
         },
         child: Container(
           padding: const EdgeInsets.all(10),

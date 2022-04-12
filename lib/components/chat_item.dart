@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mocozi/controllers/message_controller.dart';
 import 'package:mocozi/model/chat_room.dart';
 import 'package:mocozi/pages/chatRoom_page.dart';
 
@@ -12,28 +13,40 @@ class ChatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        height: 80,
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: InkWell(
             child: Row(
           children: [
-            Container(
-                height: 75,
-                width: 75,
-                child: Image.network(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToxtcl-1iO_yF8nszUob_EssatZo8c_aZbuwiH_IxKpHXL3iUI03IRkfkUfX0GPwpzsHg&usqp=CAU")),
+            CircleAvatar(
+              foregroundImage:
+                  NetworkImage(chatRoom.participants[0].user.avatar),
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  chatRoom.uid,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    letterSpacing: -1,
+                // Text(
+                //   chatRoom.uid,
+                //   style: TextStyle(
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 24.0,
+                //     letterSpacing: -1,
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    chatRoom.lastMessage.isNotEmpty
+                        ? chatRoom.lastMessage[0].message
+                        : "",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                   ),
-                ),
-                Text(chatRoom.lastMessage.message)
+                )
               ],
             )
           ],

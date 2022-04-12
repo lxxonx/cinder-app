@@ -150,8 +150,10 @@ class GroupCreatePage extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      // call signUp func
-                      _groupCreateController.createGroup();
+                      // call create group func
+                      if (!_groupCreateController.isLoading.value) {
+                        _groupCreateController.createGroup();
+                      }
                     },
                   ),
                 ],

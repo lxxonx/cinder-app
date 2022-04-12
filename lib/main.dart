@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mocozi/controllers/auth_controller.dart';
 import 'package:mocozi/controllers/friend_controller.dart';
 import 'package:mocozi/controllers/group_controller.dart';
+import 'package:mocozi/controllers/message_controller.dart';
 import 'package:mocozi/routes/routes.dart';
 import 'package:mocozi/utils/colors.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

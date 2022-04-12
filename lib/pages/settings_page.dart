@@ -23,25 +23,19 @@ class SettingsPage extends StatelessWidget {
         ],
         title: const Text("설정", style: TextStyle(color: Colors.black)),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Go back!'),
-            ),
-            OpacityButton(
+      body: Column(
+        children: [
+          Expanded(
+            child: OpacityButton(
               onPressed: () {
                 logout();
                 Navigator.pushNamed(context, "/login");
               },
               text: "logout",
               color: Colors.black,
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

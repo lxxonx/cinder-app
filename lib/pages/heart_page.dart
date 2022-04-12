@@ -6,7 +6,7 @@ class HeartPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: Center(
-          child: Text("love you forever"),
+          child: Text("더 많은 콘텐츠를 준비 중입니다"),
         ),
       ),
     );

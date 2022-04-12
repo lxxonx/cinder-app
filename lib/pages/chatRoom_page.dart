@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mocozi/components/chat_item.dart';
+import 'package:mocozi/components/message_item.dart';
 import 'package:mocozi/components/text_input_field.dart';
 import 'package:mocozi/controllers/message_controller.dart';
 import 'package:mocozi/utils/colors.dart';
@@ -9,11 +10,11 @@ class ChatRoomPage extends StatelessWidget {
   ChatRoomPage({Key? key, required this.roomName}) : super(key: key);
   final String roomName;
 
-  final MessageController _messageController = Get.put(MessageController());
-  final TextEditingController _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    final MessageController _messageController =
+        Get.put(MessageController(roomName));
+    final TextEditingController _textController = TextEditingController();
     final inputBorder =
         OutlineInputBorder(borderSide: Divider.createBorderSide(context));
     return Scaffold(
@@ -29,12 +30,18 @@ class ChatRoomPage extends StatelessWidget {
                     color: primaryColor, fontWeight: FontWeight.bold)),
           ),
           Expanded(
-              child: ListView.builder(
-            itemBuilder: ((context, index) {
-              return Text("hello");
-            }),
-            reverse: true,
-          )),
+            child: Obx(
+              () => ListView.builder(
+                itemBuilder: ((context, index) {
+                  return MessageItem(
+                    message: _messageController.messageList[index],
+                  );
+                }),
+                reverse: true,
+                itemCount: _messageController.messageList.length,
+              ),
+            ),
+          ),
           Container(
             color: Colors.white,
             width: double.infinity,

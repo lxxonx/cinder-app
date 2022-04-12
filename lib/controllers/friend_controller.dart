@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mocozi/model/group.dart';
 import 'package:mocozi/model/user.dart';
 import 'package:mocozi/screens/friend_screen.dart';
+import 'package:mocozi/screens/groupCreate_screen.dart';
 import 'package:mocozi/screens/group_screen.dart';
 import 'package:mocozi/services/remote_service.dart';
 
@@ -131,5 +132,60 @@ class FriendController extends GetxController {
       getFriendsList();
     }
     searchLoading(false);
+  }
+
+  void deleteFriend(User) {
+    Get.dialog(
+      AlertDialog(
+        title: Text("친구 삭제"),
+        content: Text("친구를 삭제하시겠습니까?"),
+        actions: [
+          TextButton(
+            child: Text("취소"),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          TextButton(
+            child: Text("확인"),
+            onPressed: () {
+              RemoteServices.deleteFriend(User.username);
+              Get.back();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void openBottomSheet() {
+    Get.bottomSheet(
+      GroupCreateScreen(),
+      backgroundColor: Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    );
+  }
+
+  void deleteMyGroup(groupname) async {
+    bool result = await RemoteServices.deleteGroup();
+
+    if (result) {
+      Get.snackbar(
+        "성공",
+        "그룹이 삭제되었습니다.",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.lightGreen,
+        colorText: Colors.white,
+      );
+      myGroups.removeWhere((element) => element.groupname == groupname);
+    } else {
+      Get.snackbar("실패", "그룹 삭제에 실패했습니다. 나중에 다시 시도해주세요",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
   }
 }

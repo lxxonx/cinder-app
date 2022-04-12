@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mocozi/components/opacity_button.dart';
 import 'package:mocozi/components/outline_circle_button.dart';
 import 'package:mocozi/controllers/card_controller.dart';
+import 'package:mocozi/controllers/friend_controller.dart';
 import 'package:mocozi/model/group.dart';
 import 'package:mocozi/pages/detail_page.dart';
+import 'package:mocozi/pages/detail_preview_page.dart';
 import 'package:mocozi/screens/groupCard_screen.dart';
 import 'package:mocozi/screens/memberInfo_screen.dart';
 import 'package:mocozi/screens/member_screen.dart';
+import 'package:mocozi/services/remote_service.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
-class SwipeCard extends StatefulWidget {
-  SwipeCard({Key? key, required this.card}) : super(key: key);
-  final SwipeItem card;
+class SwipeCardPreview extends StatefulWidget {
+  SwipeCardPreview({Key? key, required this.group}) : super(key: key);
+  final Group group;
   @override
-  _SwipeCardState createState() => _SwipeCardState();
+  _SwipeCardPreviewState createState() => _SwipeCardPreviewState();
 }
 
-class _SwipeCardState extends State<SwipeCard> {
+class _SwipeCardPreviewState extends State<SwipeCardPreview> {
   int _currentPageIndex = 0;
   List<Widget> pages = [];
   List<Widget> info = [];
@@ -26,9 +30,9 @@ class _SwipeCardState extends State<SwipeCard> {
   void initState() {
     super.initState();
     pages = [
-      GroupCardScreen(group: widget.card.content),
+      GroupCardScreen(group: widget.group),
     ];
-    var memWidget = widget.card.content.members.map<Widget>((u) {
+    var memWidget = widget.group.members.map<Widget>((u) {
       return MemberCardScreen(user: u);
     }).toList();
     pages.addAll(memWidget);
@@ -36,7 +40,7 @@ class _SwipeCardState extends State<SwipeCard> {
       GestureDetector(
           onTap: () {
             // Navigator.of(context).push(_openDetail());
-            Get.to(DetailPage(key: UniqueKey(), card: widget.card));
+            Get.to(DetailPreviewPage(key: UniqueKey(), group: widget.group));
           },
           child: Container(
             padding: const EdgeInsets.all(10),
@@ -61,7 +65,7 @@ class _SwipeCardState extends State<SwipeCard> {
                         //         fontWeight: FontWeight.w600)),
                         Container(
                             margin: const EdgeInsets.only(left: 8),
-                            child: Text(widget.card.content.groupname,
+                            child: Text(widget.group.groupname,
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18.0,
@@ -75,7 +79,7 @@ class _SwipeCardState extends State<SwipeCard> {
                   ],
                 ),
                 Text(
-                  widget.card.content.bio!,
+                  widget.group.bio!,
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -88,11 +92,11 @@ class _SwipeCardState extends State<SwipeCard> {
           )),
     ];
 
-    var memInfos = widget.card.content.members.map<Widget>((m) {
+    var memInfos = widget.group.members.map<Widget>((m) {
       return MemberInfoScreen(
         user: m,
         toDetailPage: () =>
-            Get.to(DetailPage(key: UniqueKey(), card: widget.card)),
+            Get.to(DetailPreviewPage(key: UniqueKey(), group: widget.group)),
       );
     }).toList();
     info.addAll(memInfos);
@@ -129,10 +133,26 @@ class _SwipeCardState extends State<SwipeCard> {
             ],
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                width: 100,
+                child: OpacityButton(
+                  text: "그룹 삭제",
+                  onPressed: () async {
+                    FriendController.to.deleteMyGroup(widget.group.groupname);
+                  },
+                  color: Colors.red,
+                ),
+              )
+            ],
+          ),
+          Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               info[_currentPageIndex],
-              buttons(),
+              // buttons(),
             ],
           )
         ],
@@ -161,7 +181,7 @@ class _SwipeCardState extends State<SwipeCard> {
             ),
             onPressed: () {
               // undo
-              widget.card.nope();
+              // widget.card.nope();
             },
           ),
           OutlineCircleButton(
@@ -174,7 +194,7 @@ class _SwipeCardState extends State<SwipeCard> {
             ),
             onPressed: () {
               // boost
-              widget.card.like();
+              // widget.card.like();
             },
           ),
         ],

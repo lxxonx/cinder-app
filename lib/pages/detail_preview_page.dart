@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mocozi/components/opacity_button.dart';
 import 'package:mocozi/components/outline_circle_button.dart';
-import 'package:mocozi/controllers/group_controller.dart';
+import 'package:mocozi/model/group.dart';
 import 'package:mocozi/screens/memberDetail_screen.dart';
 import 'package:mocozi/utils/colors.dart';
-import 'package:swipe_cards/swipe_cards.dart';
 
-class DetailPage extends StatefulWidget {
-  DetailPage({Key? key, required this.card}) : super(key: key);
-  final SwipeItem card;
+class DetailPreviewPage extends StatefulWidget {
+  DetailPreviewPage({Key? key, required this.group}) : super(key: key);
+  final Group group;
   @override
-  _DetailPageState createState() => _DetailPageState();
+  _DetailPreviewPageState createState() => _DetailPreviewPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPreviewPageState extends State<DetailPreviewPage> {
   int _currentPageIndex = 0;
   List<Widget> pics = [];
   late Widget info;
@@ -23,7 +21,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    var gps = widget.card.content.pics.map<Widget>((p) {
+    var gps = widget.group.pics.map<Widget>((p) {
       return (Container(
         width: 450,
         height: 450,
@@ -37,8 +35,8 @@ class _DetailPageState extends State<DetailPage> {
       ));
     }).toList();
     pics.addAll(gps);
-    for (int i = 0; i < widget.card.content.members.length; i++) {
-      var mps = widget.card.content.members[i].pics.map<Widget>((p) {
+    for (int i = 0; i < widget.group.members.length; i++) {
+      var mps = widget.group.members[i].pics!.map<Widget>((p) {
         return Container(
           width: 450,
           height: 450,
@@ -110,13 +108,13 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-                    child: Text(widget.card.content.groupname,
+                    child: Text(widget.group.groupname,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: EdgeInsets.all(8),
-                    child: Text(widget.card.content.bio),
+                    child: Text(widget.group.bio!),
                   )
                 ],
               ),
@@ -126,14 +124,6 @@ class _DetailPageState extends State<DetailPage> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              OpacityButton(
-                  onPressed: () {
-                    GroupController.to
-                        .reportGroup(widget.card.content.groupname);
-                    widget.card.nope();
-                  },
-                  text: "REPORT",
-                  color: Colors.red),
               buttons(),
             ],
           )
@@ -164,7 +154,7 @@ class _DetailPageState extends State<DetailPage> {
             onPressed: () {
               // undo
               Get.back();
-              widget.card.nope();
+              // widget.card.nope();
             },
           ),
           OutlineCircleButton(
@@ -178,7 +168,7 @@ class _DetailPageState extends State<DetailPage> {
             onPressed: () {
               // boost
               Get.back();
-              widget.card.like();
+              // widget.card.like();
             },
           ),
         ],
@@ -213,32 +203,31 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   changeInfo() {
-    if (_currentPageIndex < widget.card.content.pics.length) {
+    if (_currentPageIndex < widget.group.pics.length) {
       info = Container();
     } else if (_currentPageIndex <
-        widget.card.content.pics.length +
-            widget.card.content.members[0].pics.length) {
-      info = MemberDetailScreen(user: widget.card.content.members[0]);
+        widget.group.pics.length + widget.group.members[0].pics!.length) {
+      info = MemberDetailScreen(user: widget.group.members[0]);
     } else if (_currentPageIndex <
-        widget.card.content.pics.length +
-            widget.card.content.members[0].pics.length +
-            widget.card.content.members[1].pics.length) {
-      info = MemberDetailScreen(user: widget.card.content.members[1]);
-    } else if (widget.card.content.members[2] != null &&
+        widget.group.pics.length +
+            widget.group.members[0].pics!.length +
+            widget.group.members[1].pics!.length) {
+      info = MemberDetailScreen(user: widget.group.members[1]);
+    } else if (widget.group.members[2] != null &&
         _currentPageIndex <
-            widget.card.content.pics.length +
-                widget.card.content.members[0].pics.length +
-                widget.card.content.members[1].pics.length +
-                widget.card.content.members[2].pics.length) {
-      info = MemberDetailScreen(user: widget.card.content.members[2]);
-    } else if (widget.card.content.members[3] != null &&
+            widget.group.pics.length +
+                widget.group.members[0].pics!.length +
+                widget.group.members[1].pics!.length +
+                widget.group.members[2].pics!.length) {
+      info = MemberDetailScreen(user: widget.group.members[2]);
+    } else if (widget.group.members[3] != null &&
         _currentPageIndex <
-            widget.card.content.pics.length +
-                widget.card.content.members[0].pics.length +
-                widget.card.content.members[1].pics.length +
-                widget.card.content.members[2].pics.length +
-                widget.card.content.members[3].pics.length) {
-      info = MemberDetailScreen(user: widget.card.content.members[3]);
+            widget.group.pics.length +
+                widget.group.members[0].pics!.length +
+                widget.group.members[1].pics!.length +
+                widget.group.members[2].pics!.length +
+                widget.group.members[3].pics!.length) {
+      info = MemberDetailScreen(user: widget.group.members[3]);
     }
   }
   // Route _openDetail() {
